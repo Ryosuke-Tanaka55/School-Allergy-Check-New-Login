@@ -70,13 +70,17 @@
           <td><%= l(day.finished_at, format: :time) if day.finished_at.present? %></td>
           <td><%= day.note if day.note.present? %></td>
           <td>
-            <% if day.status == "報告中" %>
-        　     <div><%= day.lunch_check_superior %>に報告</div> 
-            <% elsif day.status ==  "確認済" %> 
-              <div> 代表者確認済 </div> 
-            <% else %>
-              <div></div>
-            <% end %> 
+            <% if @user.superior? %>
+              <div><%= l(day.@users.classroom) if day.@users.classroom.present %></div> 
+            <% else %>   
+              <% if day.status == "報告中" %>
+                 <div><%= day.lunch_check_superior %>に報告</div> 
+              <% elsif day.status ==  "確認済" %> 
+                <div> 代表者確認済 </div> 
+              <% else %>
+                <div></div>
+              <% end %> 
+           <% end %>  
           </td>
         </tr>
       <% end %>

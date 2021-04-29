@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
     @lunch_check_sum = Attendance.where(lunch_check_superior: @user.name).where(status: "報告中").count
+    @users = User.joins(:attendances).where(attendances: {status: "確認済"})
   end
   
   def comfirmation
