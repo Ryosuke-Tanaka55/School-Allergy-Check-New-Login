@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @worked_sum = @attendances.where.not(started_at: nil).count
     @lunch_check_sum = Attendance.where(lunch_check_superior: @user.name).where(status: "報告中").count
     @users = User.joins(:attendances).where(attendances: {status: "確認済"})
+    @checks = Attendance.where(worked_on: @first_day..@last_day).where(status: "確認済").order(:worked_on, :user_id)
   end
   
   def comfirmation

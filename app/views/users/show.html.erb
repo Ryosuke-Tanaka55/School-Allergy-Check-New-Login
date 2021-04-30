@@ -71,7 +71,15 @@
           <td><%= day.note if day.note.present? %></td>
           <td>
             <% if @user.superior? %>
-              <div><%= l(day.@users.classroom) if day.@users.classroom.present %></div> 
+              <% @checked = @checks.where(worked_on: day.worked_on) %>
+              <% if @checked.size > 0 %>
+                <% @checked.each do |check| %>
+                  <%= User.find(check.user_id).classroom %>
+                  <%= "　" %>
+                <% end %> 
+              <% else %>    
+                <%= "" %> 
+              <% end %>  
             <% else %>   
               <% if day.status == "報告中" %>
                  <div><%= day.lunch_check_superior %>に報告</div> 
