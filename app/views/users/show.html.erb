@@ -42,13 +42,21 @@
         <th rowspan=3>終了</th>
         <th rowspan=3>備考</th>
         <th rowspan=3>
-        <% if @user.superior? %>
-         <th>未実施学級</th>
-         <th>確認済学級</th>
+          <% if @user.superior? %>
+            <div>未実施学級</div>
           <% else %>  
-            <div>アレルギー担当㊞</div>
+            <div></div>
+          <% end %>
+        </th>
+        <th rowspan=3>
+          <% if @user.superior? %>
+            <th>確認済学級</th>
+          <% else %>  
+            <th>アレルギー担当㊞</th>
           <% end %>  
         </th>
+        
+        
       </tr>
     </thead>
     <tbody>
@@ -78,6 +86,16 @@
           <td><%= day.note if day.note.present? %></td>
           <td>
             <% if @user.superior? %>
+              <% @un_checked = @un_checks.where(worked_on: day.worked_on) %>
+              <% @un_checked.each do |un| %>
+                  <%= User.find(un.user_id).classroom %>
+                  <%= "　" %>
+              <% end %>
+            <% end %>    
+          </td>
+          <td></td>
+          <td>
+            <% if @user.superior? %>
               <% @checked = @checks.where(worked_on: day.worked_on) %>
               <% if @checked.size > 0 %>
                 <% @checked.each do |check| %>
@@ -89,7 +107,7 @@
               <% end %>  
             <% else %>   
               <% if day.status == "報告中" %>
-                 <div><%= day.lunch_check_superior %>に報告</div> 
+                <div><%= day.lunch_check_superior %>に報告</div> 
               <% elsif day.status ==  "確認済" %> 
                 <div> 代表者確認済 </div> 
               <% else %>
