@@ -86,12 +86,11 @@
           <td><%= day.note if day.note.present? %></td>
           <td>
             <% if @user.superior? %>
-              <% User.human_attribute_name :classroome %>
               <% @un_checked = @un_checks.where(worked_on: day.worked_on) %>
-              <% @un_checked.each do |un| %>
+                <% @un_checked.each do |un| %>
                   <%= User.find(un.user_id).classroom %>
                   <%= "　" %>
-              <% end %>
+                <% end %>
             <% end %>    
           </td>
           <td></td>

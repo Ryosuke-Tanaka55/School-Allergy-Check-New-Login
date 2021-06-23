@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.find (params[:id])
     @first_day = params[:day].to_date.beginning_of_month
     @last_day = @first_day.end_of_month
-    @attendances = @user.attendances.where(worked_on: @first_day..@last_day)
+    @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
     @status_sum = Attendance.where(status: "確認中").count
     @worked_sum = @attendances.where.not(started_at: nil).count
   end  
