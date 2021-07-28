@@ -1,61 +1,70 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: %i[ show edit update destroy ]
-
+  before_action :set_student, only: [:show, :edit, :update,:destroy]
+  
   # GET /students or /students.json
+  def import
+    # fileはtmpに自動で一時保存される
+     if params[:csv_file] .blank?
+      flash[:danger]= "csvファイルを選択してください"
+      redirect_to students_url
+     else    
+      Student.import(params[:csv_file])
+      flash[:success]= "インポートしました"
+      redirect_to students_url
+     end  
+  end
+ 
+ 
   def index
     @students = Student.all
+    # csv出力
+    respond_to do |format|
+      format.html 
+      format.csv do
+        send_data render_to_string, filename: "アレルギーチェック.csv", type: :csv    #csv用の処理を書く
+      end
+    end  
   end
-
-  # GET /students/1 or /students/1.json
-  def show
-  end
-
-  # GET /students/new
+  
   def new
     @student = Student.new
   end
 
-  # GET /students/1/edit
+  # GET /positions/1/edit
   def edit
+     @student = Student.find(params[:id])
   end
 
-  # POST /students or /students.json
+  # POST /positions
+  # POST /positions.json
   def create
     @student = Student.new(student_params)
-
-    respond_to do |format|
-      if @student.save
-        format.html { redirect_to @student, notice: "Student was successfully created." }
-        format.json { render :show, status: :created, location: @student }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
-    end
+     if @student.save
+       flash[:success] = '作成に成功しました。'
+       redirect_to students_url
+     else
+      flash[:danger] = "アレルギー情報追加に失敗しました。"
+      redirect_to students_url   
+     end
   end
 
-  # PATCH/PUT /students/1 or /students/1.json
   def update
-    respond_to do |format|
-      if @student.update(student_params)
-        format.html { redirect_to @student, notice: "Student was successfully updated." }
-        format.json { render :show, status: :ok, location: @student }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
+    @student = Student.find(params[:id])
+    if @student.update_attributes(student_params)
+       flash[:success] = "アレルギー情報を更新しました。"# 更新に成功した場合の処理を記述します。
+       redirect_to students_url
+    else
+      flash[:danger] = "アレルギー追加に失敗しました。"
+      redirect_to students_url
     end
-  end
-
-  # DELETE /students/1 or /students/1.json
+  end 
+  
   def destroy
     @student.destroy
-    respond_to do |format|
-      format.html { redirect_to students_url, notice: "Student was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    flash[:success] = "アレルギー情報を削除しました。"
+    redirect_to students_url
   end
-
+ 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
@@ -64,6 +73,6 @@ class StudentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def student_params
-      params.require(:student).permit(:student_name)
+       params.require(:student).permit( :student_id, :student_classroom, :teacher_of_student, :student_name, :alergy )
     end
 end

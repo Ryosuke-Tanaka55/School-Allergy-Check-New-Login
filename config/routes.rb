@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :students
+  resources :students do  
+    collection { post :import }  
+  end 
+  
   root 'static_pages#top'
   get '/signup', to: 'users#new'
 
