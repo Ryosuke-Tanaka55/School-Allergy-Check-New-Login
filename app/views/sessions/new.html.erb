@@ -4,6 +4,9 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(scope: :session, url: login_path, local: true) do |f| %>
+      
+      <%= f.label :school_name,"学校名", class: "label-login" %>
+      <%= f.text_field :school_name, class: 'form-control' %>
 
       <%= f.label :email, "メールアドレス", class: "label-login" %>
       <%= f.email_field :email, class: 'form-control' %>
