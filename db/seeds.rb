@@ -18,5 +18,11 @@ User.create!(name: "代表",
              password_confirmation: "are",
              superior: true) 
              
+User.create!(name: "担当",
+             email: "tan@n.n",
+             password: "are",
+             password_confirmation: "are",
+             superior: true)              
+             
 
 
