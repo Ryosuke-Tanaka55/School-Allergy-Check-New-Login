@@ -24,5 +24,11 @@ User.create!(name: "代表",
              admin: true,
              school_id: 1)
              
+User.create!(name: "担当",
+             email: "tan@n.n",
+             password: "are",
+             password_confirmation: "are",
+             superior: true)              
+             
 
 
