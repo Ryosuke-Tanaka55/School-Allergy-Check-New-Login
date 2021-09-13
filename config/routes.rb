@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :system_admins, controllers: {
+    sessions: 'admin_users/sessions'
+  }
+
+
   resources :students do  
     collection { post :import }  
   end 
