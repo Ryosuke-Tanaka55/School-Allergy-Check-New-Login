@@ -21,15 +21,22 @@ gem 'devise'
 gem 'devise-i18n'
 
 group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
   gem 'sqlite3', '1.3.13'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :development do
+  gem 'spring-commands-rspec'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'webdrivers'
 end
 
 # group :production do
