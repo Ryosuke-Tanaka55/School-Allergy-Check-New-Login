@@ -37,6 +37,7 @@ end
 
 group :test do
   gem 'webdrivers'
+  gem 'capybara'
 end
 
 # group :production do

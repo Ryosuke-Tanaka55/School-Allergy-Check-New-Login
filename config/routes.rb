@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
   devise_for :system_admins, controllers: {
-    sessions: 'admin_users/sessions'
+    sessions: 'system_admins/sessions'
   }
-
+  namespace :system_admins do
+    resources :teachers, only: %i(index destroy)
+  end
+  devise_for :teachers, controllers: {
+    sessions:      "teachers/sessions",
+    registrations: "teachers/registrations",
+    omniauth_callbacks: "teachers/omniauth_callbacks"
+  }
 
   resources :students do  
     collection { post :import }  
