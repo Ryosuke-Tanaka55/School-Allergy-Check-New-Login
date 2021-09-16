@@ -120,3 +120,20 @@ p {
   padding-top: 10%;
 }
 
+/* deviseログインmax-width */
+
+.mw-md {
+  max-width: 576px;
+}
+
+/* deviseログイン時のフラッシュメッセージ */
+
+.alert-notice {
+  @extend .alert-info;
+}
+
+.alert-alert {
+  @extend .alert-danger;
+}
+
+
