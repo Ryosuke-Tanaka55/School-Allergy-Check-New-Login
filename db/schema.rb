@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210915054145) do
+ActiveRecord::Schema.define(version: 20210917134005) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -69,10 +69,15 @@ ActiveRecord::Schema.define(version: 20210915054145) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "teacher_name", default: "", null: false
+    t.boolean "admin", default: false, null: false
+    t.boolean "creator", default: false, null: false
     t.index ["email"], name: "index_teachers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
+    t.index ["school_id"], name: "index_teachers_on_school_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -85,8 +90,8 @@ ActiveRecord::Schema.define(version: 20210915054145) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "classroom"
-    t.datetime "basic_time", default: "2021-09-14 23:00:00"
-    t.datetime "work_time", default: "2021-09-14 22:30:00"
+    t.datetime "basic_time", default: "2021-09-16 23:00:00"
+    t.datetime "work_time", default: "2021-09-16 22:30:00"
     t.boolean "superior", default: false
     t.string "department"
     t.index ["email"], name: "index_users_on_email", unique: true

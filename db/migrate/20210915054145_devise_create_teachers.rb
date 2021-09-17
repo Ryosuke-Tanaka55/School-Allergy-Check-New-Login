@@ -14,6 +14,8 @@ class DeviseCreateTeachers < ActiveRecord::Migration[5.1]
       ## Rememberable
       t.datetime :remember_created_at
 
+      t.references :school, index: true, foreign_key: true
+
       ## Trackable
       # t.integer  :sign_in_count, default: 0, null: false
       # t.datetime :current_sign_in_at
