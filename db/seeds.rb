@@ -1,35 +1,5 @@
 # coding: utf-8
-# School.create!(school_name: "松江市立乃木小学校")
-
-
-# User.create!(name: "Sample User",
-#              email: "sample@email.com",
-#              password: "password",
-#              password_confirmation: "password",
-#              admin: true,
-#              school_id: 1)
-             
-# User.create!(name: "管理職",
-#              email: "kanri@email.com",
-#              password: "password",
-#              password_confirmation: "password",
-#              admin: true,
-#              school_id: 1)
-             
-# User.create!(name: "代表",
-#              email: "dai@n.n",
-#              password: "are",
-#              password_confirmation: "are",
-#              superior: true,
-#              admin: true,
-#              school_id: 1)
-             
-# User.create!(name: "担当",
-#              email: "tan@n.n",
-#              password: "are",
-#              password_confirmation: "are",
-#              superior: true)              
-             
+            
 SystemAdmin.find_or_create_by(id: 1) do |admin|
   admin.email = "system@email.com"
   admin.password = "password"
@@ -40,6 +10,34 @@ puts "SystemAdmin Created"
 School.create!(school_name: "サンプル")
 
 puts "School Created"
+
+User.create!(name: "Sample User",
+  email: "sample@email.com",
+  password: "password",
+  password_confirmation: "password",
+  admin: true,
+  school_id: 1)
+  
+User.create!(name: "管理職",
+  email: "kanri@email.com",
+  password: "password",
+  password_confirmation: "password",
+  admin: true,
+  school_id: 1)
+  
+User.create!(name: "代表",
+  email: "dai@n.n",
+  password: "are",
+  password_confirmation: "are",
+  superior: true,
+  admin: true,
+  school_id: 1)
+  
+User.create!(name: "担当",
+  email: "tan@n.n",
+  password: "are",
+  password_confirmation: "are",
+  superior: true)
 
 Teacher.create!(teacher_name: "管理職",
               email: "admin@email.com",
