@@ -1,4 +1,5 @@
 class Student < ApplicationRecord
+  belongs_to :classroom
   def self.import(file)
     CSV.foreach(file.path, headers: true, encoding: 'Shift_JIS:UTF-8') do |row|
       #IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
