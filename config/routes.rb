@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     # omniauth_callbacks: "teachers/omniauth_callbacks"
   }
 
+  resources :system_admins
+  resources :teachers
+
+  # 下記山田さん既存のルート
   resources :students do  
     collection { post :import }  
   end 
