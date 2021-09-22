@@ -1,0 +1,28 @@
+version: '3'
+services:
+ db:
+  image: postgres
+  # ローカル側のデータを常にDocer側に同期するよう設定、ないとコンテナ削除の度にデータが消える
+  ports:
+    - "5432:5432"
+  # 環境変数を設定
+  environment:
+   POSTGRES_USER: app_user_role
+   POSTGRES_PASSWORD: postgres
+  volumes:
+  # ./tmp/dbはローカルのディレクトリ、/var/lib/postgresql/dataはDocker側のディレクトリ
+   - ./tmp/db:/var/lib/postgresql/data
+ web:
+  # 同じディレクトリにあるDockerfileを参照
+  build: .
+  # 3000番ポートを指定してrailsサーバーを起動
+  command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+  # ローカル側のデータを常にDocer側に同期するよう設定(docker側のディレクトリ名はdockerfileに記載した作業ディレクトリを指定)
+  volumes:
+   - .:/app
+  # ローカルの3000番ポートをDockerの3000番ポートに接続
+  ports:
+   - "3000:3000"
+  # 接続先(PostgreSQL)情報の設定
+  depends_on:
+   - db

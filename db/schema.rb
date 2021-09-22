@@ -12,12 +12,15 @@
 
 ActiveRecord::Schema.define(version: 20210829135502) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
     t.datetime "started_at"
     t.datetime "finished_at"
     t.string "note"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "first_grade"
@@ -54,19 +57,18 @@ ActiveRecord::Schema.define(version: 20210829135502) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.integer "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "classroom"
-    t.datetime "basic_time", default: "2021-09-01 23:00:00"
-    t.datetime "work_time", default: "2021-09-01 22:30:00"
+    t.datetime "basic_time", default: "2021-09-18 23:00:00"
+    t.datetime "work_time", default: "2021-09-18 22:30:00"
     t.boolean "superior", default: false
     t.string "department"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["school_id"], name: "index_users_on_school_id"
   end
 
+  add_foreign_key "attendances", "users"
 end
