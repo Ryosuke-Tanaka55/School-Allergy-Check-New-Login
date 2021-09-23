@@ -1,15 +1,19 @@
 Rails.application.routes.draw do
   devise_for :system_admins, controllers: {
-    sessions: 'system_admins/sessions'
+    sessions:      'system_admins/sessions',
+    passwords:     'system_admins/passwords',
   }
-  namespace :system_admins do
-    resources :teachers, only: %i(index destroy)
-  end
   devise_for :teachers, controllers: {
-    sessions:      "teachers/sessions",
-    registrations: "teachers/registrations",
+    sessions:      'teachers/sessions',
+    passwords:     'teachers/passwords',
+    registrations: 'teachers/registrations',
     # omniauth_callbacks: "teachers/omniauth_callbacks"
   }
+  
+  namespace :system_admins do
+    resources :schools
+    resources :teachers, only: %i(index destroy)
+  end
 
   resources :system_admins
   resources :teachers
