@@ -20,8 +20,19 @@ class ApplicationController < ActionController::Base
     @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
   end
 
- rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid
     flash[:danger] = "ページ情報の取得に失敗しました、再アクセスしてください。"
     redirect_to root_url
- end
+  end
+
+  # ログイン後に遷移するpathを設定
+  def after_sign_in_path_for(resource)
+    case resource
+    when SystemAdmin
+      system_admins_path
+    when Teacher
+      teacher_path(id: @teacher.id)
+    end
+  end
+  
 end  
