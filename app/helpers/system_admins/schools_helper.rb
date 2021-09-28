@@ -1,0 +1,2 @@
+module SystemAdmins::SchoolsHelper
+end

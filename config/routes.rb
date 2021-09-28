@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  devise_for :system_admins, controllers: {
+    sessions:      'system_admins/sessions',
+    passwords:     'system_admins/passwords',
+  }
+  devise_for :teachers, controllers: {
+    sessions:      'teachers/sessions',
+    passwords:     'teachers/passwords',
+    registrations: 'teachers/registrations',
+    # omniauth_callbacks: "teachers/omniauth_callbacks"
+  }
+  
+  namespace :system_admins do
+    resources :schools
+    resources :teachers, only: %i(index destroy)
+  end
+
+  resources :system_admins
+  resources :teachers
+
+  # 下記山田さん既存のルート
   resources :students do  
     collection { post :import }  
   end 

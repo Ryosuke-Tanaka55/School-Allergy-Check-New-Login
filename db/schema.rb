@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210829135502) do
+ActiveRecord::Schema.define(version: 20210921155210) do
+
+  create_table "alergy_checks", force: :cascade do |t|
+    t.date "worked_on", null: false
+    t.string "note"
+    t.boolean "first_check", default: false, null: false
+    t.boolean "second_check", default: false, null: false
+    t.boolean "student_check", default: false, null: false
+    t.string "status"
+    t.string "status_checker"
+    t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_alergy_checks_on_student_id"
+  end
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -35,20 +49,65 @@ ActiveRecord::Schema.define(version: 20210829135502) do
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
+  create_table "classrooms", force: :cascade do |t|
+    t.string "class_name", default: "", null: false
+    t.integer "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_classrooms_on_school_id"
+  end
+
   create_table "schools", force: :cascade do |t|
-    t.string "school_name"
+    t.string "school_name", default: "", null: false
+    t.string "school_url", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "students", force: :cascade do |t|
-    t.string "student_name"
+    t.string "student_name", default: "", null: false
+    t.integer "student_number", null: false
+    t.integer "school_id"
+    t.integer "classroom_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "student_id"
     t.string "teacher_of_student"
     t.string "student_classroom"
     t.string "alergy"
+    t.index ["classroom_id"], name: "index_students_on_classroom_id"
+    t.index ["school_id"], name: "index_students_on_school_id"
+  end
+
+  create_table "system_admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_system_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_system_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "teachers", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "teacher_name", default: "", null: false
+    t.boolean "admin", default: false, null: false
+    t.boolean "creator", default: false, null: false
+    t.integer "school_id"
+    t.integer "classroom_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classroom_id"], name: "index_teachers_on_classroom_id"
+    t.index ["email"], name: "index_teachers_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
+    t.index ["school_id"], name: "index_teachers_on_school_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -61,8 +120,8 @@ ActiveRecord::Schema.define(version: 20210829135502) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "classroom"
-    t.datetime "basic_time", default: "2021-09-01 23:00:00"
-    t.datetime "work_time", default: "2021-09-01 22:30:00"
+    t.datetime "basic_time", default: "2021-09-21 23:00:00"
+    t.datetime "work_time", default: "2021-09-21 22:30:00"
     t.boolean "superior", default: false
     t.string "department"
     t.index ["email"], name: "index_users_on_email", unique: true
