@@ -23,7 +23,7 @@ gem 'devise-i18n'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
-  gem 'sqlite3', '1.3.13'
+  gem 'pg', '0.20.0'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 

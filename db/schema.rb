@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20210921155210) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "alergy_checks", force: :cascade do |t|
     t.date "worked_on", null: false
     t.string "note"
@@ -20,7 +23,7 @@ ActiveRecord::Schema.define(version: 20210921155210) do
     t.boolean "student_check", default: false, null: false
     t.string "status"
     t.string "status_checker"
-    t.integer "student_id"
+    t.bigint "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["student_id"], name: "index_alergy_checks_on_student_id"
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 20210921155210) do
     t.datetime "started_at"
     t.datetime "finished_at"
     t.string "note"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "first_grade"
@@ -51,32 +54,26 @@ ActiveRecord::Schema.define(version: 20210921155210) do
 
   create_table "classrooms", force: :cascade do |t|
     t.string "class_name", default: "", null: false
-    t.integer "school_id"
+    t.bigint "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_id"], name: "index_classrooms_on_school_id"
   end
 
   create_table "schools", force: :cascade do |t|
-    t.string "school_name", default: "", null: false
-    t.string "school_url", default: "", null: false
+    t.string "school_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "students", force: :cascade do |t|
-    t.string "student_name", default: "", null: false
-    t.integer "student_number", null: false
-    t.integer "school_id"
-    t.integer "classroom_id"
+    t.string "student_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "student_id"
     t.string "teacher_of_student"
     t.string "student_classroom"
     t.string "alergy"
-    t.index ["classroom_id"], name: "index_students_on_classroom_id"
-    t.index ["school_id"], name: "index_students_on_school_id"
   end
 
   create_table "system_admins", force: :cascade do |t|
@@ -100,8 +97,8 @@ ActiveRecord::Schema.define(version: 20210921155210) do
     t.string "teacher_name", default: "", null: false
     t.boolean "admin", default: false, null: false
     t.boolean "creator", default: false, null: false
-    t.integer "school_id"
-    t.integer "classroom_id"
+    t.bigint "school_id"
+    t.bigint "classroom_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classroom_id"], name: "index_teachers_on_classroom_id"
@@ -113,19 +110,22 @@ ActiveRecord::Schema.define(version: 20210921155210) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.integer "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "classroom"
-    t.datetime "basic_time", default: "2021-09-21 23:00:00"
-    t.datetime "work_time", default: "2021-09-21 22:30:00"
     t.boolean "superior", default: false
     t.string "department"
+    t.datetime "basic_time"
+    t.datetime "work_time"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["school_id"], name: "index_users_on_school_id"
   end
 
+  add_foreign_key "alergy_checks", "students"
+  add_foreign_key "attendances", "users"
+  add_foreign_key "classrooms", "schools"
+  add_foreign_key "teachers", "classrooms"
+  add_foreign_key "teachers", "schools"
 end

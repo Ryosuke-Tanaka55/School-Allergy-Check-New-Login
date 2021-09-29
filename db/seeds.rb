@@ -12,6 +12,7 @@ School.create!(school_name: "サンプル")
 puts "School Created"
 
 User.create!(name: "Sample User",
+
   email: "sample@email.com",
   password: "password",
   password_confirmation: "password",
