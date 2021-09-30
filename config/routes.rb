@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'alergy_checks/new'
+
   devise_for :system_admins, controllers: {
     sessions:      'system_admins/sessions',
     passwords:     'system_admins/passwords',
