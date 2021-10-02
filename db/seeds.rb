@@ -11,37 +11,37 @@ School.create!(school_name: "サンプル")
 
 puts "School Created"
 
-User.create!(name: "Sample User",
+# User.create!(name: "Sample User",
 
-  email: "sample@email.com",
-  password: "password",
-  password_confirmation: "password",
-  admin: true,
-  school_id: 1)
+#   email: "sample@email.com",
+#   password: "password",
+#   password_confirmation: "password",
+#   admin: true,
+#   school_id: 1)
   
-User.create!(name: "管理職",
-  email: "kanri@email.com",
-  password: "password",
-  password_confirmation: "password",
-  admin: true,
-  school_id: 1)
+# User.create!(name: "管理職",
+#   email: "kanri@email.com",
+#   password: "password",
+#   password_confirmation: "password",
+#   admin: true,
+#   school_id: 1)
   
-User.create!(name: "代表",
-  email: "dai@n.n",
-  password: "are",
-  password_confirmation: "are",
-  superior: true,
-  admin: true,
-  school_id: 1)
+# User.create!(name: "代表",
+#   email: "dai@n.n",
+#   password: "are",
+#   password_confirmation: "are",
+#   superior: true,
+#   admin: true,
+#   school_id: 1)
   
-User.create!(name: "担当",
-  email: "tan@n.n",
-  password: "are",
-  password_confirmation: "are",
-  superior: true,
-  school_id: 1)
+# User.create!(name: "担当",
+#   email: "tan@n.n",
+#   password: "are",
+#   password_confirmation: "are",
+#   superior: true,
+#   school_id: 1)
 
-puts "User Created"
+# puts "User Created"
 
 # 1-1のクラス作成
 classroom_id = 1
