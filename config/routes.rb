@@ -18,9 +18,15 @@ Rails.application.routes.draw do
   end
 
   resources :system_admins
-  resources :teachers
 
-  resources :alergy_checks
+  resource :teachers, only: :show do
+    resources :students do
+      resources :alergy_checks, only: %i(edit update destroy)
+    end
+    resource :students do
+      resource :alergy_checks, only: %i(new create)
+    end
+  end
 
   # 下記山田さん既存のルート
   resources :students do  
