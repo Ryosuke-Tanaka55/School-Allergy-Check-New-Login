@@ -63,19 +63,25 @@ ActiveRecord::Schema.define(version: 20210929135325) do
   end
 
   create_table "schools", force: :cascade do |t|
-    t.string "school_name"
+    t.string "school_name", default: "", null: false
+    t.string "school_url", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "students", force: :cascade do |t|
-    t.string "student_name"
+    t.string "student_name", default: "", null: false
+    t.integer "student_number", null: false
+    t.bigint "school_id"
+    t.bigint "classroom_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "student_id"
     t.string "teacher_of_student"
     t.string "student_classroom"
     t.string "alergy"
+    t.index ["classroom_id"], name: "index_students_on_classroom_id"
+    t.index ["school_id"], name: "index_students_on_school_id"
   end
 
   create_table "system_admins", force: :cascade do |t|
@@ -118,16 +124,18 @@ ActiveRecord::Schema.define(version: 20210929135325) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "classroom"
-    t.boolean "superior", default: false
-    t.string "department"
     t.datetime "basic_time"
     t.datetime "work_time"
+    t.boolean "superior", default: false
+    t.string "department"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "alergy_checks", "students"
   add_foreign_key "attendances", "users"
   add_foreign_key "classrooms", "schools"
+  add_foreign_key "students", "classrooms"
+  add_foreign_key "students", "schools"
   add_foreign_key "teachers", "classrooms"
   add_foreign_key "teachers", "schools"
 end
