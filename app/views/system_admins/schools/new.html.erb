@@ -11,6 +11,11 @@
 
         <%= f.label :school_url %>
         <%= f.text_field :school_url, class: "form-control" %>
+
+        <%#= f.fields_for :classrooms, @school.classrooms.build do |c| %>
+          <%#= c.hidden_field :school_id, value: @school.id  %>
+          <%#= c.hidden_field :class_name, value: "3-1"  %>
+        <%# end %>
       </div>
 
       <div class="actions">
