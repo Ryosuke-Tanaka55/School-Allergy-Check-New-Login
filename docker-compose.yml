@@ -23,6 +23,10 @@ services:
   # ローカルの3000番ポートをDockerの3000番ポートに接続
   ports:
    - "3000:3000"
+  # 標準入出力とエラー出力をコンテナに結びつける
+  stdin_open: true
+  # キーボードによる入力をコンテナに結びつける
+  tty: true
   # 接続先(PostgreSQL)情報の設定
   depends_on:
    - db
