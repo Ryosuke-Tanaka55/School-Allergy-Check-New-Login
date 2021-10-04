@@ -35,7 +35,6 @@ User.create!(name: "担当",
   password: "are",
   password_confirmation: "are",
   superior: true)
->>>>>>> develop
 
 # puts "User Created"
 
