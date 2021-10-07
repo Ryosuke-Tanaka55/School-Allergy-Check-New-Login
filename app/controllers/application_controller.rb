@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     when SystemAdmin
       system_admins_path
     when Teacher
-      teacher_path(id: @teacher.id)
+      teachers_path(id: @teacher.id)
     end
   end
   

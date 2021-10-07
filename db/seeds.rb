@@ -12,7 +12,6 @@ School.create!(school_name: "サンプル")
 puts "School Created"
 
 User.create!(name: "Sample User",
-
   email: "sample@email.com",
   password: "password",
   password_confirmation: "password",
@@ -37,7 +36,7 @@ User.create!(name: "担当",
   password_confirmation: "are",
   superior: true)
 
-puts "User Created"
+# puts "User Created"
 
 # 1-1のクラス作成
 classroom_id = 1

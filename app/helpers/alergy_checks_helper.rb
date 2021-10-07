@@ -1,0 +1,2 @@
+module AlergyChecksHelper
+end

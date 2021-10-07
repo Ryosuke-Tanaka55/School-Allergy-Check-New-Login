@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'alergy_checks/new'
+
   devise_for :system_admins, controllers: {
     sessions:      'system_admins/sessions',
     passwords:     'system_admins/passwords',
@@ -16,7 +18,15 @@ Rails.application.routes.draw do
   end
 
   resources :system_admins
-  resources :teachers
+
+  resource :teachers, only: :show do
+    resources :students do
+      resources :alergy_checks, only: %i(edit update destroy)
+    end
+    resource :students do
+      resource :alergy_checks, only: %i(new create)
+    end
+  end
 
   # 下記山田さん既存のルート
   resources :students do  
