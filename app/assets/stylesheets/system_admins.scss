@@ -7,3 +7,15 @@
   list-style: none;
   display: inline-block;
 }
+
+/* 学校一覧テーブル */
+#index-school{
+  th {
+    vertical-align: middle;
+    text-align: center;
+  }
+  td {
+    vertical-align: middle;
+    text-align: center;
+  }
+}

@@ -5,7 +5,7 @@
   <strong>学校URL：</strong>
   <%= @school.school_url%><br>
 
-<%= link_to '学校管理者作成', '#', class: "btn btn-primary" %><br>
+<%= link_to '学校管理者作成', new_system_admins_school_teacher_path(@school), class: "btn btn-primary" %><br>
 
 
 <%= link_to '編集', '#' %> |

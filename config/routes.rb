@@ -9,14 +9,20 @@ Rails.application.routes.draw do
     registrations: 'teachers/registrations',
     # omniauth_callbacks: "teachers/omniauth_callbacks"
   }
+  # devise_for :teachers, path: system_admins/teachers, controllers: {
+  #   registrations: 'system_admins/teachers/registrations',
+  # }
   
   namespace :system_admins do
-    resources :schools
-    resources :teachers, only: %i(index destroy)
+    resources :schools do
+      resources :teachers
+    end
   end
 
   resources :system_admins
-  resources :teachers
+  # resources :schools do
+  #   resources :teachers
+  # end
 
   # 下記山田さん既存のルート
   resources :students do  

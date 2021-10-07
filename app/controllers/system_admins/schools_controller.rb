@@ -18,7 +18,6 @@ class SystemAdmins::SchoolsController < ApplicationController
   end
 
   def create
-    debugger
     @school = School.new(school_params)
     if @school.save
       flash[:info] = "学校を新規作成しました"
