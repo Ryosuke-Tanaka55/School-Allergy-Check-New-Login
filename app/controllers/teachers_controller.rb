@@ -4,4 +4,9 @@ class TeachersController < ApplicationController
   def show
     @teacher = Teacher.find(params[:id])
   end
+
+  # 対応法担当者ページ(show)
+  def creator
+    
+  end
 end
