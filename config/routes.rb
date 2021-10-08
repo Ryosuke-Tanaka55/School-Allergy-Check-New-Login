@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'alergy_checks/new'
-
   devise_for :system_admins, controllers: {
     sessions:      'system_admins/sessions',
     passwords:     'system_admins/passwords',
@@ -11,20 +9,22 @@ Rails.application.routes.draw do
     registrations: 'teachers/registrations',
     # omniauth_callbacks: "teachers/omniauth_callbacks"
   }
-  # devise_for :teachers, path: system_admins/teachers, controllers: {
-  #   registrations: 'system_admins/teachers/registrations',
-  # }
+
+  # devise_scope :teachers do
+  #   get 'schools/'
+  # end
   
+  resources :system_admins, only: %i(index)
+
   namespace :system_admins do
     resources :schools do
-      resources :teachers
     end
   end
 
-  resources :system_admins
-  # resources :schools do
-  #   resources :teachers
-  # end
+  resources :schools do
+    resources :teachers
+  end
+
 
   resource :teachers, only: :show do
     resources :students do
@@ -34,6 +34,9 @@ Rails.application.routes.draw do
       resource :alergy_checks, only: %i(new create)
     end
   end
+
+  get 'alergy_checks/new'
+
 
   # 下記山田さん既存のルート
   resources :students do  
