@@ -28,8 +28,8 @@
     <tbody>
       <% @one_month.each do |day| %>
         <tr>
-          <td><%= day.day %></td>
-          <td><%= link_to "入力", "#", class: "btn btn-primary" %></td>
+          <td><%= l(day, format: :short) %></td>
+          <td><%= link_to "入力", new_teachers_students_alergy_checks_path, class: "btn btn-primary", remote: true %></td>
           <td></td>
           <td></td>
           <td></td>
@@ -44,4 +44,5 @@
 </div>
 
 <!-- モーダルウィンドウ表示 -->
-<div id="edit-overwork-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
