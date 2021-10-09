@@ -1,1 +1,47 @@
-<h1>対応法担当者ページ(URL:/teachers/creator)</h1>
+<div>
+  <table class="table table-bordered table-condensed user-table">
+    <tr>
+      <td>
+        <%= link_to "←", creator_teachers_path(date: @first_day.prev_month), class: "btn btn-primary" %>
+        <%= l(@first_day, format: :middle) %> 対応法詳細
+        <%= link_to "→", creator_teachers_path(date: @first_day.next_month), class: "btn btn-primary" %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+    <thead>
+      <tr>
+          <th>日付</th>
+          <th></th>
+          <th>クラス名</th>
+          <th>児童名</th>
+          <th>メニュー名</th>
+          <th>対応法</th>
+          <th>備考</th>
+          <th></th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @one_month.each do |day| %>
+        <tr>
+          <td><%= day.day %></td>
+          <td><%= link_to "入力", "#", class: "btn btn-primary" %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= link_to "編集", "#", class: "btn btn-primary" %></td>
+          <td><%= link_to "削除", "#", class: "btn btn-primary" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<!-- モーダルウィンドウ表示 -->
+<div id="edit-overwork-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

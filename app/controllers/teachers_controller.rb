@@ -7,6 +7,8 @@ class TeachersController < ApplicationController
 
   # 対応法担当者ページ(show)
   def creator
-    
+    @first_day = params[:date].nil? ? Date.current.beginning_of_month : params[:date].to_date
+    @last_day = @first_day.end_of_month
+    @one_month = [*@first_day..@last_day]
   end
 end
