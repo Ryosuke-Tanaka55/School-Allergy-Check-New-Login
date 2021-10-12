@@ -11,7 +11,7 @@
 </div>
 
 <div>
-  <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+  <table class="table table-bordered table-condensed table-hover">
     <thead>
       <tr>
           <th>日付</th>
@@ -29,14 +29,16 @@
       <% @one_month.each do |day| %>
         <tr>
           <td><%= l(day, format: :short) %></td>
-          <td><%= link_to "入力", new_teachers_students_alergy_checks_path, class: "btn btn-primary", remote: true %></td>
+          <td><%= link_to "入力", new_teachers_students_alergy_checks_path(day: day), class: "btn btn-primary", remote: true %></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td><%= link_to "編集", "#", class: "btn btn-primary" %></td>
-          <td><%= link_to "削除", "#", class: "btn btn-primary" %></td>
+          <td><%= link_to "削除", "#", method: :delete,
+                  data: { confirm: "対応法情報を削除します。よろしいですか？" },
+                  class: "btn btn-danger" %></td>
         </tr>
       <% end %>
     </tbody>
