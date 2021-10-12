@@ -7,7 +7,8 @@ end
 
 puts "SystemAdmin Created"
 
-School.create!(school_name: "サンプル")
+School.create!(school_name: "サンプル",
+               school_url: "sample1")
 
 puts "School Created"
 
@@ -36,7 +37,7 @@ User.create!(name: "担当",
   password_confirmation: "are",
   superior: true)
 
-# puts "User Created"
+puts "User Created"
 
 # 1-1のクラス作成
 classroom_id = 1
@@ -49,6 +50,7 @@ Teacher.create!(teacher_name: "管理職",
               password_confirmation: "password",
               admin: true,
               school_id: 1,
+              tcode: "kanri1",
               classroom_id: classroom_id) 
 
 Teacher.create!(teacher_name: "入力担当者",
@@ -57,6 +59,7 @@ Teacher.create!(teacher_name: "入力担当者",
             password_confirmation: "password",
             creator: true,
             school_id: 1,
+            tcode: "taiou1",
             classroom_id: classroom_id) 
 
 Teacher.create!(teacher_name: "一般",
@@ -64,6 +67,7 @@ Teacher.create!(teacher_name: "一般",
             password: "password",
             password_confirmation: "password",
             school_id: 1,
+            tcode: "11aa",
             classroom_id: classroom_id) 
 
 puts "1-1Teacher Created"
@@ -75,12 +79,14 @@ Classroom.create!(class_name: "2-1",
 3.times do |n|
   name  = Faker::Name.name
   email = "teacher#{n+1}@email.com"
+  tcode = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1, min_numeric: 1)
   password = "password"
   Teacher.create!(teacher_name: name,
               email: email,
               password: password,
               password_confirmation: password,
               school_id: 1,
+              tcode: tcode,
               classroom_id: classroom_id)
 end
 puts "2-1Teacher Created"

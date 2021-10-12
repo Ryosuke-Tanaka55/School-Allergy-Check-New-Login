@@ -1,41 +1,37 @@
 Rails.application.routes.draw do
+  # システム管理者用画面
   devise_for :system_admins, controllers: {
     sessions:      'system_admins/sessions',
     passwords:     'system_admins/passwords',
   }
-  devise_for :teachers, controllers: {
-    sessions:      'teachers/sessions',
-    passwords:     'teachers/passwords',
-    registrations: 'teachers/registrations',
-    # omniauth_callbacks: "teachers/omniauth_callbacks"
-  }
-
-  # devise_scope :teachers do
-  #   get 'schools/'
-  # end
   
   resources :system_admins, only: %i(index)
-
   namespace :system_admins do
     resources :schools do
+      resources :teachers, param: :tcode, only: %i[show new create edit update]
     end
   end
 
-  resources :schools do
-    resources :teachers
-  end
+  # 学校区分
+  scope '/:school_url' do
 
-
-  resource :teachers, only: :show do
-    resources :students do
-      resources :alergy_checks, only: %i(edit update destroy)
+    # 先生画面
+    devise_for :teachers, controllers: {
+      sessions:      'teachers/sessions',
+      passwords:     'teachers/passwords',
+      registrations: 'teachers/registrations',
+      # omniauth_callbacks: "teachers/omniauth_callbacks"
+    }
+   
+    resource :teachers, only: :show do
+      resources :students do
+        resources :alergy_checks, only: %i(edit update destroy)
+      end
+      resource :students do
+        resource :alergy_checks, only: %i(new create)
+      end
     end
-    resource :students do
-      resource :alergy_checks, only: %i(new create)
-    end
   end
-
-  get 'alergy_checks/new'
 
 
   # 下記山田さん既存のルート
