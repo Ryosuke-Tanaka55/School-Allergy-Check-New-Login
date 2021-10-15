@@ -6,14 +6,17 @@ class AlergyChecksController < ApplicationController
   end
 
   def create
-    student_id = Student.find(params[:alergy_check][:student_id].to_i).id
-    if student_id.present?
-      @alergy_check = AlergyCheck.new(alergy_menu_params.merge(student_id: student_id))
+    student = Student.find(params[:alergy_check][:student_id].to_i)
+    if student.present?
+      @alergy_check = AlergyCheck.new(alergy_menu_params)
       if @alergy_check.save
         flash[:success] = "献立情報を登録しました。"
       else
         flash[:danger] = "登録に失敗しました。"
       end
+    else
+      flash[:danger] = "児童の情報が存在しません。入力内容を確認してください。"
+    end
     redirect_to creator_teachers_url
   end
 
