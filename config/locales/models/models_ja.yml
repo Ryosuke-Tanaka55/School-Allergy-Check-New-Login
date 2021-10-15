@@ -21,3 +21,13 @@ ja:
           finished_at: 終了時間
           note: 備考
           user: ユーザーID
+        alergy_check:
+          worked_on: 日付
+          note: 備考
+          first_check: 第1チェック
+          second_check: 第2チェック
+          student_check: 本人チェック
+          status: 
+          status_checker: 申請先
+          nemu: メニュー
+          support: 対応法

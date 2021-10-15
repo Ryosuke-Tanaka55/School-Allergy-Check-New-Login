@@ -9,7 +9,7 @@
     <div class="modal-body">
       <h1>対応法登録</h1>
       <div>
-        <%= form_with(model: @alergy_check, url: teachers_students_path) do |f| %>
+        <%= form_with(model: @alergy_check, url: teachers_students_alergy_checks_path) do |f| %>
           <table class="table table-bordered table-condensed table-hover">
             <thead>
               <tr>
@@ -26,9 +26,10 @@
             </thead>
             <tbody>
               <tr>
+                <%= f.hidden_field :worked_on, :value => @day %>
                 <td><%= l(@day, format: :short) %></td>
-                <td><%= f.collection_select :class_name, @classrooms, :id, :class_name %></td>
-                <td><%# f.collection_select %></td>
+                <td><%# f.collection_select :class_name, @classrooms, :id, :class_name %></td>
+                <td><%= f.collection_select :student_id, Student.all, :id, :student_name %></td>
                 <td><%= f.text_field :menu %></td>
                 <td><%= f.select :support, ['対応食', 'その他'] %></td>
                 <td><%= f.text_field :note %></td>
