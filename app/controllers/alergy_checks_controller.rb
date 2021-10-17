@@ -6,9 +6,8 @@ class AlergyChecksController < ApplicationController
   end
 
   def create
-    student = Student.find(params[:alergy_check][:student_id].to_i)
-    if student.present?
-      @alergy_check = AlergyCheck.new(alergy_menu_params)
+    if @student = Student.find(params[:alergy_check][:student_id].to_i)
+      @alergy_check = @student.alergy_checks.new(alergy_menu_params)
       if @alergy_check.save
         flash[:success] = "献立情報を登録しました。"
       else
