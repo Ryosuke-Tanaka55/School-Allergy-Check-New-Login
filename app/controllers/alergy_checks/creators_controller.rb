@@ -26,6 +26,11 @@ class AlergyChecks::CreatorsController < ApplicationController
   end
 
   def destroy
+    @alergy_check = AlergyCheck.find(params[:id])
+    @alergy_check.destroy
+    @student = Student.find(params[:student_id])
+    flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}のデータを削除しました。"
+    redirect_to creator_teachers_url
   end
 
   private

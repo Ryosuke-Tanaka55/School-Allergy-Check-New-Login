@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     get '/creator', to: 'teachers#creator'
     resources :students do
       namespace :alergy_checks do
-        resources :creator, only: %i(edit update destroy)
+        resources :creators, only: %i(edit update destroy)
       end
     end
     resource :students do
