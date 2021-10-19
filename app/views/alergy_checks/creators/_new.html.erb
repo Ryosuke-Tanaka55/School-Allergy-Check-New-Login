@@ -29,8 +29,8 @@
                 <%= f.hidden_field :worked_on, :value => @day %>
                 <td><%= l(@day, format: :short) %></td>
                 <td><%# f.collection_select :class_name, @classrooms, :id, :class_name %></td>
-                <td><%= f.collection_select :student_id, Student.all, :id, :student_name %></td>
-                <td><%= f.text_field :menu %></td>
+                <td><%= f.collection_select :student_id, Student.all, :id, :student_name, required: true %></td>
+                <td><%= f.text_field :menu, required: true %></td>
                 <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'] %></td>
                 <td><%= f.text_field :note %></td>
               </tr>

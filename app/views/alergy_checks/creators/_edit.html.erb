@@ -29,7 +29,7 @@
                 <td><%= l(@alergy_check.worked_on, format: :short) %></td>
                 <td><%# f.collection_select :class_name, @classrooms, :id, :class_name %></td>
                 <td><%= @student.student_name %></td>
-                <td><%= f.text_field :menu %></td>
+                <td><%= f.text_field :menu, required: true %></td>
                 <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'] %></td>
                 <td><%= f.text_field :note %></td>
               </tr>
