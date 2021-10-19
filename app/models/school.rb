@@ -8,4 +8,7 @@ class School < ApplicationRecord
   validates :school_url, presence: true, length: { in: 5..7 },
               format: { with: VALID_SCHOOLURL_REGEX, message: 'は半角・英数を両方含む必要があります' },
               uniqueness: true  
+  def to_param
+    school_url
+  end
 end

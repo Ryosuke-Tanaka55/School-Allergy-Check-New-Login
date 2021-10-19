@@ -23,7 +23,7 @@
         <% elsif system_admin_signed_in? %>
           <li><%= link_to 'ログアウト', destroy_system_admin_session_path, method: :delete %></li>
         <% elsif teacher_signed_in? %>
-          <li><%= link_to 'ログアウト', destroy_teacher_session_path, method: :delete %></li>
+          <li><%= link_to 'ログアウト', destroy_teacher_session_path(school_url: current_teacher.school_id), method: :delete %></li>
         <% else %>
           <li><%= link_to "ログイン", login_path %></li>
         <% end %>

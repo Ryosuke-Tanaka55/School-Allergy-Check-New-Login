@@ -2,9 +2,10 @@
 <!-- %= render 'layouts/flash_messages' % -->
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= f.hidden_field(:current_school_url, value: params[:school_url]) %>
   <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control', required: true %>
+    <%= f.label :tcode %>
+    <%= f.text_field :tcode, autofocus: true, class: 'form-control' %>
   </div>
 
   <div class="form-group">
