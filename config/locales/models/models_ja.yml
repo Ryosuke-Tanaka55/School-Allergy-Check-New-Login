@@ -3,6 +3,8 @@ ja:
     models:
       user: ユーザー
       attendance: 勤怠
+      alergy_check:
+      student: 児童
     attributes:
         user:
           id: ID
@@ -29,5 +31,9 @@ ja:
           student_check: 本人チェック
           status: 
           status_checker: 申請先
-          nemu: メニュー
+          menu: メニュー
           support: 対応法
+        student:
+          student_name: 児童名
+          student_number: 番号
+          alergy: アレルギー食品
