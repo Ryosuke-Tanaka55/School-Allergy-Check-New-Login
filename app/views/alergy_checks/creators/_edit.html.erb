@@ -7,7 +7,37 @@
     </div>
 
     <div class="modal-body">
-      <h1>対応法編集画面</h1> 
+      <h1>対応法登録</h1>
+      <div>
+        <%= form_with model: @alergy_check, url: teachers_student_alergy_checks_creator_path(@alergy_check.student_id, @alergy_check.id) do |f| %>
+          <table class="table table-bordered table-condensed table-hover">
+            <thead>
+              <tr>
+                <td colspan=8><%= l(@alergy_check.worked_on, format: :long) %></td>
+              </tr>
+              <tr>
+                <th>日付</th>
+                <th>クラス名</th>
+                <th>児童名</th>
+                <th>メニュー名</th>
+                <th>対応法</th>
+                <th>備考</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><%= l(@alergy_check.worked_on, format: :short) %></td>
+                <td><%# f.collection_select :class_name, @classrooms, :id, :class_name %></td>
+                <td><%= @student.student_name %></td>
+                <td><%= f.text_field :menu %></td>
+                <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'] %></td>
+                <td><%= f.text_field :note %></td>
+              </tr>
+            </tbody>
+          </table>
+          <%= f.submit "更新", class: "btn btn-primary" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
