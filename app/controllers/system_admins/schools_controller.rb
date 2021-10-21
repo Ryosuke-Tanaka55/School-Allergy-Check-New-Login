@@ -1,5 +1,6 @@
 class SystemAdmins::SchoolsController < ApplicationController
-  before_action :set_school, only: %i[ show edit update destroy ]
+  before_action :authenticate_system_admin!
+  before_action :set_school_url, only: %i[ show edit update destroy ]
   after_action :set_class, only: :create
 
   def index
@@ -34,10 +35,10 @@ class SystemAdmins::SchoolsController < ApplicationController
   end
 
   private
-    def set_school
-      @school = School.find(params[:id])
-    end
 
+    
+
+  
     def school_params
       # params.require(:school).permit(:school_name, :school_url, classrooms_attributes:[:school_id, :class_name])
       params.require(:school).permit(:school_name, :school_url)
