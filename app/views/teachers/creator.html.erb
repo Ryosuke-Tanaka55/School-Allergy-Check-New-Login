@@ -11,7 +11,7 @@
 </div>
 
 <div>
-  <table class="table table-bordered table-condensed table-hover">
+  <table class="table table-bordered table-condensed table-hover table__contents--center">
     <thead>
       <tr>
           <th>日付</th>
@@ -52,7 +52,7 @@
                 <td><%= link_to "編集", edit_teachers_student_alergy_checks_creator_path(student.id, alergy_check.id), 
                         class: "btn btn-primary", remote: true %></td>
                 <td><%= link_to "削除", teachers_student_alergy_checks_creator_path(student.id, alergy_check.id), 
-                      method: :delete, data: { confirm: "対応法情報を削除します。よろしいですか？" }, class: "btn btn-danger" %></td>
+                        method: :delete, data: { confirm: "対応法情報を削除します。よろしいですか？" }, class: "btn btn-danger" %></td>
               </tr>
             <% end %>
           <% end %>
