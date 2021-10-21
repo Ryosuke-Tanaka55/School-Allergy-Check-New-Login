@@ -30,7 +30,7 @@ class AlergyChecks::CreatorsController < ApplicationController
     if @alergy_check.update(edit_alergy_menu_params)
       flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}の情報を更新しました。"
     else
-      flash[:danger] = "更新に失敗しました。"
+      flash[:danger] = "更新に失敗しました。<br>" + @aleryg_check.errors.full_messages.join("<br>")
     end
     redirect_to creator_teachers_url
   end

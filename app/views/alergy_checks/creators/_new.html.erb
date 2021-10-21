@@ -10,7 +10,7 @@
       <h1>対応法登録</h1>
       <div>
         <%= form_with(model: @alergy_check, url: teachers_students_alergy_checks_creator_path) do |f| %>
-          <table class="table table-bordered table-condensed table-hover table__contents--center">
+          <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
             <thead>
               <tr>
                 <td colspan=8><%= l(@day, format: :long) %></td>
@@ -36,7 +36,9 @@
               </tr>
             </tbody>
           </table>
-          <%= f.submit "登録", class: "btn btn-primary" %>
+          <div>
+            <%= f.submit "登録", class: "btn btn-primary btn-block" %>
+          </div>
         <% end %>
       </div>
     </div>

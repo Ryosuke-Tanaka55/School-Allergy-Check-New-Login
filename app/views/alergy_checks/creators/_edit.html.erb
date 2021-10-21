@@ -10,7 +10,7 @@
       <h1>対応法登録</h1>
       <div>
         <%= form_with model: @alergy_check, url: teachers_student_alergy_checks_creator_path(@alergy_check.student_id, @alergy_check.id) do |f| %>
-          <table class="table table-bordered table-condensed table-hover table__contents--center">
+          <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
             <thead>
               <tr>
                 <td colspan=8><%= l(@alergy_check.worked_on, format: :long) %></td>
@@ -29,13 +29,15 @@
                 <td><%= l(@alergy_check.worked_on, format: :short) %></td>
                 <td><%# f.collection_select :class_name, @classrooms, :id, :class_name %></td>
                 <td><%= @student.student_name %></td>
-                <td><%= f.text_field :menu, required: true, class: "form-control"  %></td>
+                <td><%= f.text_field :menu, class: "form-control"  %></td>
                 <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], {}, { class: "form-control" }%></td>
                 <td><%= f.text_field :note, class: "form-control" %></td>
               </tr>
             </tbody>
           </table>
-          <%= f.submit "更新", class: "btn btn-primary" %>
+          <div>
+            <%= f.submit "更新", class: "btn btn-primary btn-block" %>
+          </div>
         <% end %>
       </div>
     </div>
