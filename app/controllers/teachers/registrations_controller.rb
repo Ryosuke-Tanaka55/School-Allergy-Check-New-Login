@@ -72,7 +72,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   # 学校管理者新規登録時のストロングパラメーター
   def configure_sign_up_params
     # if system_admin_signed_in?
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i(teacher_name tcode email password school_id classroom_id))
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i(teacher_name tcode email password password_confirmation school_id classroom_id))
     # elsif current_teacher.present? && current_teacher.admin?
       # devise_parameter_sanitizer.permit(:sign_up, keys: %i(teacher_name tcode password school_id classroom_id))
     # end
@@ -80,7 +80,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
 
   # 一般職員新規登録時のストロングパラメーター
   def ippan_sign_up_params
-    params.require(:teacher).permit(:teacher_name, :tcode, :password, :school_id, :classroom_id)
+    params.require(:teacher).permit(:teacher_name, :tcode, :password, :password_confirmation, :school_id, :classroom_id)
     # devise_parameter_sanitizer.permit(:sign_up, keys: %i(teacher_name tcode password school_id classroom_id))
   end
 

@@ -27,16 +27,21 @@ class Teacher < ApplicationRecord
               format: { with: VALID_TCODE_REGEX, message: 'は半角・英数を両方含む必要があります' },
               uniqueness: true
 
-  validates :email, uniqueness: true
+  # validates :email, uniqueness: true
 
-  # データ更新・変更時にemailを必須としない設定
+  # email_required?の返り値をfalseにする事で、emailのvalidates_presence_ofのバリデーションを行わない
   def email_required?
-    false
+    !email.blank? && super
   end
 
-  def email_changed?
-    false
-  end
+  # # データ更新・変更時にemailを必須としない設定
+  # def email_required?
+  #   false
+  # end
+
+  # def email_changed?
+  #   false
+  # end
 
   # attributes
   # アクセス中のスクールコード=URLに含まれるschool_codeをセット
