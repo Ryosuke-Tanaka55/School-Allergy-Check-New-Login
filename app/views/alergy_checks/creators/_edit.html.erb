@@ -26,11 +26,11 @@
             </thead>
             <tbody>
               <tr>
-                <td><%= l(@alergy_check.worked_on, format: :short) %></td>
+                <td><%= l(@alergy_check.worked_on, format: :short) + "(#{$days_of_the_week[@alergy_check.worked_on.wday]})"%></td>
                 <td><%# f.collection_select :class_name, @classrooms, :id, :class_name %></td>
                 <td><%= @student.student_name %></td>
-                <td><%= f.text_field :menu, class: "form-control"  %></td>
-                <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], {}, { class: "form-control" }%></td>
+                <td><%= f.text_field :menu, required: true, class: "form-control"  %></td>
+                <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], { include_blank: "対応を選択してください", required: true }, { class: "form-control" }%></td>
                 <td><%= f.text_field :note, class: "form-control" %></td>
               </tr>
             </tbody>
