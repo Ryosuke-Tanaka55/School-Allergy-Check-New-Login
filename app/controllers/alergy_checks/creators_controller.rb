@@ -14,7 +14,7 @@ class AlergyChecks::CreatorsController < ApplicationController
       if @alergy_check.save
         flash[:success] = "献立情報を登録しました。"
       else
-        flash[:danger] = "登録に失敗しました。"
+        flash[:danger] = "登録に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>")
       end
     else
       flash[:danger] = "児童の情報が存在しません。入力内容を確認してください。"
