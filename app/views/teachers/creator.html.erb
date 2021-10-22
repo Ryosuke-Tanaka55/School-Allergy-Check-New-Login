@@ -28,7 +28,7 @@
     <tbody>
       <% @one_month.each do |day| %>
         <tr>
-          <td><%= l(day, format: :short) %></td>
+          <td><%= l(day, format: :short) + "(#{@days_of_the_week[day.wday]})" %></td>
           <td><%= link_to "入力", new_teachers_students_alergy_checks_creator_path(day: day), class: "btn btn-primary", remote: true %></td>
           <td></td>
           <td></td>
