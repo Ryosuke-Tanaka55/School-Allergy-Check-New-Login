@@ -1,0 +1,1 @@
+<td><%= f.collection_select :student_id, Student.where(classroom_id: classroom_id), :id, :student_name, { required: true }, { class: "form-control" } %></td>
