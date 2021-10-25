@@ -29,7 +29,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
     else
       if Teacher.create!(ippan_sign_up_params)
         flash[:success] = "職員を作成しました。"
-        redirect_to teachers_path(school_url: params[:school_url])
+        redirect_to classrooms_path(school_url: params[:school_url])
       else
         flash[:danger] = "作成に失敗しました。"
         render :new

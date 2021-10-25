@@ -31,6 +31,8 @@ Rails.application.routes.draw do
         resource :alergy_checks, only: %i(new create)
       end
     end
+
+    resources :classrooms
   end
 
 
