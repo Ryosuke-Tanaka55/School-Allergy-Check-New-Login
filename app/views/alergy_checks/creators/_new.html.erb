@@ -28,12 +28,12 @@
               <tr>
                 <%= f.hidden_field :worked_on, :value => @day %>
                 <td><%= l(@day, format: :short) + "(#{$days_of_the_week[@day.wday]})"%></td>
-                <td><%= f.collection_select :class_name, @classrooms, :id, :class_name, {}, { class: "form-control" } %></td>
+                <td><%= f.collection_select :classroom, @classrooms, :id, :class_name, { include_blank: "クラスを選択" }, { class: "form-control", id: "select--classroom" } %></td>
                 <div class="student-area">
                   <%= render partial: "select_students", locals: { classroom_id: Classroom.first.id, f: f } %>
                 </div>
                 <td><%= f.text_field :menu, required: true, class: "form-control" %></td>
-                <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], { include_blank: "対応を選択してください", required: true }, { class: "form-control" } %></td>
+                <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], { include_blank: "対応を選択", required: true }, { class: "form-control" } %></td>
                 <td><%= f.text_field :note, class: "form-control" %></td>
               </tr>
             </tbody>

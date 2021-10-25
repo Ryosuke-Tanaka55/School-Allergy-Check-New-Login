@@ -10,7 +10,7 @@ class AlergyChecks::CreatorsController < ApplicationController
 
   # Ajax処理
   def get_students
-    render partial: "select_students", locals: { classroom_id: params[:classroom_id] }
+    render partial: "select_students", locals: { classroom_id: params[:classroom] }
   end
 
   def create
