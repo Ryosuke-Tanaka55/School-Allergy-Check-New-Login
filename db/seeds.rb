@@ -69,7 +69,7 @@ Teacher.create!(teacher_name: "一般",
 puts "1-1Teacher Created"
 
 # 児童データ作成
-5.times do |n|
+4.times do |n|
   name  = Faker::Name.name
   number = 1100 + n + 1
   Student.create!(student_name: name,
@@ -96,5 +96,16 @@ Classroom.create!(class_name: "2-1",
               classroom_id: classroom_id)
 end
 puts "2-1Teacher Created"
+
+4.times do |n|
+  name  = Faker::Name.name
+  number = 2100 + n + 1
+  Student.create!(student_name: name,
+                  student_number: number,
+                  school_id: 1,
+                  classroom_id: classroom_id)
+end
+
+puts "2-1Student Created"
 
 
