@@ -27,11 +27,7 @@ Rails.application.routes.draw do
     end
     resource :students do
       namespace :alergy_checks do
-        resource :creator, only: %i(new create) do
-          collection do
-            get "get_students"
-          end
-        end
+        resource :creator, only: %i(new create)
       end
     end
   end

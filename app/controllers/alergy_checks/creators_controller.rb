@@ -8,11 +8,6 @@ class AlergyChecks::CreatorsController < ApplicationController
     @classrooms = Classroom.all
   end
 
-  # Ajax処理
-  def get_students
-    render partial: "select_students", locals: { classroom_id: params[:classroom] }
-  end
-
   def create
     if @student = Student.find(params[:alergy_check][:student_id].to_i)
       @alergy_check = @student.alergy_checks.new(new_alergy_menu_params)
