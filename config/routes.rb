@@ -32,7 +32,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :classrooms
+    resources :classrooms do
+      collection do
+        get 'edit_using_class'
+        patch 'update_using_class'
+      end
+    end
   end
 
 

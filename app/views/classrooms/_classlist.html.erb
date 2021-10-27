@@ -4,6 +4,8 @@
       <th>クラス名</th>
       <th>担任登録</th>
       <th>担任名</th>
+      <th>職員コード</th>
+      <th>パスワード</th>
       <th>担任削除</th>
     </tr>
   </thead>
@@ -15,6 +17,8 @@
       <tr>
         <td><%= classroom.class_name %></td>
         <td><%= link_to '担任登録', new_teacher_registration_path(classroom_id: classroom.id), class: "btn btn-primary" %></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
       </tr>
@@ -30,10 +34,14 @@
           <% if classroom.class_name == saved_class_name %>
             <td></td>
             <td><%= teacher.teacher_name %></td>
+            <td><%= teacher.tcode %></td>
+            <td><%= teacher.password %></td>
           <% else %>
             <% saved_class_name = classroom.class_name %>
             <td><%= link_to '担任登録', new_teacher_registration_path(classroom_id: classroom.id), class: "btn btn-primary" %></td>
             <td><%= teacher.teacher_name %></td>
+            <td><%= teacher.tcode %></td>
+            <td><%= teacher.password %></td>
           <% end %>
           <td><%= link_to "削除", teacher_registration_path(school_url: params[:school_url]), method: :delete, class: "btn btn-danger", data: {confirm: "削除してよろしいですか？" } %></td>
         </tr>

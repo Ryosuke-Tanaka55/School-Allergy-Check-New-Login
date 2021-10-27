@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 20211021153418) do
 
   create_table "classrooms", force: :cascade do |t|
     t.string "class_name", default: "", null: false
+    t.integer "class_grade"
+    t.boolean "using_class", default: true
     t.bigint "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

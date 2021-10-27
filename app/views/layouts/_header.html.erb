@@ -25,6 +25,7 @@
         <% elsif teacher_signed_in? %>
           <% if teacher_signed_in? && current_teacher.admin? %>
             <li><%= link_to 'クラス一覧', classrooms_path(school_url: params[:school_url]) %></li>
+            <li><%= link_to 'クラス編集', edit_using_class_classrooms_path(school_url: params[:school_url]) %></li>
           <% end %>
           <li><%= link_to 'ログアウト', destroy_teacher_session_path(school_url: current_teacher.school_id), method: :delete %></li>
         <% else %>

@@ -1,13 +1,49 @@
 class ClassroomsController < ApplicationController
-  before_action :set_school_url
+  before_action :set_school
   
   def index
-    classrooms = Classroom.all
-    @first_grade = Classroom.where(class_name: ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8"])
-    @second_grade = Classroom.where(class_name: ["2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8"])
-    @third_grade = Classroom.where(class_name: ["3-1", "3-2", "3-3", "3-4", "3-5", "3-6", "3-7", "3-8"])
-    @fourth_grade = Classroom.where(class_name: ["4-1", "4-2", "4-3", "4-4", "4-5", "4-6", "4-7", "4-8"])
-    @fifth_grade = Classroom.where(class_name: ["5-1", "5-2", "5-3", "5-4", "5-5", "5-6", "5-7", "5-8"])
-    @sixth_grade = Classroom.where(class_name: ["6-1", "6-2", "6-3", "6-4", "6-5", "6-6", "6-7", "6-8"])
+    classrooms = @school.classrooms.where(using_class: true)
+    # 現状seed込みのidの為、アプリ渡す際下記id番号変更必要！
+    @first_grade = @school.classrooms.where(class_grade: 1, using_class: true).order(:id)
+    @second_grade = @school.classrooms.where(class_grade: 2, using_class: true).order(:id)
+    @third_grade = @school.classrooms.where(class_grade: 3, using_class: true).order(:id)
+    @fourth_grade = @school.classrooms.where(class_grade: 4, using_class: true).order(:id)
+    @fifth_grade = @school.classrooms.where(class_grade: 5, using_class: true).order(:id)
+    @sixth_grade = @school.classrooms.where(class_grade: 6, using_class: true).order(:id)
+    @other_grade = @school.classrooms.where(class_grade: 7, using_class: true).order(:id)
+  end
+
+  def edit_using_class
+    @classrooms = @school.classrooms.all.order(:id)
+  end
+
+  def update_using_class
+    @classrooms = @school.classrooms.all.order(:id)
+    ActiveRecord::Base.transaction do
+      using_class_params.each do |id, item|
+        if item[:class_name].blank?
+          flash[:danger] = "クラス名を入力して下さい"
+          redirect_to edit_using_class_classrooms_path(@school)
+        else
+          classroom = Classroom.find(id)
+          classroom.update_attributes!(item)
+        end
+      end
+    end
+    flash[:success] = "クラス編集を更新しました。"
+    redirect_to classrooms_path
+  rescue ActiveRecord::RecordInvalid
+    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    redirect_to edit_using_class_classrooms_path(@school)
+  end
+
+
+  # schoolの特定
+  def set_school
+    @school = School.find_by(school_url: params[:school_url])
+  end
+
+  def using_class_params
+    params.require(:school).permit(classrooms: [:using_class, :class_name])[:classrooms]
   end
 end
