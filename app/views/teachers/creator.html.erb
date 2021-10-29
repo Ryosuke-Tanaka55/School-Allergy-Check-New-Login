@@ -44,7 +44,7 @@
               <tr>
                 <td></td>
                 <td></td>             
-                <td></td>
+                <td><%= Classroom.find(student.classroom_id).class_name %></td>
                 <td><%= student.student_name %></td>
                 <td><%= alergy_check.menu %></td>
                 <td><%= alergy_check.support %></td>
