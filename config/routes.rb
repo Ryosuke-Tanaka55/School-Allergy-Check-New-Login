@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'alergy_checks/new'
 
   devise_for :system_admins, controllers: {
     sessions:      'system_admins/sessions',
@@ -20,11 +19,16 @@ Rails.application.routes.draw do
   resources :system_admins
 
   resource :teachers, only: :show do
+    get '/creator', to: 'teachers#creator'
     resources :students do
-      resources :alergy_checks, only: %i(edit update destroy)
+      namespace :alergy_checks do
+        resources :creators, only: %i(edit update destroy)
+      end
     end
     resource :students do
-      resource :alergy_checks, only: %i(new create)
+      namespace :alergy_checks do
+        resource :creator, only: %i(new create)
+      end
     end
   end
 
