@@ -3,37 +3,37 @@ ja:
     models:
       user: ユーザー
       attendance: 勤怠
-      alergy_check:
+      alergy_check: アレルギーチェック
       student: 児童
     attributes:
-        user:
-          id: ID
-          name: 名前
-          email: メールアドレス
-          classroom: 学級
-          basic_time: 基本時間
-          work_time: 勤務時間
-          password: パスワード
-          password_confirmation: パスワード再入力
-          created_at: 作成日
-          updated_at: 更新日
-        attendance:
-          worked_on: 日付
-          started_at: 開始時間
-          finished_at: 終了時間
-          note: 備考
-          user: ユーザーID
-        alergy_check:
-          worked_on: 日付
-          note: 備考
-          first_check: 第1チェック
-          second_check: 第2チェック
-          student_check: 本人チェック
-          status: 
-          status_checker: 申請先
-          menu: メニュー
-          support: 対応法
-        student:
-          student_name: 児童名
-          student_number: 番号
-          alergy: アレルギー食品
+      user:
+        id: ID
+        name: 名前
+        email: メールアドレス
+        classroom: 学級
+        basic_time: 基本時間
+        work_time: 勤務時間
+        password: パスワード
+        password_confirmation: パスワード再入力
+        created_at: 作成日
+        updated_at: 更新日
+      attendance:
+        worked_on: 日付
+        started_at: 開始時間
+        finished_at: 終了時間
+        note: 備考
+        user: ユーザーID
+      alergy_check:
+        worked_on: 日付
+        note: 備考
+        first_check: 第1チェック
+        second_check: 第2チェック
+        student_check: 本人チェック
+        status: 
+        status_checker: 申請先
+        menu: メニュー
+        support: 対応法
+      student:
+        student_name: 児童名
+        student_number: 番号
+        alergy: アレルギー食品
