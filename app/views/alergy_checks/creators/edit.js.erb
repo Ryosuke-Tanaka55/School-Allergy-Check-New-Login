@@ -1,2 +1,11 @@
 $("#edit").html("<%= escape_javascript(render 'edit') %>");
 $("#edit").modal("show");
+
+$("#select--classroom").on('change', function() {
+  let classroomVal = $('#select--classroom').val();
+  if (classroomVal !== "") {
+    let selectedTemplate = $(`#student-of-classroom${classroomVal}`);
+    $('#select--student').empty();
+    $('#select--student').append(selectedTemplate.html());
+  };
+});

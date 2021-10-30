@@ -24,14 +24,16 @@ class AlergyChecks::CreatorsController < ApplicationController
 
   def edit
     @student = Student.find(params[:student_id])
+    @classroom = Classroom.find(@student.classroom_id)
     @alergy_check = AlergyCheck.find(params[:id])
+    @classrooms = Classroom.all
   end
 
   def update
     @student = Student.find(params[:student_id])
     @alergy_check = AlergyCheck.find(params[:id])
     if @alergy_check.update(edit_alergy_menu_params)
-      flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}の情報を更新しました。"
+      flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}の情報を更新しました。"
     else
       flash[:danger] = "更新に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>")
     end
@@ -52,6 +54,6 @@ class AlergyChecks::CreatorsController < ApplicationController
     end
 
     def edit_alergy_menu_params
-      params.require(:alergy_check).permit(:menu, :support, :note)
+      params.require(:alergy_check).permit(:student_id, :menu, :support, :note)
     end
 end

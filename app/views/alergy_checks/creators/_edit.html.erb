@@ -27,10 +27,17 @@
             <tbody>
               <tr>
                 <td><%= l(@alergy_check.worked_on, format: :short) + "(#{$days_of_the_week[@alergy_check.worked_on.wday]})"%></td>
-                <td><%# f.collection_select :class_name, @classrooms, :id, :class_name %></td>
-                <td><%= @student.student_name %></td>
+                <td><%= f.collection_select :classroom, @classrooms, :id, :class_name, { selected: @classroom.id }, { class: "form-control", id: "select--classroom" } %></td>
+                <% Classroom.all.each do |classroom| %>
+                  <template id="student-of-classroom<%= classroom.id %>">
+                    <%= f.collection_select :student_id, classroom.students, :id, :student_name, { include_blank: "児童を選択", required: true }, { class: "form-control" } %>
+                  </template>
+                <% end %>
+                <td id="select--student">
+                  <%= f.collection_select :student_id, @classroom.students, :id, :student_name, { required: true }, { class: "form-control" } %>
+                </td>
                 <td><%= f.text_field :menu, required: true, class: "form-control"  %></td>
-                <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], { include_blank: "対応を選択してください", required: true }, { class: "form-control" }%></td>
+                <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], { required: true }, { class: "form-control" } %></td>
                 <td><%= f.text_field :note, class: "form-control" %></td>
               </tr>
             </tbody>
