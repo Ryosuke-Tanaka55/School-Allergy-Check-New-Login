@@ -1,0 +1,16 @@
+<tr>
+  <%= f.hidden_field :worked_on, :value => @day %>
+  <td><%= l(@day, format: :short) + "(#{$days_of_the_week[@day.wday]})"%></td>
+  <td><%= f.collection_select :classroom, @classrooms, :id, :class_name, { include_blank: "クラスを選択" }, { class: "form-control", id: "select--classroom" } %></td>
+  <% Classroom.all.each do |classroom| %>
+    <template id="student-of-classroom<%= classroom.id %>">
+      <%= f.collection_select :student_id, classroom.students, :id, :student_name, { include_blank: "児童を選択", required: true }, { class: "form-control" } %>
+    </template>
+  <% end %>
+  <td id="select--student">
+    <%= f.select :student_id, [], { include_blank: "児童を選択" }, { class: "default-student-select form-control" } %>
+  </td>
+  <td><%= f.text_field :menu, required: true, class: "form-control" %></td>
+  <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], { include_blank: "対応を選択", required: true }, { class: "form-control" } %></td>
+  <td><%= f.text_field :note, class: "form-control" %></td>
+</tr>
