@@ -3,7 +3,8 @@ class AlergyChecks::CreatorsController < ApplicationController
   $days_of_the_week = %w{日 月 火 水 木 金 土}
 
   def new
-    @alergy_check = AlergyCheck.new
+    @student = Student.new
+    @alergy_check = @student.alergy_checks.build
     @day = params[:day].to_date
     @classrooms = Classroom.all
   end
@@ -11,7 +12,7 @@ class AlergyChecks::CreatorsController < ApplicationController
   def create
     if params[:alergy_check][:student_id].present?
       @student = Student.find(params[:alergy_check][:student_id].to_i)
-      @alergy_check = @student.alergy_checks.new(new_alergy_menu_params)
+      @alergy_check = @student.alergy_checks.new(new_creator_params)
       if @alergy_check.save
         flash[:success] = "献立情報を登録しました。"
       else
@@ -36,7 +37,7 @@ class AlergyChecks::CreatorsController < ApplicationController
     if params[:alergy_check][:student_id].present?
       @student = Student.find(params[:student_id])
       @alergy_check = AlergyCheck.find(params[:id])
-      if @alergy_check.update(edit_alergy_menu_params)
+      if @alergy_check.update(edit_creator_params)
         flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}の情報を更新しました。"
       else
         flash[:danger] = "更新に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>")
@@ -58,11 +59,12 @@ class AlergyChecks::CreatorsController < ApplicationController
   end
 
   private
-    def new_alergy_menu_params
-      params.require(:alergy_check).permit(:worked_on, :student_id, :menu, :support, :note)
+    def new_creator_params
+      params.require(:alergy_check).permit(
+        :student_id, alergy_checks_attributes: [:id, :worked_on, :menu, :support, :note, :_destroy])
     end
 
-    def edit_alergy_menu_params
+    def edit_creator_params
       params.require(:alergy_check).permit(:student_id, :menu, :support, :note)
     end
 end
