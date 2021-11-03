@@ -33,8 +33,8 @@ class ApplicationController < ActionController::Base
     when SystemAdmin
       system_admins_path
     when Teacher
-      # teachers_path(id: @teacher.id)
       teachers_path(school_url: params[:school_url])
+      # teachers_path(id: current_teacher.id)
     end
   end
 

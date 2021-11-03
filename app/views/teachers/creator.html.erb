@@ -1,0 +1,67 @@
+<div>
+  <table class="table table-bordered table-condensed user-table">
+    <tr>
+      <td>
+        <%= link_to "←", creator_teachers_path(date: @first_day.prev_month), class: "btn btn-primary" %>
+        <%= l(@first_day, format: :middle) %> 対応法詳細
+        <%= link_to "→", creator_teachers_path(date: @first_day.next_month), class: "btn btn-primary" %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <table class="table table-bordered table-condensed table-hover table__creator-contents--center">
+    <thead>
+      <tr>
+          <th>日付</th>
+          <th></th>
+          <th>クラス名</th>
+          <th>児童名</th>
+          <th>メニュー名</th>
+          <th>対応法</th>
+          <th>備考</th>
+          <th></th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @one_month.each do |day| %>
+        <tr>
+          <td><%= l(day, format: :short) + "(#{@days_of_the_week[day.wday]})" %></td>
+          <td><%= link_to "入力", new_teachers_students_alergy_checks_creator_path(day: day), class: "btn btn-primary", remote: true %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <% @students.each do |student| %>
+          <% student.alergy_checks.each do |alergy_check| %>
+            <% if alergy_check.worked_on == day %>
+              <tr>
+                <td></td>
+                <td></td>             
+                <td><%= Classroom.find(student.classroom_id).class_name %></td>
+                <td><%= student.student_name %></td>
+                <td><%= alergy_check.menu %></td>
+                <td><%= alergy_check.support %></td>
+                <td><%= alergy_check.note %></td>
+                <td><%= link_to "編集", edit_teachers_student_alergy_checks_creator_path(student.id, alergy_check.id), 
+                        class: "btn btn-primary", remote: true %></td>
+                <td><%= link_to "削除", teachers_student_alergy_checks_creator_path(student.id, alergy_check.id), 
+                        method: :delete, data: { confirm: "対応法情報を削除します。よろしいですか？" }, class: "btn btn-danger" %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<!-- モーダルウィンドウ表示 -->
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

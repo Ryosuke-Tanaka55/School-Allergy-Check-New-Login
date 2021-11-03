@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20211021153418) do
     t.bigint "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "menu"
-    t.string "support"
+    t.string "menu", null: false
+    t.string "support", null: false
     t.index ["student_id"], name: "index_alergy_checks_on_student_id"
   end
 

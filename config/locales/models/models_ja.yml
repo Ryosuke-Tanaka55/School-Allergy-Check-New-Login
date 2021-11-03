@@ -3,6 +3,10 @@ ja:
     models:
       user: ユーザー
       attendance: 勤怠
+      school: 学校
+      teacher: 職員
+      alergy_check: アレルギーチェック
+      student: 児童
     attributes:
         user:
           id: ID
@@ -32,5 +36,17 @@ ja:
           tcode: 職員コード
           admin: 管理者
           creator: 対応法担当者
-          
-
+        alergy_check:
+          worked_on: 日付
+          note: 備考
+          first_check: 第1チェック
+          second_check: 第2チェック
+          student_check: 本人チェック
+          status: 
+          status_checker: 申請先
+          menu: メニュー
+          support: 対応法
+        student:
+          student_name: 児童名
+          student_number: 番号
+          alergy: アレルギー食品

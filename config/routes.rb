@@ -28,11 +28,16 @@ Rails.application.routes.draw do
     }
    
     resource :teachers, except: %i(show create edit update destroy) do
+      get '/creator', to: 'teachers#creator'
       resources :students do
-        resources :alergy_checks, only: %i(edit update destroy)
+        namespace :alergy_checks do
+          resources :creators, only: %i(edit update destroy)
+        end
       end
       resource :students do
-        resource :alergy_checks, only: %i(new create)
+        namespace :alergy_checks do
+          resource :creator, only: %i(new create)
+        end
       end
       get 'show'
       post 'create'
