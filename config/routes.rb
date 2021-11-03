@@ -23,13 +23,18 @@ Rails.application.routes.draw do
       # omniauth_callbacks: "teachers/omniauth_callbacks"
     }
    
-    resource :teachers, only: :show do
+    resource :teachers, except: %i(show create edit update destroy) do
       resources :students do
         resources :alergy_checks, only: %i(edit update destroy)
       end
       resource :students do
         resource :alergy_checks, only: %i(new create)
       end
+      get 'show'
+      post 'create'
+      get 'edit_info'
+      patch 'update_info'
+      delete 'destroy'
     end
 
     resources :classrooms do

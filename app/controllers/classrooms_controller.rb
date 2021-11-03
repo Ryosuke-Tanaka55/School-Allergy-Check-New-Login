@@ -37,6 +37,7 @@ class ClassroomsController < ApplicationController
     redirect_to edit_using_class_classrooms_path(@school)
   end
 
+private
 
   # schoolの特定
   def set_school

@@ -3,7 +3,11 @@
     <%= link_to "Allergy Check App", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "ホーム", root_path %></li>
+        <% if teacher_signed_in? %>
+          <li><%= link_to "ホーム", '#' %></li>
+        <% else %>
+          <li><%= link_to "ホーム", root_path %></li>
+        <% end %>
         <% if logged_in? %>
          <li><%= link_to "全てのユーザー", users_path %></li>
          <li><%= link_to "児童アレルギー情報", students_path %></li>
@@ -23,7 +27,7 @@
         <% elsif system_admin_signed_in? %>
           <li><%= link_to 'ログアウト', destroy_system_admin_session_path, method: :delete %></li>
         <% elsif teacher_signed_in? %>
-          <% if teacher_signed_in? && current_teacher.admin? %>
+          <% if current_teacher.admin? %>
             <li><%= link_to 'クラス一覧', classrooms_path(school_url: params[:school_url]) %></li>
             <li><%= link_to 'クラス編集', edit_using_class_classrooms_path(school_url: params[:school_url]) %></li>
           <% end %>
