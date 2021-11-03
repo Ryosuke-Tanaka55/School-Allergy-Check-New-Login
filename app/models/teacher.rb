@@ -45,6 +45,6 @@ class Teacher < ApplicationRecord
 
   # attributes
   # アクセス中のスクールコード=URLに含まれるschool_codeをセット
-  attr_accessor :current_school_url
+  # attr_accessor :current_school_url
 
 end

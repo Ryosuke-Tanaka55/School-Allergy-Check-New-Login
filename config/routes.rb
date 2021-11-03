@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'static_pages#top'
+
   # システム管理者用画面
   devise_for :system_admins, controllers: {
     sessions:      'system_admins/sessions',
@@ -14,6 +16,8 @@ Rails.application.routes.draw do
 
   # 学校区分
   scope '/:school_url' do
+
+    root to: 'static_pages#school_top', as: 'top'
 
     # 先生画面
     devise_for :teachers, controllers: {
@@ -51,7 +55,6 @@ Rails.application.routes.draw do
     collection { post :import }  
   end 
   
-  root 'static_pages#top'
   get '/signup', to: 'users#new'
 
   # ログイン機能

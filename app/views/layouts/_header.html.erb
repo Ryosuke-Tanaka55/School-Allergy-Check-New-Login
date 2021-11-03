@@ -4,7 +4,7 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if teacher_signed_in? %>
-          <li><%= link_to "ホーム", '#' %></li>
+          <li><%= link_to "ホーム", top_path(school_url: params[:school_url]) %></li>
         <% else %>
           <li><%= link_to "ホーム", root_path %></li>
         <% end %>
@@ -31,9 +31,14 @@
             <li><%= link_to 'クラス一覧', classrooms_path(school_url: params[:school_url]) %></li>
             <li><%= link_to 'クラス編集', edit_using_class_classrooms_path(school_url: params[:school_url]) %></li>
           <% end %>
-          <li><%= link_to 'ログアウト', destroy_teacher_session_path(school_url: current_teacher.school_id), method: :delete %></li>
+          <li><%= link_to 'ログアウト', destroy_teacher_session_path, method: :delete %></li>
         <% else %>
-          <li><%= link_to "ログイン", login_path %></li>
+          <% if params[:school_url].blank? %>
+            <%# <li><%= link_to "ログイン", login_path %></li> %>
+            <li><%= link_to "ログイン", new_system_admin_session_path %></li>
+          <% else %>
+            <li><%= link_to "ログイン", new_teacher_session_path(school_url: params[:school_url]) %></li>
+          <% end %>
         <% end %>
       </ul>
     </nav>

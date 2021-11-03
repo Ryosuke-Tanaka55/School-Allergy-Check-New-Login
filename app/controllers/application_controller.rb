@@ -38,6 +38,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # ログアウト後に遷移するpathを設定
+  # def after_sign_out_path_for(resource)
+  #   debugger
+  #   case resource
+  #   when SystemAdmin
+  #     root_path
+  #   when Teacher
+  #     top_path(school_url: params[:school_url])
+  #   end
+  # end
+
    # school_urlの設定
   def set_school_url
     @school = School.find_by(school_url: params[:id])
