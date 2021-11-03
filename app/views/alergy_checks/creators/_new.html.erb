@@ -1,42 +1,51 @@
-<div class="modal-dialog modal-lg modal-dialog-center">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+<div class="creator-new-modal">
+  <div class="modal-dialog modal-lg modal-dialog-center">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-    <div class="modal-body">
-      <h1>対応法登録</h1>
-      <div>
-        <%= form_with(model: @student, url: teachers_students_alergy_checks_creator_path) do |f| %>
-          <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
-            <thead>
-              <tr>
-                <td colspan=8><%= l(@day, format: :long) %></td>
-              </tr>
-              <tr>
-                <th>日付</th>
-                <th>クラス名</th>
-                <th>児童名</th>
-                <th>メニュー名</th>
-                <th>対応法</th>
-                <th>備考</th>
-              </tr>
-            </thead>
-            <tbody id="creator-association-insertion-point">
-              <%= render "alergy_check_fields", f: f %>
-            </tbody>
-          </table>
-          <div class="links">
-            <%= link_to_add_association 'フォームを追加', f, :alergy_checks,
-                class: "btn btn-primary", 
-                data: {
-                  association_insertion_node: "#creator-association-insertion-point",
-                  association_insertion_method: 'append' } %>
-            <%= f.submit "登録", class: "btn btn-primary btn-block" %>
-          </div>
-        <% end %>
+      <div class="modal-body">
+        <h1>対応法登録</h1>
+        <div>
+          <%= form_with(model: @student, url: teachers_students_alergy_checks_creator_path) do |f| %>
+            <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
+              <thead>
+                <tr>
+                  <td colspan=8><%= l(@day, format: :long) %></td>
+                </tr>
+                <tr>
+                  <th>日付</th>
+                  <th>クラス名</th>
+                  <th>児童名</th>
+                  <th>メニュー名</th>
+                  <th>対応法</th>
+                  <th>備考</th>
+                </tr>
+              </thead>
+              <tbody id="creator-association-insertion-point">
+                <% Classroom.all.each do |classroom| %>
+                <template id="student-of-classroom<%= classroom.id %>">
+                  <%= f.collection_select :student, classroom.students, :id, :student_name,
+                                          { include_blank: "児童を選択", required: true }, { class: "form-control" } %>
+                </template>
+              <% end %>
+                <%= render "alergy_check_fields", f: f %>
+              </tbody>
+            </table>
+            <div class="links">
+              <%= link_to_add_association 'フォームを追加', f, :alergy_checks,
+                  class: "btn btn-primary", 
+                  id: "add-fields-btn",
+                  data: {
+                    association_insertion_node: "#creator-association-insertion-point",
+                    association_insertion_method: 'append' } %>
+              <%= f.submit "登録", class: "btn btn-primary btn-block" %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

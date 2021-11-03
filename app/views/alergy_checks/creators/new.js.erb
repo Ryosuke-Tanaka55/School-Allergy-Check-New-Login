@@ -1,19 +1,22 @@
 $("#new").html("<%= escape_javascript(render 'new') %>");
 $("#new").modal("show");
 
-$("#select--classroom").on('change', function() {
-  let classroomVal = $('#select--classroom').val();
+//.classroomの値が変更された時
+$(document).on('change', '.select--classroom', function() {
+  //現在選択されている要素の値を変数に格納する
+  let classroomVal = $(".select--classroom>select").val();
+  let defaultStudentSelect = `<select class="default-student-select form-control" name="student[student]">
+                                <option value>児童を選択</option>
+                              </select>`;
+  //同じ子同士のtemplate要素を差し込む
   if (classroomVal !== "") {
-    let defaultStudentSelect = `<select class="default-student-select form-control" name="alergy_check[student_id]">
-                                  <option value>児童を選択</option>
-                                </select>`;
-    // クラスのidが一致するtemplate要素を格納
+    // クラスのidに対応するtemplate要素を格納
     let selectedTemplate = $(`#student-of-classroom${classroomVal}`);
-    // 値が変わったときに#select--studentの中身を削除したい
-    $('#select--student').empty();
-    $('#select--student').append(selectedTemplate.html());
+    // 値が変わったときに#select--studentの中身を削除、新しい要素を追加
+    $('.select--student').empty();
+    $('.select--student').append(selectedTemplate.html());
   }else {
-    $('#select--student').empty();
-    $('#select--student').append(defaultStudentSelect);
+    $('.select--student').empty();
+    $('.select--student').append(defaultStudentSelect);
   };
 });

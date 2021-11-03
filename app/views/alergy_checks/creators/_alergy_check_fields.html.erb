@@ -1,25 +1,20 @@
 <tr class="nested-fields">
-  <%= f.fields_for :alergy_checks do |form| %>
-    <%= f.hidden_field :worked_on, :value => @day %>
-    <td><%= l(@day, format: :short) + "(#{$days_of_the_week[@day.wday]})"%></td>
-    <td>
-      <%= form.collection_select :classroom, @classrooms, :id, :class_name,
+  <%= f.hidden_field :worked_on, :value => @day %>
+  <td><%= l(@day, format: :short) + "(#{$days_of_the_week[@day.wday]})"%></td>
+  <%= f.fields_for :alergy_checks do |a| %>
+    <td class="select--classroom">
+      <%= a.collection_select :classroom, @classrooms, :id, :class_name,
                               { include_blank: "クラスを選択" },
-                              { class: "form-control", id: "select--classroom" } %>
+                              { class: "form-control" } %>
     </td>
-    <% Classroom.all.each do |classroom| %>
-      <template id="student-of-classroom<%= classroom.id %>">
-        <%= f.collection_select :student_id, classroom.students, :id, :student_name,
-                                { include_blank: "児童を選択", required: true }, { class: "form-control" } %>
-      </template>
-    <% end %>
-    <td id="select--student">
-      <%= f.select :student_id, [], { include_blank: "児童を選択" }, { class: "default-student-select form-control" } %>
-    </td>
-    <td><%= form.text_field :menu, required: true, class: "form-control" %></td>
-    <td><%= form.select :support, ['対応食', '代替食', '除去食', 'その他'],
+    <td class="select--student">
+      <%= f.select :student, [], { include_blank: "児童を選択" }, { class: "default-student-select form-control" } %>
+    </td> 
+   
+    <td><%= a.text_field :menu, required: true, class: "form-control" %></td>
+    <td><%= a.select :support, ['対応食', '代替食', '除去食', 'その他'],
                         { include_blank: "対応を選択", required: true }, { class: "form-control" } %></td>
-    <td><%= form.text_field :note, class: "form-control" %></td>
+    <td><%= a.text_field :note, class: "form-control" %></td>
   <% end %>
   <td><%= link_to_remove_association "削除", f, class: "btn btn-default" %></td>
 </tr>
