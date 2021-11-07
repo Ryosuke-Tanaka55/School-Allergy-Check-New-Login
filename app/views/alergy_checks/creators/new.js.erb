@@ -1,24 +1,27 @@
 $("#new").html("<%= escape_javascript(render 'new') %>");
 $("#new").modal("show");
 
+
+
+
 //.classroomの値が変更された時
-$(document).on("change", ".select--classroom", function() {
+//$(document).on("change", ".select--classroom", function() {
   //現在選択されているクラス名セレクトボックスの値を変数に格納する
-  let classroomVal = $(":focus").val();
+  //let classroomVal = $(":focus").val();
   //現在選択されているクラス名セレクトボックスに隣接する児童名セレクトボックスを取り出す
-  let selectStudent = $(":focus").parent().next();
-  let defaultStudentSelect = `<select class="default-student-select form-control" name="student[student]">
-                                <option value>児童を選択</option>
-                              </select>`;
+  //let selectStudent = $(":focus").parent().next();
+  //let defaultStudentSelect = `<select class="default-student-select form-control" name="student[student]">
+    //                            <option value>児童を選択</option>
+    //                          </select>`;
   //同じ子同士のtemplate要素を差し込む
-  if (classroomVal !== "") {
+  //if (classroomVal !== "") {
     // クラスのidに対応するtemplate要素を格納
-    let selectedTemplate = $(`#student-of-classroom${classroomVal}`);
-    // 値が変わったときに#select--studentの中身を削除、新しい要素を追加
-    $(":focus").parent(".select--classroom").next(".select--student").empty();
-    $(":focus").parent(".select--classroom").next(".select--student").append(selectedTemplate.html());
-  }else {
-    $(":focus").parent(".select--classroom").next(".select--student").empty();
-    $(":focus").parent(".select--classroom").next(".select--student").append(defaultStudentSelect);
-  };
-});
+    //let selectedTemplate = $(`#student-of-classroom${classroomVal}`);
+    // 値が変わったときに.select--studentの中身を削除、新しい要素を追加
+    //$(":focus").parent(".select--classroom").next(".select--student").empty();
+    //$(":focus").parent(".select--classroom").next(".select--student").append(selectedTemplate.html());
+  //}else {
+    //$(":focus").parent(".select--classroom").next(".select--student").empty();
+    //$(":focus").parent(".select--classroom").next(".select--student").append(defaultStudentSelect);
+  //};
+//});

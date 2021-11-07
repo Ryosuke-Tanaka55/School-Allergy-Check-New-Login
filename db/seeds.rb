@@ -70,7 +70,7 @@ puts "1-1Teacher Created"
 
 # 児童データ作成
 4.times do |n|
-  name  = Faker::Name.name
+  name  = "student1-1-#{n+1}"
   number = 1100 + n + 1
   Student.create!(student_name: name,
                   student_number: number,
@@ -98,7 +98,7 @@ end
 puts "2-1Teacher Created"
 
 4.times do |n|
-  name  = Faker::Name.name
+  name  = "student2-1-#{n+1}"
   number = 2100 + n + 1
   Student.create!(student_name: name,
                   student_number: number,

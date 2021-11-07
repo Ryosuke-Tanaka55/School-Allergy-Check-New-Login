@@ -10,7 +10,7 @@
       <div class="modal-body">
         <h1>対応法登録</h1>
         <div>
-          <%= form_with(model: @student, url: teachers_students_alergy_checks_creator_path) do |f| %>
+          <%= form_with(model: @classroom, url: teachers_students_alergy_checks_creator_path) do |f| %>
             <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
               <thead>
                 <tr>
@@ -26,17 +26,19 @@
                 </tr>
               </thead>
               <tbody id="creator-association-insertion-point">
-                <% Classroom.all.each do |classroom| %>
-                <template id="student-of-classroom<%= classroom.id %>">
-                  <%= f.collection_select :student, classroom.students, :id, :student_name,
-                                          { include_blank: "児童を選択", required: true }, { class: "form-control" } %>
-                </template>
-              <% end %>
-                <%= render "alergy_check_fields", f: f %>
+                <%= f.fields_for :alergy_check do |a| %>
+                  <% Classroom.all.each do |classroom| %>
+                    <template id="student-of-classroom<%= classroom.id %>">
+                      <%= a.collection_select :student, classroom.students, :id, :student_name,
+                                              { include_blank: "児童を選択", required: true }, { class: "form-control" } %>
+                    </template>
+                  <% end %>
+                <% end %>
+                <%= render "student_fields", f: f  %>
               </tbody>
             </table>
             <div class="links">
-              <%= link_to_add_association 'フォームを追加', f, :alergy_checks,
+              <%= link_to_add_association 'フォームを追加', f, :students,
                   class: "btn btn-primary", 
                   id: "add-fields-btn",
                   data: {

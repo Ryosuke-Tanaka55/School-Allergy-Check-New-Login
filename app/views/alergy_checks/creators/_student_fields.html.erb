@@ -1,16 +1,18 @@
 <tr class="nested-fields">
-  <%= f.hidden_field :worked_on, :value => @day %>
   <td><%= l(@day, format: :short) + "(#{$days_of_the_week[@day.wday]})"%></td>
-  <%= f.fields_for :alergy_checks do |a| %>
+  <%= f.fields_for :alergy_check do |a| %>
+    <%= a.hidden_field :worked_on, :value => @day %>
     <td class="select--classroom">
       <%= a.collection_select :classroom, @classrooms, :id, :class_name,
                               { include_blank: "クラスを選択" },
                               { class: "form-control" } %>
     </td>
     <td class="select--student">
-      <%= f.select :student, [], { include_blank: "児童を選択" }, { class: "default-student-select form-control" } %>
+      <%# a.select :student, [], { include_blank: "児童を選択" }, { class: "default-student-select form-control" } %>
+      <%= a.collection_select :student, Student.all, :id, :student_name,
+                              { include_blank: "クラスを選択" },
+                              { class: "form-control" } %>
     </td> 
-   
     <td><%= a.text_field :menu, required: true, class: "form-control" %></td>
     <td><%= a.select :support, ['対応食', '代替食', '除去食', 'その他'],
                         { include_blank: "対応を選択", required: true }, { class: "form-control" } %></td>

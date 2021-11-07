@@ -3,13 +3,15 @@ class AlergyChecks::CreatorsController < ApplicationController
   $days_of_the_week = %w{日 月 火 水 木 金 土}
 
   def new
-    @student = Student.new
+    @classroom = Classroom.new
+    @student = @classroom.students.build
     @alergy_check = @student.alergy_checks.build
     @day = params[:day].to_date
     @classrooms = Classroom.all
   end
 
   def create
+    debugger
     if params[:alergy_check][:student_id].present?
       @student = Student.find(params[:alergy_check][:student_id].to_i)
       @alergy_check = @student.alergy_checks.new(new_creator_params)
@@ -60,8 +62,21 @@ class AlergyChecks::CreatorsController < ApplicationController
 
   private
     def new_creator_params
-      params.require(:alergy_check).permit(
-        :student_id, alergy_checks_attributes: [:id, :worked_on, :menu, :support, :note, :_destroy])
+      params.require(:classroom).permit(
+        student_attributes: [
+          :_destroy,
+          alergy_check_attributes: [
+            :classroom,
+            :student,
+            :id,
+            :worked_on,
+            :menu,
+            :support,
+            :note,
+            :_destroy
+          ]
+        ]
+      )
     end
 
     def edit_creator_params
