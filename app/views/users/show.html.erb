@@ -24,8 +24,10 @@
       <% else %>
         <p>【アレルギーチェックのお知らせ】</p>
       <% end %>
+      <%= link_to "管理者一覧", lunch_check_all_user_attendances_path(@user), remote: true, style: "color:red;" %>
     </div>
   <% end %>   
 
 <div id="lunch-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="lunch-check-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="lunch-check-all" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

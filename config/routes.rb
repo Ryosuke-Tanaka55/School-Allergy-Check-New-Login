@@ -59,7 +59,9 @@ Rails.application.routes.draw do
      end   
      collection do
         get 'lunch_check_info'
-        patch 'update_lunch_check_info'   
+        patch 'update_lunch_check_info'
+        get 'lunch_check_all'
+        patch 'update_lunch_check_all' 
      end #collection do end
     end #resouces do end
   end #user resouces do end 
