@@ -11,21 +11,20 @@ class AlergyChecks::CreatorsController < ApplicationController
   end
 
   def create
-    debugger
-    if params[:alergy_check][:student_id].present?
-      @student = Student.find(params[:alergy_check][:student_id].to_i)
-      @alergy_check = @student.alergy_checks.new(new_creator_params)
-      if @alergy_check.save
-        flash[:success] = "献立情報を登録しました。"
-      else
-        flash[:danger] = "登録に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>")
-      end
-    elsif params[:alergy_check][:student_id].nil?
-      flash[:danger] = "登録に失敗しました。児童の情報が存在しません。入力内容を確認してください。"
-    else
-      flash[:danger] = "登録に失敗しました。クラス名と児童名を選択してください。"
-    end
-    redirect_to creator_teachers_url
+    # if params[:alergy_check][:student_id].present?
+    #   @student = Student.find(params[:alergy_check][:student_id].to_i)
+    #   @alergy_check = @student.alergy_checks.new(new_creator_params)
+    #   if @alergy_check.save
+    #     flash[:success] = "献立情報を登録しました。"
+    #   else
+    #     flash[:danger] = "登録に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>")
+    #   end
+    # elsif params[:alergy_check][:student_id].nil?
+    #   flash[:danger] = "登録に失敗しました。児童の情報が存在しません。入力内容を確認してください。"
+    # else
+    #   flash[:danger] = "登録に失敗しました。クラス名と児童名を選択してください。"
+    # end
+    # redirect_to creator_teachers_url
   end
 
   def edit

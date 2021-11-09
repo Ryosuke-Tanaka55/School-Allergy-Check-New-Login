@@ -1,7 +1,7 @@
 class AlergyCheck < ApplicationRecord
   belongs_to :student
 
-  # 登録時に使用する仮想カラム
+  # 登録時に使用する仮想カラム(DB保存不可)
   attribute :classroom, :integer
   attribute :student, :integer
 
