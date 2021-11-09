@@ -6,8 +6,10 @@
       </button>
     </div>
     <div class="modal-body">
-      <h1>担任編集</h1>
+      <h1><%= @teacher.classroom_id == nil ? "職員編集" : "担任編集" %></h1>
       <%= form_with(model: @teacher, url: update_info_teachers_path, local: true) do |f| %>
+        <%= render 'shared/error_messages', object: @teacher %>
+      
         <%= f.hidden_field(:school_id, value: @school.id) %>
         <%= f.hidden_field(:classroom_id, value: @teacher.classroom_id) %>
         <%= f.hidden_field(:id, value: @teacher.id) %>
@@ -17,6 +19,13 @@
           <%= f.label :teacher_name %>
           <%= f.text_field :teacher_name, autofocus: true, class: 'form-control' %>
         </div>
+
+        <% if @teacher.admin == true %>
+          <div class="form-group">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+          </div>
+        <% end %>
 
         <div class="form-group">
           <%= f.label :tcode %>
@@ -31,6 +40,17 @@
         <div class="form-group">
           <%= f.label :password_confirmation %>
           <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
+        </div>
+
+        <div class="check_box">
+          <%= f.check_box :admin %>
+          <%= f.label :admin %>
+
+          <%= f.check_box :creator %>
+          <%= f.label :creator %>
+
+          <%= f.check_box :charger %>
+          <%= f.label :charger %>
         </div>
 
         <div class="form-group">

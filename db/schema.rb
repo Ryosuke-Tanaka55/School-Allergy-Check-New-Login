@@ -107,9 +107,15 @@ ActiveRecord::Schema.define(version: 20211021153418) do
     t.string "teacher_name", default: "", null: false
     t.boolean "admin", default: false, null: false
     t.boolean "creator", default: false, null: false
+    t.boolean "charger", default: false, null: false
     t.string "tcode", default: "", null: false
     t.bigint "school_id"
     t.bigint "classroom_id"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classroom_id"], name: "index_teachers_on_classroom_id"

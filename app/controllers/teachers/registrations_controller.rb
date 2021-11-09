@@ -79,7 +79,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
 
   # 一般職員新規登録時のストロングパラメーター
   def ippan_sign_up_params
-    params.require(:teacher).permit(:teacher_name, :tcode, :password, :password_confirmation, :school_id, :classroom_id)
+    params.require(:teacher).permit(:teacher_name, :tcode, :password, :password_confirmation, :school_id, :classroom_id, :admin, :creator, :charger)
     # devise_parameter_sanitizer.permit(:sign_up, keys: %i(teacher_name tcode password school_id classroom_id))
   end
 

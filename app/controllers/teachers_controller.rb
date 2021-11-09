@@ -1,7 +1,13 @@
 class TeachersController < ApplicationController
   before_action :authenticate_teacher!
   before_action :set_school
+  before_action :admin_teacher, only: [:new, :create, :edit_info, :update_info, :destroy]
+  # before_action :check_school_url
 
+
+  def index
+    @teachers = @school.teachers.all
+  end
 
   def show
     # @teacher = Teacher.find(params[:id])
@@ -15,11 +21,11 @@ class TeachersController < ApplicationController
     @teacher = Teacher.new(teachers_params)
     if @teacher.save
       flash[:success] = "担任を作成しました。"
-      redirect_to classrooms_path(school_url: params[:school_url])
+      redirect_to classrooms_path(school_url: params[:school_url]) and return
     else
-      flash[:danger] = "作成に失敗しました。"
-      render :new
+      flash[:danger] = "作成に失敗しました。<br>" + "・" + @teacher.errors.full_messages.join("<br>")
     end
+    redirect_to classrooms_path(school_url: params[:school_url]) and return
   end
 
   def edit_info
@@ -29,11 +35,18 @@ class TeachersController < ApplicationController
   def update_info
     @teacher = Teacher.find(params[:teacher][:id])
     if @teacher.update_attributes!(teachers_params)
-      flash[:success] = "担任情報を更新しました。"
+      flash[:success] = "職員情報を更新しました。"
       redirect_to classrooms_path(school_url: params[:school_url])
     else
       render :edit
     end
+  end
+
+  def destroy
+    @teacher = Teacher.find(params[:id])
+    @teacher.destroy
+    flash[:danger] = "#{@teacher.teacher_name}を削除しました。"
+    redirect_to classrooms_path(school_url: params[:school_url])
   end
 
   # 対応法担当者ページ(show)
@@ -54,7 +67,12 @@ class TeachersController < ApplicationController
     end
 
     def teachers_params
-      params.require(:teacher).permit(:teacher_name, :tcode, :password, :password_confirmation, :school_id, :classroom_id)
+      params.require(:teacher).permit(:teacher_name, :email, :tcode, :password, :password_confirmation, :school_id, :classroom_id, :admin, :creator, :charger)
+    end
+
+    # アクセスした職員が現在ログインしている職員か確認
+    def correct_teacher
+      redirect_to top_path(school_url: params[:school_url]) unless current_teacher?(@teacher)
     end
   
 end

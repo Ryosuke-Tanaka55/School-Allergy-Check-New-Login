@@ -1,4 +1,4 @@
-<h1>クラスルーム一覧</h1>
+<h1>職員一覧</h1>
 
 <!--タブ部分-->
 <ul class="tab-list list-unstyled">
@@ -23,6 +23,9 @@
   <li class="tab">
     特別学級
   </li>
+  <li class="tab">
+    その他
+  </li>
 </ul>
 <!--タブで選択された要素部分-->
 <div class="tabbox-contents">
@@ -46,6 +49,9 @@
   </div>
   <div class="tabbox">
     <%= render 'classrooms/classlist', classrooms: @other_grade %>    
+  </div>
+  <div class="tabbox">
+    <%= render 'classrooms/teacherlist', classrooms: @other %>    
   </div>
 </div>
 

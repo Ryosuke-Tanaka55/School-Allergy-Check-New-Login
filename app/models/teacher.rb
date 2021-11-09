@@ -5,6 +5,7 @@ class Teacher < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
+         :trackable,
          authentication_keys: %i[tcode]
         #  strip_whitespace_keys: %i[email]
 

@@ -25,7 +25,7 @@
 
   <div class="center">
     <%= f.submit "変更を保存する", class: "btn btn-lg btn-primary" %>
-    <%= link_to "キャンセル", '#', class: "btn btn-lg btn-default" %>
+    <%= link_to "キャンセル", classrooms_path(school_url: params[:school_url]), class: "btn btn-lg btn-default" %>
   </div>
 <% end %>
 

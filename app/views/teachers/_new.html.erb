@@ -8,8 +8,8 @@
     <div class="modal-body">
       <h1>担任登録</h1>
       <%= form_with(model: @teacher, local: true) do |f| %>
-          <%= f.hidden_field(:school_id, value: @school.id) %>
-          <%= f.hidden_field(:classroom_id, value: params[:classroom_id]) %>
+        <%= f.hidden_field(:school_id, value: @school.id) %>
+        <%= f.hidden_field(:classroom_id, value: params[:classroom_id]) %>
 
         <div class="form-group">
           <%= f.label :teacher_name %>
@@ -29,6 +29,17 @@
         <div class="form-group">
           <%= f.label :password_confirmation %>
           <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
+        </div>
+
+        <div class="check_box">
+          <%= f.check_box :admin %>
+          <%= f.label :admin %>
+
+          <%= f.check_box :creator %>
+          <%= f.label :creator %>
+
+          <%= f.check_box :charger %>
+          <%= f.label :charger %>
         </div>
 
         <div class="form-group">

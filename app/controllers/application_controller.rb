@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
 
+
   # ---------下記既存アプリの記述-------------------
   $days_of_the_week = %w{日 月 火 水 木 金 土}
 
@@ -33,7 +34,11 @@ class ApplicationController < ActionController::Base
     when SystemAdmin
       system_admins_path
     when Teacher
-      teachers_path(school_url: params[:school_url])
+      if current_teacher.admin == true && resource.sign_in_count == 1
+        edit_using_class_classrooms_path(school_url: params[:school_url])
+      else
+        show_teachers_path(school_url: params[:school_url])
+      end
       # teachers_path(id: current_teacher.id)
     end
   end
@@ -52,5 +57,17 @@ class ApplicationController < ActionController::Base
    # school_urlの設定
   def set_school_url
     @school = School.find_by(school_url: params[:id])
+  end
+
+   # school間のアクセス制限
+  # def check_school_url
+  #   return if system_admin_signed_in?
+
+  #   routing_error if params[:school_url] != School.find(id: current_teacher.school_id).school_url
+  # end
+
+  # 管理者かどうかの判定
+  def admin_teacher
+    redirect_to top_path(school_url: params[:school_url]) unless current_teacher.admin?
   end
 end  

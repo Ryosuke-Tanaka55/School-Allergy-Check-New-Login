@@ -1,5 +1,6 @@
 class ClassroomsController < ApplicationController
   before_action :set_school
+  before_action :admin_teacher, only: [:index, :edit_using_class, :update_using_class]
   
   def index
     classrooms = @school.classrooms.where(using_class: true)
@@ -11,6 +12,7 @@ class ClassroomsController < ApplicationController
     @fifth_grade = @school.classrooms.where(class_grade: 5, using_class: true).order(:id)
     @sixth_grade = @school.classrooms.where(class_grade: 6, using_class: true).order(:id)
     @other_grade = @school.classrooms.where(class_grade: 7, using_class: true).order(:id)
+    @other = @school.teachers.where(classroom_id: nil)
   end
 
   def edit_using_class

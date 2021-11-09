@@ -36,6 +36,7 @@ ja:
           tcode: 職員コード
           admin: 管理者
           creator: 対応法担当者
+          charger: 代理申請者
         alergy_check:
           worked_on: 日付
           note: 備考

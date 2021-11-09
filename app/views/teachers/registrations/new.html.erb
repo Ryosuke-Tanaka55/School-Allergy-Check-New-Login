@@ -44,12 +44,26 @@
     <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
   </div>
 
+  <% if current_teacher.admin == true %>
+    <div class="check_box">
+      <%= f.check_box :admin %>
+      <%= f.label :admin %>
+
+      <%= f.check_box :creator %>
+      <%= f.label :creator %>
+
+      <%= f.check_box :charger %>
+      <%= f.label :charger %>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <%= f.submit t('.sign_up'), class: 'btn btn-info btn-block' %>
   </div>
+      
 <% end %>
 
-<%= render 'teachers/shared/links' %>
+<!-- %= render 'teachers/shared/links' % -->
 
 <% if system_admin_signed_in? %>
   <%= link_to '戻る', system_admins_schools_path %>

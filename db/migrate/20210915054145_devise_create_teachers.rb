@@ -17,16 +17,17 @@ class DeviseCreateTeachers < ActiveRecord::Migration[5.1]
       t.string :teacher_name,       null: false, default: ""
       t.boolean :admin,             null: false, default: false # 学校管理者
       t.boolean :creator,           null: false, default: false # 対応法入力担当者
+      t.boolean :charger,           null: false, default: false # 代理申請者
       t.string :tcode,              null: false, default: "" # 先生コード
       t.references :school, index: true, foreign_key: true
       t.references :classroom, index: true, foreign_key: true
 
       ## Trackable
-      # t.integer  :sign_in_count, default: 0, null: false
-      # t.datetime :current_sign_in_at
-      # t.datetime :last_sign_in_at
-      # t.string   :current_sign_in_ip
-      # t.string   :last_sign_in_ip
+      t.integer  :sign_in_count, default: 0, null: false
+      t.datetime :current_sign_in_at
+      t.datetime :last_sign_in_at
+      t.string   :current_sign_in_ip
+      t.string   :last_sign_in_ip
 
       ## Confirmable
       # t.string   :confirmation_token

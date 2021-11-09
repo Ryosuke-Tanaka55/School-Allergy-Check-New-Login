@@ -39,11 +39,11 @@ Rails.application.routes.draw do
           resource :creator, only: %i(new create)
         end
       end
-      get 'show'
       post 'create'
+      get 'show', as: :show
       get 'edit_info'
       patch 'update_info'
-      delete 'destroy'
+      delete 'destroy', as: :destroy
     end
 
     resources :classrooms do
