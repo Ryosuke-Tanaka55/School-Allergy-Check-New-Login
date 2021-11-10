@@ -28,14 +28,7 @@
               <tr>
                 <td><%= l(@alergy_check.worked_on, format: :short) + "(#{$days_of_the_week[@alergy_check.worked_on.wday]})"%></td>
                 <td><%= f.collection_select :classroom, @classrooms, :id, :class_name, { selected: @classroom.id }, { class: "form-control", id: "select--classroom" } %></td>
-                <% Classroom.all.each do |classroom| %>
-                  <template id="student-of-classroom<%= classroom.id %>">
-                    <%= f.collection_select :student_id, classroom.students, :id, :student_name, { include_blank: "児童を選択", required: true }, { class: "form-control" } %>
-                  </template>
-                <% end %>
-                <td id="select--student">
-                  <%= f.collection_select :student_id, @classroom.students, :id, :student_name, { required: true }, { class: "form-control" } %>
-                </td>
+                <td><%= f.collection_select :student_id, @classroom.students, :id, :student_name, { required: true }, { class: "form-control", id: "select--student" } %></td>
                 <td><%= f.text_field :menu, required: true, class: "form-control"  %></td>
                 <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], { required: true }, { class: "form-control" } %></td>
                 <td><%= f.text_field :note, class: "form-control" %></td>
@@ -50,3 +43,33 @@
     </div>
   </div>
 </div>
+
+<script>
+
+// optionを追加するHTML
+function appendStudent(datas, student_select_id) {
+  var appendId = $(`#${student_select_id}`)
+  $(`#${student_select_id} > option`).remove();
+  datas.forEach(function(data) {
+    appendId.append($("<option>").val(data[0]).html(data[1]))
+  })
+}
+
+// クラスが選択された時のアクション
+$(document).on("change", "#select--classroom", function () {
+  classroom_id = $(this).val()
+  student_select_id = "select--student"
+  // ajaxでリクエストを送信
+  $.ajax({
+    type: "GET",
+    url: "/teachers/students/alergy_checks/creator/students",
+    data: {classroom_id: classroom_id},
+    dataType: 'json'
+  })
+  // doneメソッドでappendする
+  .done(function(datas) {
+    appendStudent(datas, student_select_id)
+  })
+})
+
+</script>

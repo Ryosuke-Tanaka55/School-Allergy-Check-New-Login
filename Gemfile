@@ -15,6 +15,7 @@ gem 'jquery-rails'
 gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'roo'
+gem 'cocoon'
 
 # ログイン機能
 gem 'devise'
@@ -25,6 +26,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'pg', '0.20.0'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rails-erd'
 end
 
 group :development do

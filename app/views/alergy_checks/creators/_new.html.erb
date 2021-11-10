@@ -1,53 +1,79 @@
-<div class="modal-dialog modal-lg modal-dialog-center">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+<div class="creator-new-modal">
+  <div class="modal-dialog modal-lg modal-dialog-center">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-    <div class="modal-body">
-      <h1>対応法登録</h1>
-      <div>
-        <%= form_with(model: @alergy_check, url: teachers_students_alergy_checks_creator_path) do |f| %>
-          <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
-            <thead>
-              <tr>
-                <td colspan=8><%= l(@day, format: :long) %></td>
-              </tr>
-              <tr>
-                <th>日付</th>
-                <th>クラス名</th>
-                <th>児童名</th>
-                <th>メニュー名</th>
-                <th>対応法</th>
-                <th>備考</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <%= f.hidden_field :worked_on, :value => @day %>
-                <td><%= l(@day, format: :short) + "(#{$days_of_the_week[@day.wday]})"%></td>
-                <td><%= f.collection_select :classroom, @classrooms, :id, :class_name, { include_blank: "クラスを選択" }, { class: "form-control", id: "select--classroom" } %></td>
-                <% Classroom.all.each do |classroom| %>
-                  <template id="student-of-classroom<%= classroom.id %>">
-                    <%= f.collection_select :student_id, classroom.students, :id, :student_name, { include_blank: "児童を選択", required: true }, { class: "form-control" } %>
-                  </template>
+      <div class="modal-body">
+        <h1>対応法登録</h1>
+        <div>
+          <%= form_with(model: @student, url: teachers_students_alergy_checks_creator_path) do |f| %>
+            <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
+              <thead>
+                <tr>
+                  <td colspan=8><%= l(@day, format: :long) %></td>
+                </tr>
+                <tr>
+                  <th>日付</th>
+                  <th>クラス名</th>
+                  <th>児童名</th>
+                  <th>メニュー名</th>
+                  <th>対応法</th>
+                  <th>備考</th>
+                </tr>
+              </thead>
+              <tbody id="creator-association-insertion-point">
+                <%= f.fields_for 'alergy_checks' do |a| %>
+                  <%= render "alergy_check_fields", f: a  %>
                 <% end %>
-                <td id="select--student">
-                  <%= f.select :student_id, [], { include_blank: "児童を選択" }, { class: "default-student-select form-control" } %>
-                </td>
-                <td><%= f.text_field :menu, required: true, class: "form-control" %></td>
-                <td><%= f.select :support, ['対応食', '代替食', '除去食', 'その他'], { include_blank: "対応を選択", required: true }, { class: "form-control" } %></td>
-                <td><%= f.text_field :note, class: "form-control" %></td>
-              </tr>
-            </tbody>
-          </table>
-          <div>
-            <%= f.submit "登録", class: "btn btn-primary btn-block" %>
-          </div>
-        <% end %>
+
+              </tbody>
+            </table>
+            <div class="links">
+              <%= link_to_add_association 'フォームを追加', f, :alergy_checks,
+                  class: "btn btn-primary",
+                  id: "add-fields-btn",
+                  data: {
+                    association_insertion_node: "#creator-association-insertion-point",
+                    association_insertion_method: 'append' } %>
+              <%= f.submit "登録", class: "btn btn-primary btn-block" %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+
+// optionを追加するHTML
+function appendStudent(datas, student_select_id) {
+  var appendId = $(`#${student_select_id}`)
+  $(`#${student_select_id} > option`).remove();
+  datas.forEach(function(data) {
+    appendId.append($("<option>").val(data[0]).html(data[1]))
+  })
+}
+
+// クラスが選択された時のアクション
+$(document).on("change", ".classroom-select", function () {
+  classroom_id = $(this).val()
+  student_select_id = $(this).attr('id').replace('classroom', 'student_id')
+  // ajaxでリクエストを送信
+  $.ajax({
+    type: "GET",
+    url: "/teachers/students/alergy_checks/creator/students",
+    data: {classroom_id: classroom_id},
+    dataType: 'json'
+  })
+  // doneメソッドでappendする
+  .done(function(datas) {
+    appendStudent(datas, student_select_id)
+  })
+})
+
+</script>
