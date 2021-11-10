@@ -6,12 +6,6 @@ Rails.application.routes.draw do
     sessions:      'system_admins/sessions',
     passwords:     'system_admins/passwords',
   }
-  devise_for :teachers, controllers: {
-    sessions:      'teachers/sessions',
-    passwords:     'teachers/passwords',
-    registrations: 'teachers/registrations',
-    # omniauth_callbacks: "teachers/omniauth_callbacks"
-  }
 
 
   resources :system_admins, only: %i(index)

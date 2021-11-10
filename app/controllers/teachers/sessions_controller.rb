@@ -28,6 +28,6 @@ class Teachers::SessionsController < Devise::SessionsController
 
    # schoolの特定
    def set_school
-    @school = School.find_by(school_url: params[:school_url])
+    @school = School.find_by!(school_url: params[:school_url])
   end
 end

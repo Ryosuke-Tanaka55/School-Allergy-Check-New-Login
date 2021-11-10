@@ -1,7 +1,6 @@
 class SystemAdmins::SchoolsController < ApplicationController
   before_action :authenticate_system_admin!
   before_action :set_school_url, only: %i[ show edit update destroy ]
-  after_action :set_class, only: :create
 
   def index
     @schools = School.all
@@ -12,19 +11,19 @@ class SystemAdmins::SchoolsController < ApplicationController
 
   def edit
   end
-  
+
   def new
     @school = School.new
-    # @school.classrooms.build
   end
 
   def create
     @school = School.new(school_params)
+    set_class
     if @school.save
       flash[:info] = "学校を新規作成しました"
-      redirect_to system_admins_schools_path
+      redirect_to system_admins_schools_url
     else
-      flash[:danger] = "作成に失敗しました"
+      render :new
     end
   end
 
@@ -36,9 +35,9 @@ class SystemAdmins::SchoolsController < ApplicationController
 
   private
 
-    
 
-  
+
+
     def school_params
       # params.require(:school).permit(:school_name, :school_url, classrooms_attributes:[:school_id, :class_name])
       params.require(:school).permit(:school_name, :school_url)
@@ -46,7 +45,7 @@ class SystemAdmins::SchoolsController < ApplicationController
 
     def set_class
       # @classrooms = @school.classrooms.create(class_name)
-      @classrooms = @school.classrooms.create([
+      @classrooms = @school.classrooms.build([
         {class_name: "1-1", class_grade: 1},
         {class_name: "1-2", class_grade: 1},
         {class_name: "1-3", class_grade: 1},

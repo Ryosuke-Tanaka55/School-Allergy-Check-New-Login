@@ -17,9 +17,9 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   def create
     # 学校管理者作成時にはadmin付与・一般職員作成時はfalseのまま作成
     if system_admin_signed_in?
-      @admin_teacher = Teacher.new(sign_up_params)
-      @admin_teacher.admin = true
-      if @admin_teacher.save
+      self.resource = Teacher.new(sign_up_params)
+      resource.admin = true
+      if resource.save
         flash[:success] = "学校管理者を作成しました。"
         redirect_to system_admins_schools_url
       else
