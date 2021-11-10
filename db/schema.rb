@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211019124554) do
+ActiveRecord::Schema.define(version: 20211021153418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 20211019124554) do
 
   create_table "classrooms", force: :cascade do |t|
     t.string "class_name", default: "", null: false
+    t.integer "class_grade"
+    t.boolean "using_class", default: true
     t.bigint "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -97,7 +99,7 @@ ActiveRecord::Schema.define(version: 20211019124554) do
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.string "email", default: "", null: false
+    t.string "email"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -105,12 +107,18 @@ ActiveRecord::Schema.define(version: 20211019124554) do
     t.string "teacher_name", default: "", null: false
     t.boolean "admin", default: false, null: false
     t.boolean "creator", default: false, null: false
+    t.boolean "charger", default: false, null: false
+    t.string "tcode", default: "", null: false
     t.bigint "school_id"
     t.bigint "classroom_id"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classroom_id"], name: "index_teachers_on_classroom_id"
-    t.index ["email"], name: "index_teachers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
     t.index ["school_id"], name: "index_teachers_on_school_id"
   end

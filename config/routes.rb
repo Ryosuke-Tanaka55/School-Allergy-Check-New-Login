@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  root 'static_pages#top'
 
+  # システム管理者用画面
   devise_for :system_admins, controllers: {
     sessions:      'system_admins/sessions',
     passwords:     'system_admins/passwords',
@@ -11,19 +13,44 @@ Rails.application.routes.draw do
     # omniauth_callbacks: "teachers/omniauth_callbacks"
   }
 
+
+  resources :system_admins, only: %i(index)
   namespace :system_admins do
-    resources :schools
-    resources :teachers, only: %i(index destroy)
+    resources :schools do
+      resources :teachers, param: :tcode, only: %i[show new create edit update]
+    end
   end
 
-  resources :system_admins
+  # 学校区分
+  scope '/:school_url' do
 
-  resource :teachers, only: :show do
-    get '/creator', to: 'teachers#creator'
-    resources :students do
-      namespace :alergy_checks do
-        resources :creators, only: %i(edit update destroy)
+    root to: 'static_pages#school_top', as: 'top'
+
+    # 先生画面
+    devise_for :teachers, controllers: {
+      sessions:      'teachers/sessions',
+      passwords:     'teachers/passwords',
+      registrations: 'teachers/registrations',
+      # omniauth_callbacks: "teachers/omniauth_callbacks"
+    }
+
+    resource :teachers, except: %i(show create edit update destroy) do
+      get '/creator', to: 'teachers#creator'
+      resources :students do
+        namespace :alergy_checks do
+          resources :creators, only: %i(edit update destroy)
+        end
       end
+      resource :students do
+        namespace :alergy_checks do
+          resource :creator, only: %i(new create)
+        end
+      end
+      post 'create'
+      get 'show', as: :show
+      get 'edit_info'
+      patch 'update_info'
+      delete 'destroy', as: :destroy
     end
     resource :students do
       namespace :alergy_checks do
@@ -32,14 +59,21 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    resources :classrooms do
+      collection do
+        get 'edit_using_class'
+        patch 'update_using_class'
+      end
+    end
   end
+
 
   # 下記山田さん既存のルート
   resources :students do
     collection { post :import }
   end
 
-  root 'static_pages#top'
   get '/signup', to: 'users#new'
 
   # ログイン機能
