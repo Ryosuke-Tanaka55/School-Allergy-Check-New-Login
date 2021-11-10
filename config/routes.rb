@@ -66,4 +66,4 @@ Rails.application.routes.draw do
     end #resouces do end
   end #user resouces do end 
 end
-#draw do end
+#draw to end.

@@ -85,7 +85,7 @@ class AttendancesController < ApplicationController
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
          @info_sum = Attendance.where(status: "確認済").count
-         @unapproval_info_sum = Attendance.where(status: "要再確認").count
+         @unapproval_info_sum = Attendance.where(status: "要再確認!").count
          flash[:success] = "確認済#{@info_sum}件、要再確認#{@unapproval_info_sum}件"
       end #if end 
     end #each end 
