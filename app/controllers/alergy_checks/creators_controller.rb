@@ -10,28 +10,31 @@ class AlergyChecks::CreatorsController < ApplicationController
   end
 
   def create
-    binding.irb
-    # if params[:alergy_check][:student_id].present?
-    #   @student = Student.find(params[:alergy_check][:student_id].to_i)
-    #   @alergy_check = @student.alergy_checks.new(new_creator_params)
-    #   if @alergy_check.save
-    #     flash[:success] = "献立情報を登録しました。"
-    #   else
-    #     flash[:danger] = "登録に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>")
-    #   end
-    # elsif params[:alergy_check][:student_id].nil?
-    #   flash[:danger] = "登録に失敗しました。児童の情報が存在しません。入力内容を確認してください。"
-    # else
-    #   flash[:danger] = "登録に失敗しました。クラス名と児童名を選択してください。"
-    # end
-    # redirect_to creator_teachers_url
+    AlergyCheck.transaction do
+      params[:student][:alergy_checks_attributes].each do |_, v|
+        student = current_teacher.school.students.find(nil)
+        if v[:_destroy] == "false"
+          student.alergy_checks.create!(
+            worked_on:  v[:worked_on],
+            menu:       v[:menu],
+            support:    v[:support]
+          )
+        end
+      end
+    end
+    flash[:success] = 'アレルギー情報を登録しました。'
+    redirect_to creator_teachers_url
+
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+    flash[:danger] = e.message
+    redirect_to creator_teachers_url
   end
 
   def edit
-    @student = Student.find(params[:student_id])
-    @classroom = Classroom.find(@student.classroom_id)
-    @alergy_check = AlergyCheck.find(params[:id])
-    @classrooms = Classroom.all
+    @student = current_teacher.school.students.find(params[:student_id])
+    @classroom = current_teacher.school.classrooms.find(@student.classroom_id)
+    @alergy_check = @student.alergy_checks.find(params[:id])
+    @classrooms = current_teacher.school.classrooms
   end
 
   def update
@@ -66,24 +69,6 @@ class AlergyChecks::CreatorsController < ApplicationController
   end
 
   private
-    def new_creator_params
-      params.require(:classroom).permit(
-        student_attributes: [
-          :_destroy,
-          alergy_check_attributes: [
-            :classroom,
-            :student,
-            :id,
-            :worked_on,
-            :menu,
-            :support,
-            :note,
-            :_destroy
-          ]
-        ]
-      )
-    end
-
     def edit_creator_params
       params.require(:alergy_check).permit(:student_id, :menu, :support, :note)
     end
