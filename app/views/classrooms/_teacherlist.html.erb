@@ -3,6 +3,7 @@
     <tr>
       <th>職員名</th>
       <th>職員コード</th>
+      <th>メールアドレス</th>
       <th>管理者</th>
       <th>対応法担当者</th>
       <th>代理申請者</th>
@@ -17,6 +18,7 @@
       <tr>
         <td><%= teacher.teacher_name %></td>
         <td><%= teacher.tcode %></td>
+        <td><%= teacher.email %></td>
         <td><%= teacher.admin ? '⭕️': '❌' %></td>
         <td><%= teacher.creator ? '⭕️': '❌' %></td>
         <td><%= teacher.charger ? '⭕️': '❌' %></td>

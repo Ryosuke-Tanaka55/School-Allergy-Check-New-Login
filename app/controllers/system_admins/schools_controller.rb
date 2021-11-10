@@ -22,7 +22,7 @@ class SystemAdmins::SchoolsController < ApplicationController
     @school = School.new(school_params)
     if @school.save
       flash[:info] = "学校を新規作成しました"
-      redirect_to system_admins_school_path(@school)
+      redirect_to system_admins_schools_path
     else
       flash[:danger] = "作成に失敗しました"
     end

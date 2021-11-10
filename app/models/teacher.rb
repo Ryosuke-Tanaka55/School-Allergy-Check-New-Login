@@ -28,8 +28,9 @@ class Teacher < ApplicationRecord
               format: { with: VALID_TCODE_REGEX, message: 'は半角・英数を両方含む必要があります' },
               uniqueness: true
 
-  # validates :email, uniqueness: true
+  # validate :validate_email
 
+              
   # email_required?の返り値をfalseにする事で、emailのvalidates_presence_ofのバリデーションを行わない
   def email_required?
     !email.blank? && super
@@ -47,5 +48,16 @@ class Teacher < ApplicationRecord
   # attributes
   # アクセス中のスクールコード=URLに含まれるschool_codeをセット
   # attr_accessor :current_school_url
+
+  private
+
+  # 学校管理者の場合はメール有、その他職員の場合はメール無でOKの設定
+  def validate_email
+    if self.admin?
+      if Teacher.find_by(email: self.email)
+        errors.add(:email, "は重複しています。")
+      end
+    end
+  end
 
 end

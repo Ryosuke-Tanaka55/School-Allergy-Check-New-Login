@@ -14,11 +14,11 @@ class TeachersController < ApplicationController
   end
 
   def new
-    @teacher = Teacher.new
+    @teacher = @school.teachers.new
   end
 
   def create
-    @teacher = Teacher.new(teachers_params)
+    @teacher = @school.teachers.new(teachers_params)
     if @teacher.save
       flash[:success] = "担任を作成しました。"
       redirect_to classrooms_path(school_url: params[:school_url]) and return
@@ -29,11 +29,11 @@ class TeachersController < ApplicationController
   end
 
   def edit_info
-    @teacher = Teacher.find(params[:id])
+    @teacher = @school.teachers.find(params[:id])
   end
 
   def update_info
-    @teacher = Teacher.find(params[:teacher][:id])
+    @teacher = @school.teachers.find(params[:teacher][:id])
     if @teacher.update_attributes!(teachers_params)
       flash[:success] = "職員情報を更新しました。"
       redirect_to classrooms_path(school_url: params[:school_url])
@@ -43,7 +43,7 @@ class TeachersController < ApplicationController
   end
 
   def destroy
-    @teacher = Teacher.find(params[:id])
+    @teacher = @school.teachers.find(params[:id])
     @teacher.destroy
     flash[:danger] = "#{@teacher.teacher_name}を削除しました。"
     redirect_to classrooms_path(school_url: params[:school_url])

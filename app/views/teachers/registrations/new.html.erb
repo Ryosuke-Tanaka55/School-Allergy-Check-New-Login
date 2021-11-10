@@ -1,8 +1,4 @@
-<% if system_admin_signed_in? %>
-  <h1><%= "学校管理者登録" %></h1>
-<% else %>
-  <h1><%= "職員登録" %></h1>
-<% end %>
+<h1><%= system_admin_signed_in? ? "学校管理者登録" : "職員登録" %></h1>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= bootstrap_devise_error_messages! %>
@@ -44,7 +40,7 @@
     <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
   </div>
 
-  <% if current_teacher.admin == true %>
+  <% if teacher_signed_in? && current_teacher.admin == true %>
     <div class="check_box">
       <%= f.check_box :admin %>
       <%= f.label :admin %>

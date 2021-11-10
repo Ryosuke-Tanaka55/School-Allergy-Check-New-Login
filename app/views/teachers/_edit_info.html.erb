@@ -10,7 +10,7 @@
       <%= form_with(model: @teacher, url: update_info_teachers_path, local: true) do |f| %>
         <%= render 'shared/error_messages', object: @teacher %>
       
-        <%= f.hidden_field(:school_id, value: @school.id) %>
+        <!-- %= f.hidden_field(:school_id, value: @school.id) % -->
         <%= f.hidden_field(:classroom_id, value: @teacher.classroom_id) %>
         <%= f.hidden_field(:id, value: @teacher.id) %>
 
