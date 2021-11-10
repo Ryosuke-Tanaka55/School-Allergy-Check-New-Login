@@ -3,14 +3,14 @@ class AlergyChecks::CreatorsController < ApplicationController
   $days_of_the_week = %w{日 月 火 水 木 金 土}
 
   def new
-    @classroom = Classroom.new
-    @student = @classroom.students.build
+    @student = Student.new
     @alergy_check = @student.alergy_checks.build
     @day = params[:day].to_date
-    @classrooms = Classroom.all
+    @classrooms = current_teacher.school.classrooms
   end
 
   def create
+    binding.irb
     # if params[:alergy_check][:student_id].present?
     #   @student = Student.find(params[:alergy_check][:student_id].to_i)
     #   @alergy_check = @student.alergy_checks.new(new_creator_params)
@@ -57,6 +57,12 @@ class AlergyChecks::CreatorsController < ApplicationController
     @alergy_check.destroy
     flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}の情報を削除しました。"
     redirect_to creator_teachers_url
+  end
+
+  def search_student
+    students = current_teacher.school.classrooms.find_by(id: params[:classroom_id]).students
+    response = students.map{|student| [student.id, student.student_name]}
+    render json: response
   end
 
   private
