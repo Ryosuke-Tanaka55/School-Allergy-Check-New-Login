@@ -4,7 +4,7 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if teacher_signed_in? %>
-          <li><%= link_to "ホーム", top_path(school_url: params[:school_url]) %></li>
+          <li><%= link_to "ホーム", top_path %></li>
         <% else %>
           <li><%= link_to "ホーム", root_path %></li>
         <% end %>
@@ -35,10 +35,10 @@
             </a>
             <% if current_teacher.admin? %>
               <ul class="dropdown-menu">
-                <li><%= link_to '本日の作業', show_teachers_path(school_url: params[:school_url]) %></li>
-                <li><%= link_to '職員登録', new_teacher_registration_path(school_url: params[:school_url]) %></li>
-                <li><%= link_to '職員一覧', classrooms_path(school_url: params[:school_url]) %></li>
-                <li><%= link_to 'クラス編集', edit_using_class_classrooms_path(school_url: params[:school_url]) %></li>
+                <li><%= link_to '本日の作業', show_teachers_path %></li>
+                <li><%= link_to '職員登録', new_teacher_registration_path %></li>
+                <li><%= link_to '職員一覧', classrooms_path %></li>
+                <li><%= link_to 'クラス編集', edit_using_class_classrooms_path %></li>
                 <li class="divider"></li>
                 <li>
                   <li><%= link_to 'ログアウト', destroy_teacher_session_path, method: :delete %></li>
@@ -46,7 +46,7 @@
               </ul>
             <% else %>
               <ul class="dropdown-menu">
-                <li><%= link_to '本日の作業', show_teachers_path(school_url: params[:school_url]) %></li>
+                <li><%= link_to '本日の作業', show_teachers_path %></li>
                 <li class="divider"></li>
                 <li>
                   <li><%= link_to 'ログアウト', destroy_teacher_session_path, method: :delete %></li>

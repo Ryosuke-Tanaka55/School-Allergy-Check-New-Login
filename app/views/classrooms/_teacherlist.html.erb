@@ -22,8 +22,8 @@
         <td><%= teacher.admin ? '⭕️': '❌' %></td>
         <td><%= teacher.creator ? '⭕️': '❌' %></td>
         <td><%= teacher.charger ? '⭕️': '❌' %></td>
-        <td><%= link_to "編集", edit_info_teachers_path(school_url: params[:school_url], id: teacher.id), remote: true, class: "btn btn-primary" %></td>
-        <td><%= link_to "削除", destroy_teachers_path(school_url: params[:school_url], id: teacher.id), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
+        <td><%= link_to "編集", edit_info_teachers_path(id: teacher.id), remote: true, class: "btn btn-primary" %></td>
+        <td><%= link_to "削除", destroy_teachers_path(id: teacher.id), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
       </tr>
     <% end %>
   </tbody>

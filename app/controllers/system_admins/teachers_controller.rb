@@ -6,17 +6,17 @@ class SystemAdmins::TeachersController < ApplicationController
   end
 
   def new
-    @school = School.find(params[:school_id])
+    @school = School.find_by!(school_url: params[:school_id])
     @admin_teacher = @school.teachers.new
   end
 
   def create
-    @school = School.find(params[:school_id])
+    @school = School.find_by!(school_url: params[:school_id])
     @admin_teacher = @school.teachers.new(admin_teacher_params)
     @admin_teacher.admin = true
     if @admin_teacher.save
       flash[:info] = "学校管理者を作成しました"
-      redirect_to system_admins_school_teacher_path(@school, @admin_teacher)
+      redirect_to system_admins_schools_path
     else
       flash[:danger] = "作成に失敗しました"
       render :new
@@ -32,7 +32,7 @@ class SystemAdmins::TeachersController < ApplicationController
     end
 
     def admin_teacher_params
-      params.require(:teacher).permit(:teacher_name, :email, :password, :password_confirmation)
+      params.require(:teacher).permit(:teacher_name, :tcode, :email, :password, :password_confirmation)
     end
 
 end

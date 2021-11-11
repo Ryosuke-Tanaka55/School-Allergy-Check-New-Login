@@ -1,6 +1,5 @@
 class SystemAdmins::SchoolsController < ApplicationController
   before_action :authenticate_system_admin!
-  before_action :set_school_url, only: %i[ show edit update destroy ]
 
   def index
     @schools = School.all

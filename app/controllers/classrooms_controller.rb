@@ -1,8 +1,10 @@
 class ClassroomsController < ApplicationController
+  include SchoolsHelper
+
   before_action :set_school
   before_action :authenticate_teacher!
   before_action :admin_teacher, only: [:index, :edit_using_class, :update_using_class]
-  
+
   def index
     classrooms = @school.classrooms.where(using_class: true)
     # 現状seed込みのidの為、アプリ渡す際下記id番号変更必要！
@@ -44,7 +46,7 @@ private
 
   # schoolの特定
   def set_school
-    @school = School.find_by(school_url: params[:school_url])
+    @school = current_school
   end
 
   def using_class_params

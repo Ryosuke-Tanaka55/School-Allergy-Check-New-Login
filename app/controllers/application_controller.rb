@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   $days_of_the_week = %w{日 月 火 水 木 金 土}
 
   # ページ出力前に1ヶ月分のデータの存在を確認・セットします。
- def set_one_month 
+ def set_one_month
   @first_day = params[:date].nil? ?
   Date.current.beginning_of_month : params[:date].to_date
   @last_day = @first_day.end_of_month
@@ -35,39 +35,15 @@ class ApplicationController < ActionController::Base
       system_admins_path
     when Teacher
       if current_teacher.admin == true && resource.sign_in_count == 1
-        edit_using_class_classrooms_path(school_url: params[:school_url])
+        edit_using_class_classrooms_path
       else
-        show_teachers_path(school_url: params[:school_url])
+        show_teachers_path
       end
-      # teachers_path(id: current_teacher.id)
     end
   end
 
-  # ログアウト後に遷移するpathを設定
-  # def after_sign_out_path_for(resource)
-  #   debugger
-  #   case resource
-  #   when SystemAdmin
-  #     root_path
-  #   when Teacher
-  #     top_path(school_url: params[:school_url])
-  #   end
-  # end
-
-   # school_urlの設定
-  def set_school_url
-    @school = School.find_by(school_url: params[:id])
-  end
-
-   # school間のアクセス制限
-  # def check_school_url
-  #   return if system_admin_signed_in?
-
-  #   routing_error if params[:school_url] != School.find(id: current_teacher.school_id).school_url
-  # end
-
   # 管理者かどうかの判定
   def admin_teacher
-    redirect_to top_path(school_url: params[:school_url]) unless current_teacher.admin?
+    redirect_to top_pathaaaa unless current_teacher.admin?
   end
-end  
+end

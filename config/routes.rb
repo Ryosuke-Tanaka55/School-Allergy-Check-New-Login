@@ -16,52 +16,56 @@ Rails.application.routes.draw do
   end
 
   # 学校区分
+  root to: 'static_pages#school_top', as: 'top'
+
+  # 先生画面
+  devise_for :teachers, skip: 'sessions', controllers: {
+    passwords:     'teachers/passwords',
+    registrations: 'teachers/registrations',
+    # omniauth_callbacks: "teachers/omniauth_callbacks"
+  }
   scope '/:school_url' do
+    devise_scope :teacher do
+      get 'teachers/sign_in', to: 'teachers/sessions#new', as: :new_teacher_session
+      post 'teachers/sign_in', to: 'teachers/sessions#create', as: :teacher_session
+    end
+  end
+  devise_scope :teacher do
+    delete 'teachers/sign_in', to: 'teachers/sessions#destroy', as: :destroy_teacher_session
+  end
 
-    root to: 'static_pages#school_top', as: 'top'
-
-    # 先生画面
-    devise_for :teachers, controllers: {
-      sessions:      'teachers/sessions',
-      passwords:     'teachers/passwords',
-      registrations: 'teachers/registrations',
-      # omniauth_callbacks: "teachers/omniauth_callbacks"
-    }
-
-    resource :teachers, except: %i(show create edit update destroy) do
-      get '/creator', to: 'teachers#creator'
-      resources :students do
-        namespace :alergy_checks do
-          resources :creators, only: %i(edit update destroy)
-        end
+  resource :teachers, except: %i(show create edit update destroy) do
+    get '/creator', to: 'teachers#creator'
+    resources :students do
+      namespace :alergy_checks do
+        resources :creators, only: %i(edit update destroy)
       end
-      resource :students do
-        namespace :alergy_checks do
-          resource :creator, only: %i(new create)
-        end
-      end
-      post 'create'
-      get 'show', as: :show
-      get 'edit_info'
-      patch 'update_info'
-      delete 'destroy', as: :destroy
     end
     resource :students do
       namespace :alergy_checks do
-        resource :creator, only: %i(new create) do
-          get '/students', to: 'creators#search_student'
-        end
+        resource :creator, only: %i(new create)
       end
     end
-
-    resources :classrooms do
-      collection do
-        get 'edit_using_class'
-        patch 'update_using_class'
+    post 'create'
+    get 'show', as: :show
+    get 'edit_info'
+    patch 'update_info'
+    delete 'destroy', as: :destroy
+  end
+  resource :students do
+    namespace :alergy_checks do
+      resource :creator, only: %i(new create) do
+        get '/students', to: 'creators#search_student'
       end
     end
   end
 
+  resources :classrooms do
+    collection do
+      get 'edit_using_class'
+      patch 'update_using_class'
+    end
+  end
 
   # 下記山田さん既存のルート
   resources :students do

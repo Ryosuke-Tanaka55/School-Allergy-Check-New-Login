@@ -4,9 +4,6 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :require_no_authentication, only: [:cancel] # ログイン後も新規登録を可能にする為、new、createを外す
   before_action :creatable?, only: [:new, :create]
   before_action :configure_sign_up_params, only: [:create]
-  # before_action :ippan_sign_up_params, only: [:create]
-  before_action :set_school
-  # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   # def new
@@ -29,7 +26,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
     else
       if Teacher.create!(ippan_sign_up_params)
         flash[:success] = "職員を作成しました。"
-        redirect_to classrooms_path(school_url: params[:school_url])
+        redirect_to classrooms_path
       else
         flash[:danger] = "作成に失敗しました。"
         render :new
@@ -63,11 +60,6 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
 
   protected
 
-  # schoolの特定
-  def set_school
-    @school = School.find_by(school_url: params[:school_url])
-  end
-
   # 学校管理者新規登録時のストロングパラメーター
   def configure_sign_up_params
     # if system_admin_signed_in?
@@ -99,7 +91,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   def creatable?
     if !current_teacher_is_admin? && !system_admin_signed_in?
       flash[:danger] = "新規登録は管理者のみ行えます"
-      redirect_to teachers_path(school_url: params[:school_url])
+      redirect_to teachers_path
     end
   end
 

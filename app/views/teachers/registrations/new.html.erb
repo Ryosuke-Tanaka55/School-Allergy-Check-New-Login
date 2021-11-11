@@ -2,10 +2,10 @@
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= bootstrap_devise_error_messages! %>
-    <%= f.hidden_field(:school_id, value: @school.id) %>
     <% if system_admin_signed_in? %>
       <%= f.hidden_field(:classroom_id, value: nil) %>
     <% elsif current_teacher.present? && current_teacher.admin? %>
+      <%= f.hidden_field(:school_id, value: current_school.id) %>
       <%= f.hidden_field(:classroom_id, value: params[:classroom_id]) %>
     <% end %>
 
