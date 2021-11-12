@@ -29,33 +29,3 @@
     <td><%= f.text_field :note, class: "form-control" %></td>
   <td><%= link_to_remove_association "削除", f, class: "btn btn-default" %></td>
 </tr>
-
-<script>
-
-// optionを追加するHTML
-function appendStudent(datas, student_select_id) {
-  var appendId = $(`#${student_select_id}`)
-  $(`#${student_select_id} > option`).remove();
-  datas.forEach(function(data) {
-    appendId.append($("<option>").val(data[0]).html(data[1]))
-  })
-}
-
-// Lカテゴリーが選択された時のアクション
-$(document).on("change", ".classroom-select", function () {
-  classroom_id = $(this).val()
-  student_select_id = $(this).attr('id').replace('classroom', 'student_id')
-  // ajaxでリクエストを送信
-  $.ajax({
-    type: "GET",
-    url: "/teachers/students/alergy_checks/creator/students",
-    data: {classroom_id: classroom_id},
-    dataType: 'json'
-  })
-  // doneメソッドでappendする
-  .done(function(datas) {
-    appendStudent(datas, student_select_id)
-  })
-})
-
-</script>

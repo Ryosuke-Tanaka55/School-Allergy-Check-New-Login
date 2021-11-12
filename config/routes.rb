@@ -1,24 +1,40 @@
 Rails.application.routes.draw do
+  root 'static_pages#top'
 
+  # システム管理者用画面
   devise_for :system_admins, controllers: {
     sessions:      'system_admins/sessions',
     passwords:     'system_admins/passwords',
   }
-  devise_for :teachers, controllers: {
-    sessions:      'teachers/sessions',
+
+
+  resources :system_admins, only: %i(index)
+  namespace :system_admins do
+    resources :schools do
+      resources :teachers, param: :tcode, only: %i[show new create edit update]
+    end
+  end
+
+  # 学校区分
+  root to: 'static_pages#school_top', as: 'top'
+
+  # 先生画面
+  devise_for :teachers, skip: 'sessions', controllers: {
     passwords:     'teachers/passwords',
     registrations: 'teachers/registrations',
     # omniauth_callbacks: "teachers/omniauth_callbacks"
   }
-
-  namespace :system_admins do
-    resources :schools
-    resources :teachers, only: %i(index destroy)
+  scope '/:school_url' do
+    devise_scope :teacher do
+      get 'teachers/sign_in', to: 'teachers/sessions#new', as: :new_teacher_session
+      post 'teachers/sign_in', to: 'teachers/sessions#create', as: :teacher_session
+    end
+  end
+  devise_scope :teacher do
+    delete 'teachers/sign_in', to: 'teachers/sessions#destroy', as: :destroy_teacher_session
   end
 
-  resources :system_admins
-
-  resource :teachers, only: :show do
+  resource :teachers, except: %i(show create edit update destroy) do
     get '/creator', to: 'teachers#creator'
     resources :students do
       namespace :alergy_checks do
@@ -27,10 +43,27 @@ Rails.application.routes.draw do
     end
     resource :students do
       namespace :alergy_checks do
-        resource :creator, only: %i(new create) do
-          get '/students', to: 'creators#search_student'
-        end
+        resource :creator, only: %i(new create)
       end
+    end
+    post 'create'
+    get 'show', as: :show
+    get 'edit_info'
+    patch 'update_info'
+    delete 'destroy', as: :destroy
+  end
+  resource :students do
+    namespace :alergy_checks do
+      resource :creator, only: %i(new create) do
+        get '/students', to: 'creators#search_student'
+      end
+    end
+  end
+
+  resources :classrooms do
+    collection do
+      get 'edit_using_class'
+      patch 'update_using_class'
     end
   end
 
@@ -39,7 +72,6 @@ Rails.application.routes.draw do
     collection { post :import }
   end
 
-  root 'static_pages#top'
   get '/signup', to: 'users#new'
 
   # ログイン機能

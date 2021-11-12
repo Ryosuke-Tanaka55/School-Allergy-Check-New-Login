@@ -12,7 +12,7 @@ class AlergyChecks::CreatorsController < ApplicationController
   def create
     AlergyCheck.transaction do
       params[:student][:alergy_checks_attributes].each do |_, v|
-        student = current_teacher.school.students.find(nil)
+        student = current_teacher.school.students.find(v[:student_id])
         if v[:_destroy] == "false"
           student.alergy_checks.create!(
             worked_on:  v[:worked_on],
