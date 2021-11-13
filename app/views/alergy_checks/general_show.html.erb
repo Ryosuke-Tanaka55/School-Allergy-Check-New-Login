@@ -1,3 +1,19 @@
-<%= link_to "アレルギーチェック有" , teachers_alergy_checks_path, remote: true, class: "btn btn-primary" %>
+<!-- userのshowのCSSも要確認 -->
+<div>
+  <div class="center">
+    <span style="font-size:2em"><%= I18n.l Date.today, format: :long %><br><br><br></span>
+    <span style="font-size:3em"><%= "本日のチェック件数" %><br><br></span>
+    <span style="font-size:2em"><%= @lunch_check_sum %> 件のチェックが必要です</span><br><br><br><br>
+    <span style="font-size:3em"><%= "本日のアレルギーチェック" %><br><br></span>
+  </div>
+  <div class="area">
+    <% if @lunch_check_sum > 0 %>
+      <%= link_to "有", teachers_alergy_checks_path, remote: true, class: "inline-block button" %>
+    <% else %>
+      <a class="inline-block button" href="#">無</a>
+    <% end %>
+  </div>
+</div>
 
+<!-- モーダル設定 -->
 <div id="index" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
