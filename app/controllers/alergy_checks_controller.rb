@@ -1,7 +1,7 @@
 class AlergyChecksController < ApplicationController
 
   def general_show
-    @lunch_check_sum = 1
+    @alergy_check_sum = Classroom.find(current_teacher.classroom_id).alergy_checks.all.count
   end
 
   def index
