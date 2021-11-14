@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211021153418) do
+ActiveRecord::Schema.define(version: 20211114061404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20211021153418) do
     t.boolean "first_check", default: false, null: false
     t.boolean "second_check", default: false, null: false
     t.boolean "student_check", default: false, null: false
-    t.string "status"
+    t.string "status", default: "", null: false
     t.string "status_checker"
     t.bigint "student_id"
     t.datetime "created_at", null: false
