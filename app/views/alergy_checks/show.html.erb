@@ -8,7 +8,7 @@
   </div>
   <div class="area">
     <% if @alergy_check_sum > 0 %>
-      <%= link_to "有", teachers_alergy_checks_path, remote: true, class: "inline-block button" %>
+      <%= link_to "有", today_index_teachers_alergy_checks_path, remote: true, class: "inline-block button" %>
     <% else %>
       <a class="inline-block button" href="#">無</a>
     <% end %>
@@ -16,4 +16,4 @@
 </div>
 
 <!-- モーダル設定 -->
-<div id="index" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="today-index" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

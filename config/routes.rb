@@ -53,10 +53,10 @@ Rails.application.routes.draw do
     delete 'destroy', as: :destroy
 
     #担任ページ
-    resources :alergy_checks, only: %i(index update) do
+    resource :alergy_checks, only: %i(show update) do
       collection do
-        get 'general_show'
-        get 'index_one_month'
+        get 'today_index'
+        get 'one_month_index'
       end
     end
 
