@@ -5,6 +5,41 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <h1 class="modal-title">【本日のチェック一覧】</h1>
+
+      <div class="modal-body">
+        <table border=2 width=100%, class="table table-bordered table-condensed user-table">
+          <thead>
+            <tr>
+              <th class=center>児童名</th>
+              <th class=center>メニュー名</th>
+              <th class=center>対応法</th>
+              <th class=center>備考</th>
+              <th class=center>第1チェック</th>
+              <th class=center>第2チェック</th>
+              <th class=center>本人チェック</th>
+              <th class=center>申請者</th>
+              <th class=center>報告先</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @alergy_checks.each do |alergy_check| %>
+              <% form_with(model: alergy_check, url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
+                <tr> 
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><% f.submit "報告する", class: "btn btn-primary btn-lg btn-block" %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
     </div> 
   </div>
 </div>
