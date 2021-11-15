@@ -12,6 +12,7 @@ class AlergyChecksController < ApplicationController
   end
 
   def update
+    @alergy_check
   end
 
   def one_month_index
