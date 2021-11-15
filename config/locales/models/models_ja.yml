@@ -44,9 +44,10 @@ ja:
           second_check: 第2チェック
           student_check: 本人チェック
           status: 
-          status_checker: 申請先
+          status_checker: 報告先
           menu: メニュー
           support: 対応法
+          applicant_id: 報告者
         student:
           student_name: 児童名
           student_number: 番号

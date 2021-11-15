@@ -7,39 +7,50 @@
       <h1 class="modal-title">【本日のチェック一覧】</h1>
 
       <div class="modal-body">
-        <table border=2 width=100%, class="table table-bordered table-condensed user-table">
+        <table border=2 width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
           <thead>
             <tr>
-              <th class=center>児童名</th>
-              <th class=center>メニュー名</th>
-              <th class=center>対応法</th>
-              <th class=center>備考</th>
-              <th class=center>第1チェック</th>
-              <th class=center>第2チェック</th>
-              <th class=center>本人チェック</th>
-              <th class=center>申請者</th>
-              <th class=center>報告先</th>
+              <th><%= Student.human_attribute_name(:student_name) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:menu) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:support) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:note) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:first_check) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:second_check) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:student_check) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:applicant_id) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:status_checker) %></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <% @alergy_checks.each do |alergy_check| %>
-              <% form_with(model: alergy_check, url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
-                <tr> 
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><% f.submit "報告する", class: "btn btn-primary btn-lg btn-block" %></td>
+              <%= form_with(model: alergy_check, url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
+                <tr>
+                  <td><%= alergy_check.student.student_name %></td>
+                  <td><%= alergy_check.menu %></td>
+                  <td><%= alergy_check.support %></td>
+                  <td>
+                    <% if alergy_check.note.present? %>
+                      <%= alergy_check.note %>
+                    <% else %>
+                      なし
+                    <% end %>
+                  </td>
+                  <td><%= f.check_box :first_check, {}, true, false %></td>
+                  <td><%= f.check_box :second_check, {}, true, false %></td>
+                  <td><%= f.check_box :student_check, {}, true, false %></td>
+                  <td><%= f.collection_select :applicant_id, @teachers, :id, :teacher_name, 
+                                              { include_blank: "申請者名を選択" }, class: "form-control",
+                                              required: true %></td>
+                  <td><%= Teacher.human_attribute_name(:admin) %></td>
+                  <!--ステータスによってボタンテキストの変更処理が必要-->
+                  <td><%= f.submit "#{check_state(alergy_check.status)}", class: "btn btn-primary btn-sm" %></td>
                 </tr>
               <% end %>
             <% end %>
           </tbody>
         </table>
+      </div>
     </div> 
   </div>
 </div>

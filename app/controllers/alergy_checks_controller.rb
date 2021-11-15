@@ -8,6 +8,7 @@ class AlergyChecksController < ApplicationController
 
   def today_index
     @alergy_checks = @classroom.alergy_checks.all
+    @teachers = Teacher.where.not(creator: true) #対応法担当者は除く
   end
 
   def update

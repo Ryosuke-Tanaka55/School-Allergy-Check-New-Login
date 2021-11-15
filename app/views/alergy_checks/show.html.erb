@@ -1,7 +1,7 @@
 <!-- userのshowのCSSも要確認 -->
 <div>
   <div class="center">
-    <span style="font-size:2em"><%= I18n.l Date.today, format: :long %><br><br></span>
+    <span style="font-size:2em"><%= I18n.l(Date.today, format: :long) %><br><br></span>
     <span style="font-size:2em">クラス：<%= @classroom.class_name %><br><br><br></span>
     <span style="font-size:3em"><%= "本日のアレルギーチェック" %><br><br></span>
   </div>
