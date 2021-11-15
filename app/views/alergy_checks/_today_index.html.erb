@@ -43,7 +43,6 @@
                                               { include_blank: "申請者名を選択" }, class: "form-control",
                                               required: true %></td>
                   <td><%= Teacher.human_attribute_name(:admin) %></td>
-                  <!--ステータスによってボタンテキストの変更処理が必要-->
                   <td><%= f.submit "#{check_state(alergy_check.status)}", class: "btn btn-primary btn-sm" %></td>
                 </tr>
               <% end %>
