@@ -1,17 +1,32 @@
-<h1>献立表</h1>
+<h1>献立表一覧</h1>
 
-
-<%= form_with model: [@school, @menu], url: teachers_menus_path, local: true do |f| %>
-  <div class="col-md-4 offset-md-8">
-    <%= f.label :menu_pdf %>
-    <%= f.file_field :menu_pdf %>
-    <%= f.submit "アップロード" %>
-  </div>
-<% end %>
-
-<div class="btn-users-show">
-  <%= link_to "⇦ 前月", teachers_menus_path(date: @first_day.prev_month), class: "btn btn-info" %>
-  <%= link_to "当月", teachers_menus_path(date: Date.today), class: "btn btn-info" %>
-  <%= link_to "次月 ⇨", teachers_menus_path(date: @first_day.next_month), class: "btn btn-info" %>
+<!--園児登録ボタン-->
+<div class="btn-menu-new">
+  <%= link_to "献立表追加", new_teachers_menu_path, remote: true, class: "btn btn-primary" %>
 </div>
 
+<table class="table table-bordered table-condensed" id="index-classroom">
+  <thead>
+    <tr>
+      <th>献立表名</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @menus.each do |menu| %>
+      <tr>
+        <td><%= link_to menu.menu_name, teachers_menu_path(menu) %></td>
+        <td><%= link_to "編集", edit_teachers_menu_path(menu), remote: true, class: "btn btn-primary" %></td>
+        <td><%= link_to "削除", teachers_menu_path(menu), method: :delete, class: "btn btn-danger", data: {confirm: "#{menu.menu_pdf}を削除してよろしいですか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

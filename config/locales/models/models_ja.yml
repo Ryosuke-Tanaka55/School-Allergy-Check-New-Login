@@ -53,4 +53,5 @@ ja:
           student_number: 番号
           alergy: アレルギー食品
         menu:
+          menu_name: 献立表名
           menu_pdf: 献立PDF

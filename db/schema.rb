@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20211113012831) do
   end
 
   create_table "menus", force: :cascade do |t|
+    t.string "menu_name"
     t.string "menu_pdf"
     t.bigint "school_id"
     t.datetime "created_at", null: false
