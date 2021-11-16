@@ -1,0 +1,17 @@
+<h1>献立表</h1>
+
+
+<%= form_with model: [@school, @menu], url: teachers_menus_path, local: true do |f| %>
+  <div class="col-md-4 offset-md-8">
+    <%= f.label :menu_pdf %>
+    <%= f.file_field :menu_pdf %>
+    <%= f.submit "アップロード" %>
+  </div>
+<% end %>
+
+<div class="btn-users-show">
+  <%= link_to "⇦ 前月", teachers_menus_path(date: @first_day.prev_month), class: "btn btn-info" %>
+  <%= link_to "当月", teachers_menus_path(date: Date.today), class: "btn btn-info" %>
+  <%= link_to "次月 ⇨", teachers_menus_path(date: @first_day.next_month), class: "btn btn-info" %>
+</div>
+
