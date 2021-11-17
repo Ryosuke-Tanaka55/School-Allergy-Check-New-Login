@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :teachers do
+  resource :teachers do
   resources :admin_alergy_checks, only: [:edit, :update] do
     collection do  
       get 'lunch_check'

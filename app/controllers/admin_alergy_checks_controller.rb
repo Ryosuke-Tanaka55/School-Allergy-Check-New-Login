@@ -1,5 +1,13 @@
-class AttendancesController < ApplicationController
+class AdminAlergyChecksController < ApplicationController
   UPDATE_ERROR_MSG = "登録に失敗しました。やり直してください。"
+
+  def show
+    @worked_sum = @attendances.where.not(started_at: nil).count
+    @lunch_check_sum = Attendance.where(lunch_check_superior: @user.name).where(status: "報告中").count
+    @users = User.joins(:attendances).where(attendances: {status: "確認済"})
+    @checks = Attendance.where(worked_on: @first_day..@last_day).where(status: "確認済").order(:worked_on, :user_id)
+    @un_checks = Attendance.where(worked_on: @first_day..@last_day).where.not(status: "報告中").where.not(status: "確認済").where.not(status: "要確認").order(:worked_on, :user_id)
+  end  
 
  def update
     @user = User.find(params[:user_id])
