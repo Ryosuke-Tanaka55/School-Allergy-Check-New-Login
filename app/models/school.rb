@@ -3,6 +3,7 @@ class School < ApplicationRecord
   has_many :teachers, dependent: :destroy
   has_many :classrooms, dependent: :destroy
   has_many :students, dependent: :destroy
+  has_many :menus, dependent: :destroy
   accepts_nested_attributes_for :classrooms
 
   VALID_SCHOOLURL_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze

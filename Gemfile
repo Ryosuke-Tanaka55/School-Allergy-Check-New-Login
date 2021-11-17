@@ -16,6 +16,9 @@ gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'roo'
 gem 'cocoon'
+gem 'carrierwave'
+gem 'mini_magick'
+
 
 # ログイン機能
 gem 'devise'

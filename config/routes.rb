@@ -45,6 +45,7 @@ Rails.application.routes.draw do
         resource :creator, only: %i(new create)
       end
     end
+    resources :menus
     post 'create'
     get 'show', as: :show
     get 'edit_info'
