@@ -4,18 +4,20 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
+      <h1>献立表追加</h1>
     </div>
     <div class="modal-body">
-      <h1>献立表追加</h1>
       <%= form_with model: [@school, @menu], url: teachers_menus_path, local: true do |f| %>
-        <div class="col-md-4 offset-md-8">
+        <div class="form-group">
           <%= f.label :menu_name %><br>
-          <%= f.text_field :menu_name %><br>
+          <%= f.text_field :menu_name, class: "form-control" %><br>
+        </div>
 
+        <div class="form-group">
           <%= f.label :menu_pdf %>
           <%= f.file_field :menu_pdf %>
-          <%= f.submit "追加する" %>
         </div>
+        <%= f.submit "追加する", class: "btn btn-primary btn-block" %>
       <% end %>
     </div>
   </div>

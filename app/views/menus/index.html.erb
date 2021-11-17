@@ -1,16 +1,20 @@
 <h1>献立表一覧</h1>
 
 <!--園児登録ボタン-->
-<div class="btn-menu-new">
-  <%= link_to "献立表追加", new_teachers_menu_path, remote: true, class: "btn btn-primary" %>
-</div>
+<% if current_teacher.admin? %>
+  <div class="btn-menu-new">
+    <%= link_to "献立表追加", new_teachers_menu_path, remote: true, class: "btn btn-primary" %>
+  </div>
+<% end %>
 
 <table class="table table-bordered table-condensed" id="index-classroom">
   <thead>
     <tr>
       <th>献立表名</th>
-      <th>編集</th>
-      <th>削除</th>
+      <% if current_teacher.admin? %>
+        <th>編集</th>
+        <th>削除</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -18,8 +22,10 @@
     <% @menus.each do |menu| %>
       <tr>
         <td><%= link_to menu.menu_name, teachers_menu_path(menu) %></td>
-        <td><%= link_to "編集", edit_teachers_menu_path(menu), remote: true, class: "btn btn-primary" %></td>
-        <td><%= link_to "削除", teachers_menu_path(menu), method: :delete, class: "btn btn-danger", data: {confirm: "#{menu.menu_pdf}を削除してよろしいですか？" } %></td>
+        <% if current_teacher. admin? %>
+          <td><%= link_to "編集", edit_teachers_menu_path(menu), remote: true, class: "btn btn-primary" %></td>
+          <td><%= link_to "削除", teachers_menu_path(menu), method: :delete, class: "btn btn-danger", data: {confirm: "#{menu.menu_name}を削除してよろしいですか？" } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

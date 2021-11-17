@@ -6,7 +6,7 @@
       <%= render 'layouts/flash_messages' %>
       <%= render 'layouts/model_error_messages', model: @school %>
 
-      <div class="field">
+      <div class="form-group">
         <%= f.label :school_name %>
         <%= f.text_field :school_name, class: "form-control" %>
 
@@ -18,7 +18,7 @@
         <%= f.submit "作成する", class: "btn btn-primary btn-block" %>
       </div>
     <% end %>
-    <%= link_to '戻る', system_admins_schools_path %>
+    <%= link_to '一覧へ戻る', system_admins_schools_path, class: 'btn btn-default btn-block' %>
   </div>
 </div>
 
