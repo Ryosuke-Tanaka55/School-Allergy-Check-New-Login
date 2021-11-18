@@ -2,13 +2,13 @@ class AlergyChecksController < ApplicationController
   before_action :set_classroom, only: [:show, :today_index]
 
   def show
-    @alergy_check_sum = @classroom.alergy_checks.where(worked_on: Date.current).count
-    #.allと.where(status: "")の数の差分がゼロの時、「本日のチェックは完了しました」と表示する
+    @alergy_check_sum = @classroom.alergy_checks.where(worked_on: Date.current).count #本日のチェック件数
+    @submitted = @classroom.alergy_checks.where(worked_on: Date.current).where.not(status: "").count #報告済み件数
   end
 
   def today_index
-    @alergy_checks = @classroom.alergy_checks.where(worked_on: Date.current) #本日の日付のものに限る
-    @teachers = Teacher.where.not(creator: true) #対応法担当者は除く
+    @alergy_checks = @classroom.alergy_checks.where(worked_on: Date.current).order(:student_id)
+    @teachers = Teacher.where.not(creator: true)
   end
 
   def update

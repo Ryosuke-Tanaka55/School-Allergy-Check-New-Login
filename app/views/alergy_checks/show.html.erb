@@ -2,8 +2,12 @@
 <div>
   <div class="center">
     <span style="font-size:2em"><%= I18n.l(Date.current, format: :long) %><br><br></span>
-    <span style="font-size:2em">クラス：<%= @classroom.class_name %><br><br><br></span>
-    <span style="font-size:3em"><%= "本日のアレルギーチェック" %><br><br></span>
+    <span style="font-size:2em">クラス：<%= @classroom.class_name %><br><br></span>
+    <% if @alergy_check_sum == @submitted %>  
+      <span style="font-size:2em">本日のチェックは完了しました<br><br></span>
+    <% else %>
+      <span style="font-size:2em">本日のアレルギーチェック：<%= "#{@alergy_check_sum}件" %><br><br></span>
+    <% end %>
   </div>
   <div class="area">
     <% if @alergy_check_sum > 0 %>
