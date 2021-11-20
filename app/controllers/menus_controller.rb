@@ -21,15 +21,12 @@ class MenusController < ApplicationController
 
   # 献立表保存
   def create
-    if params[:menu][:menu_pdf].blank?
-      flash[:danger] = "ファイルを指定してください。"
-    elsif params[:menu][:menu_name].blank?
-      flash[:danger] = "ファイル名を入力してください。"
-    else
-      @menu = @school.menus.new(menu_params)
-      @menu.save
+    @menu = @school.menus.new(menu_params)
+    if @menu.save
       flash[:success] = '献立表を追加しました。'
       redirect_to teachers_menu_path(@menu) and return
+    else
+      flash[:danger] = "作成に失敗しました。<br>・#{@menu.errors.full_messages.join('<br>・')}"
     end
     redirect_to teachers_menus_path and return
   end
@@ -40,16 +37,13 @@ class MenusController < ApplicationController
 
   # 献立表更新
   def update
-    if params[:menu][:menu_pdf].blank?
-      flash[:danger] = "ファイルを指定してください。"
-    elsif params[:menu][:menu_name].blank?
-      flash[:danger] = "ファイル名を入力してください。"
-    else
-      @menu.update_attributes(menu_params)
+    if @menu.update_attributes(menu_params)
       flash[:success] = "献立表を更新しました。"
-      redirect_to teachers_menus_path and return
-    end
-    redirect_to teachers_menus_path and return
+      redirect_to teachers_menu_path(@menu) and return
+    else
+      flash[:danger] = "更新に失敗しました。<br>・#{@menu.errors.full_messages.join('<br>・')}"
+  end
+  redirect_to teachers_menus_path and return
   end
 
   # 献立表削除
