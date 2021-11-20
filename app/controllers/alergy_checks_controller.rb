@@ -8,15 +8,23 @@ class AlergyChecksController < ApplicationController
 
   def today_index
     @alergy_checks = @classroom.alergy_checks.where(worked_on: Date.current).order(:student_id)
-    @teachers = Teacher.where.not(creator: true)
+    @teachers = Teacher.all
   end
 
   def update
     @alergy_check = AlergyCheck.find(params[:alergy_check][:alergy_check_id])
-    if @alergy_check.update_attributes(today_check_params)
+    if current_teacher.school.id != @alergy_check.student.school_id
+      flash[:danger] = "許可されていない操作が行われました。"
+      return redirect_to teachers_alergy_checks_url
+    end
+
+    #バリデーションチェック前の値セット
+    @alergy_check.assign_attributes(today_check_params)
+
+    if @alergy_check.valid?(:today_check) && @alergy_check.save
       flash[:success] = "#{@alergy_check.student.student_name}のチェックを報告しました。"
     else
-      flash[:danger] = "チェックの報告に失敗しました。入力項目を確認してください。"
+      flash[:danger] = "#{@alergy_check.student.student_name}のチェック報告に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>・")
     end
     redirect_to teachers_alergy_checks_url
   end
