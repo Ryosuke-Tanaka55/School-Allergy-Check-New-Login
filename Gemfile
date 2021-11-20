@@ -18,6 +18,9 @@ gem 'roo'
 gem 'cocoon'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'fog-aws'
+gem 'dotenv-rails'
+gem 'carrierwave-i18n'
 
 
 # ログイン機能
