@@ -16,6 +16,12 @@ gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'roo'
 gem 'cocoon'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog-aws'
+gem 'dotenv-rails'
+gem 'carrierwave-i18n'
+
 
 # ログイン機能
 gem 'devise'
@@ -35,6 +41,9 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # 開発環境でのメール送信時にブラウザで確認できるようにするライブラリ
+  gem 'letter_opener_web'
 end
 
 group :test do

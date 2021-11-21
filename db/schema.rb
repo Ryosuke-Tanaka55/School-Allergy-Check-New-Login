@@ -65,6 +65,15 @@ ActiveRecord::Schema.define(version: 20211114065127) do
     t.index ["school_id"], name: "index_classrooms_on_school_id"
   end
 
+  create_table "menus", force: :cascade do |t|
+    t.string "menu_name"
+    t.string "menu_pdf"
+    t.bigint "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_menus_on_school_id"
+  end
+
   create_table "schools", force: :cascade do |t|
     t.string "school_name", default: "", null: false
     t.string "school_url", default: "", null: false
@@ -143,6 +152,7 @@ ActiveRecord::Schema.define(version: 20211114065127) do
   add_foreign_key "alergy_checks", "students"
   add_foreign_key "attendances", "users"
   add_foreign_key "classrooms", "schools"
+  add_foreign_key "menus", "schools"
   add_foreign_key "students", "classrooms"
   add_foreign_key "students", "schools"
   add_foreign_key "teachers", "classrooms"

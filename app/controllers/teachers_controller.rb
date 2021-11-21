@@ -23,7 +23,7 @@ class TeachersController < ApplicationController
       flash[:success] = "担任を作成しました。"
       redirect_to classrooms_path and return
     else
-      flash[:danger] = "作成に失敗しました。<br>" + "・" + @teacher.errors.full_messages.join("<br>")
+      flash[:danger] = "作成に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"
     end
     redirect_to classrooms_path and return
   end
