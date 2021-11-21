@@ -51,6 +51,16 @@ Rails.application.routes.draw do
     get 'edit_info'
     patch 'update_info'
     delete 'destroy', as: :destroy
+
+    #担任ページ
+    resource :alergy_checks, only: %i(show update) do
+      collection do
+        get 'today_index'
+        get 'one_month_index'
+      end
+    end
+
+
   end
   resource :students do
     namespace :alergy_checks do
