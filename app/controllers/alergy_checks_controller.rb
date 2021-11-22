@@ -2,17 +2,18 @@ class AlergyChecksController < ApplicationController
   before_action :set_classroom, only: [:show, :today_index]
 
   def show
-    @alergy_check_sum = @classroom.alergy_checks.where(worked_on: Date.current).count #本日のチェック件数
+    @alergy_check_sum = @classroom.alergy_checks.where(worked_on: Date.current).count
     @submitted = @classroom.alergy_checks.where(worked_on: Date.current).where.not(status: "").count #報告済み件数
   end
 
   def today_index
     @alergy_checks = @classroom.alergy_checks.where(worked_on: Date.current).order(:student_id)
-    @teachers = Teacher.all
+    @teachers = Teacher.all ## 自クラス申請の場合は担任の名前のみ、管理職以外の代理申請の場合は管理職名以外の名前から選択可にする
   end
 
   def update
     @alergy_check = AlergyCheck.find(params[:alergy_check][:alergy_check_id])
+    # 同じclassroom_idを持つ児童しか選択できない
     if current_teacher.school.id != @alergy_check.student.school_id
       flash[:danger] = "許可されていない操作が行われました。"
       return redirect_to teachers_alergy_checks_url
