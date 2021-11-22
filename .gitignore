@@ -23,6 +23,6 @@
 .byebug_history
 
 # Ignore uploaded files in development
- /public/uploads/
+/public/uploads/
 
- /.env
+/.env
