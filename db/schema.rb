@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211021153418) do
+ActiveRecord::Schema.define(version: 20211122091408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(version: 20211021153418) do
     t.string "teacher_of_student"
     t.string "student_classroom"
     t.string "alergy"
+    t.string "student_classs_room"
+    t.string "student_note"
     t.index ["classroom_id"], name: "index_students_on_classroom_id"
     t.index ["school_id"], name: "index_students_on_school_id"
   end
