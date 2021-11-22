@@ -6,12 +6,11 @@ Rails.application.routes.draw do
 
   # システム管理者用画面
   devise_for :system_admins, controllers: {
+    registrations: 'system_admins/registrations',
     sessions:      'system_admins/sessions',
     passwords:     'system_admins/passwords',
   }
 
-
-  resources :system_admins, only: %i(index)
   namespace :system_admins do
     resources :schools do
       resources :teachers, param: :tcode, only: %i[show new create edit update]
@@ -52,11 +51,22 @@ Rails.application.routes.draw do
         resource :creator, only: %i(new create)
       end
     end
+    resources :menus
     post 'create'
     get 'show', as: :show
     get 'edit_info'
     patch 'update_info'
     delete 'destroy', as: :destroy
+
+    #担任ページ
+    resource :alergy_checks, only: %i(show update) do
+      collection do
+        get 'today_index'
+        get 'one_month_index'
+      end
+    end
+
+
   end
   resource :students do
     namespace :alergy_checks do
@@ -71,6 +81,10 @@ Rails.application.routes.draw do
       get 'edit_using_class'
       patch 'update_using_class'
     end
+  end
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
   # 下記山田さん既存のルート

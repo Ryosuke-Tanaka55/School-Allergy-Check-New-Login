@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211122091408) do
+ActiveRecord::Schema.define(version: 20211114065127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,13 +21,14 @@ ActiveRecord::Schema.define(version: 20211122091408) do
     t.boolean "first_check", default: false, null: false
     t.boolean "second_check", default: false, null: false
     t.boolean "student_check", default: false, null: false
-    t.string "status"
+    t.string "status", default: "", null: false
     t.string "status_checker"
     t.bigint "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "menu", null: false
     t.string "support", null: false
+    t.integer "applicant_id"
     t.index ["student_id"], name: "index_alergy_checks_on_student_id"
   end
 
@@ -62,6 +63,15 @@ ActiveRecord::Schema.define(version: 20211122091408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_id"], name: "index_classrooms_on_school_id"
+  end
+
+  create_table "menus", force: :cascade do |t|
+    t.string "menu_name"
+    t.string "menu_pdf"
+    t.bigint "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_menus_on_school_id"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -144,6 +154,7 @@ ActiveRecord::Schema.define(version: 20211122091408) do
   add_foreign_key "alergy_checks", "students"
   add_foreign_key "attendances", "users"
   add_foreign_key "classrooms", "schools"
+  add_foreign_key "menus", "schools"
   add_foreign_key "students", "classrooms"
   add_foreign_key "students", "schools"
   add_foreign_key "teachers", "classrooms"
