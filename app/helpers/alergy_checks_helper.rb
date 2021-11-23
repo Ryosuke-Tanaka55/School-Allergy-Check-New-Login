@@ -19,4 +19,13 @@ module AlergyChecksHelper
       return "管理職#{status}"
     end
   end
+
+  # 備考欄表示
+  def note(note)
+    if note.nil?
+      return "なし"
+    else
+      return note
+    end
+  end
 end

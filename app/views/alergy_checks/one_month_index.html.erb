@@ -6,7 +6,7 @@
 </div>
 
 <div>
-  <table class="table table-bordered table-condensed table-hover table__general-contents--center">
+  <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
     <thead>
       <tr>
           <th><%= AlergyCheck.human_attribute_name(:worked_on) %></th>
@@ -25,7 +25,7 @@
           <td><%= alergy_check.student.student_name %></td>
           <td><%= alergy_check.menu %></td>
           <td><%= alergy_check.support %></td>
-          <td><%= alergy_check.note %></td>
+          <td><%= note(alergy_check.note) %></td>
           <td><%= alergy_check.applicant %></td>
           <td>
             <%= monthly_check_state(alergy_check.status) %>
