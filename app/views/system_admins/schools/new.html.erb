@@ -4,8 +4,9 @@
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @school, url: system_admins_schools_path, local: true) do |f| %>
       <%= render 'layouts/flash_messages' %>
+      <%= render 'layouts/model_error_messages', model: @school %>
 
-      <div class="field">
+      <div class="form-group">
         <%= f.label :school_name %>
         <%= f.text_field :school_name, class: "form-control" %>
 
@@ -17,7 +18,7 @@
         <%= f.submit "作成する", class: "btn btn-primary btn-block" %>
       </div>
     <% end %>
-    <%= link_to '戻る', system_admins_path %>
+    <%= link_to '一覧へ戻る', system_admins_schools_path, class: 'btn btn-default btn-block' %>
   </div>
 </div>
 

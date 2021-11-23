@@ -1,19 +1,2 @@
 $("#new").html("<%= escape_javascript(render 'new') %>");
 $("#new").modal("show");
-
-$("#select--classroom").on('change', function() {
-  let classroomVal = $('#select--classroom').val();
-  if (classroomVal !== "") {
-    let defaultStudentSelect = `<select class="default-student-select form-control" name="alergy_check[student_id]">
-                                  <option value>児童を選択</option>
-                                </select>`;
-    // クラスのidが一致するtemplate要素を格納
-    let selectedTemplate = $(`#student-of-classroom${classroomVal}`);
-    // 値が変わったときに#select--studentの中身を削除したい
-    $('#select--student').empty();
-    $('#select--student').append(selectedTemplate.html());
-  }else {
-    $('#select--student').empty();
-    $('#select--student').append(defaultStudentSelect);
-  };
-});
