@@ -19,7 +19,7 @@ class AlergyCheck < ApplicationRecord
       validates :second_check
       validates :student_check
     end
-    validates :applicant_id, presence: true
+    validates :applicant, presence: true
   end
 
   # worked_onカラムが本日の日付であるものを取得する
