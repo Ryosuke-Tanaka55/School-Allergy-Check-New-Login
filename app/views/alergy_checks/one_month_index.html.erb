@@ -1,37 +1,43 @@
 <div class="button__monthly">
   <h1>月間チェック一覧</h1>
-  <%= link_to "前月", "#", class: "btn btn-info" %>
-  <%= link_to "次月", "#", class: "btn btn-info" %>
-  <%= link_to "印刷する", "#", class: "btn btn-primary" %>
+  <%= link_to "前月", one_month_index_teachers_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-info" %>
+  <%= link_to "次月", one_month_index_teachers_alergy_checks_path(date: @first_day.next_month), class: "btn btn-info" %>
+  <% if @alergy_checks.any? %>
+    <%= link_to "印刷する", "#", class: "btn btn-primary" %>
+  <% end %>
 </div>
 
 <div>
-  <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
-    <thead>
-      <tr>
-          <th><%= AlergyCheck.human_attribute_name(:worked_on) %></th>
-          <th><%= Student.human_attribute_name(:student_name) %></th>
-          <th><%= AlergyCheck.human_attribute_name(:menu) %></th>
-          <th><%= AlergyCheck.human_attribute_name(:support) %></th>
-          <th><%= AlergyCheck.human_attribute_name(:note) %></th>
-          <th><%= AlergyCheck.human_attribute_name(:applicant_id) %></th>
-          <th><%= AlergyCheck.human_attribute_name(:status) %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @classroom.alergy_checks.each do |alergy_check| %>
+  <% if @alergy_checks.any? %>
+    <table class="table table-bordered table-condensed table-hover table__alergy-contents--center">
+      <thead>
         <tr>
-          <td><%= l(alergy_check.worked_on, format: :short) %></td>
-          <td><%= alergy_check.student.student_name %></td>
-          <td><%= alergy_check.menu %></td>
-          <td><%= alergy_check.support %></td>
-          <td><%= note(alergy_check.note) %></td>
-          <td><%= alergy_check.applicant %></td>
-          <td>
-            <%= monthly_check_state(alergy_check.status) %>
-          </td>
+            <th><%= AlergyCheck.human_attribute_name(:worked_on) %></th>
+            <th><%= Student.human_attribute_name(:student_name) %></th>
+            <th><%= AlergyCheck.human_attribute_name(:menu) %></th>
+            <th><%= AlergyCheck.human_attribute_name(:support) %></th>
+            <th><%= AlergyCheck.human_attribute_name(:note) %></th>
+            <th><%= AlergyCheck.human_attribute_name(:applicant_id) %></th>
+            <th><%= AlergyCheck.human_attribute_name(:status) %></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @alergy_checks.each do |alergy_check| %>
+          <tr>
+            <td><%= l(alergy_check.worked_on, format: :short) %></td>
+            <td><%= alergy_check.student.student_name %></td>
+            <td><%= alergy_check.menu %></td>
+            <td><%= alergy_check.support %></td>
+            <td><%= note(alergy_check.note) %></td>
+            <td><%= alergy_check.applicant %></td>
+            <td>
+              <%= monthly_check_state(alergy_check.status) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <h1 style="font-size:2em"><%= "#{@first_day.month}月のチェック情報はありません。" %></h2>
+  <% end %>
 </div>

@@ -31,6 +31,10 @@ class AlergyChecksController < ApplicationController
   end
 
   def one_month_index
+    @days_of_the_week = %w{日 月 火 水 木 金 土}
+    @first_day = params[:date].nil? ? Date.current.beginning_of_month : params[:date].to_date
+    @last_day = @first_day.end_of_month
+    @alergy_checks = @classroom.alergy_checks.where(worked_on: @first_day..@last_day)
   end
 
   private
