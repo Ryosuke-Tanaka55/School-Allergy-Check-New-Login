@@ -1,7 +1,8 @@
 module AlergyChecksHelper
-  # 報告ボタンテキスト表示切り替え
+  # 報告ボタンテキスト表示
   def check_state(status)
-    if status == ""
+    case status
+    when "" then
       return "報告する"
     else
       return status
