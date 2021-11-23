@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211019124554) do
+ActiveRecord::Schema.define(version: 20211118144549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_alergy_checks", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "worked_on"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.string "note"
+    t.string "status", default: "f"
+    t.string "lunch_check_superior"
+    t.boolean "superior_checker"
+  end
 
   create_table "alergy_checks", force: :cascade do |t|
     t.date "worked_on", null: false

@@ -112,6 +112,4 @@ class AdminAlergyChecksController < ApplicationController
   def lunch_check_info_params 
     params.require(:user).permit(attendances: [:status, :superior_checker])[:attendances]
   end  
-  
-  
-end  
+end
