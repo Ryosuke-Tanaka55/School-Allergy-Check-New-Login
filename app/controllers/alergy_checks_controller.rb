@@ -1,5 +1,5 @@
 class AlergyChecksController < ApplicationController
-  before_action :set_classroom, only: [:show, :today_index]
+  before_action :set_classroom, only: [:show, :today_index, :one_month_index]
 
   def show
     @alergy_check_sum = @classroom.alergy_checks.today.count
@@ -39,6 +39,6 @@ class AlergyChecksController < ApplicationController
     end
 
     def today_check_params
-      params.require(:alergy_check).permit(:first_check, :second_check, :student_check, :applicant_id).merge(status: "報告中")
+      params.require(:alergy_check).permit(:first_check, :second_check, :student_check, :applicant).merge(status: "報告中")
     end
 end

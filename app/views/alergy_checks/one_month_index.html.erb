@@ -19,15 +19,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+      <% @classroom.alergy_checks.each do |alergy_check| %>
+        <tr>
+          <td><%= l(alergy_check.worked_on, format: :short) %></td>
+          <td><%= alergy_check.student.student_name %></td>
+          <td><%= alergy_check.menu %></td>
+          <td><%= alergy_check.support %></td>
+          <td><%= alergy_check.note %></td>
+          <td><%= alergy_check.applicant %></td>
+          <td>
+            <%= monthly_check_state(alergy_check.status) %>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
