@@ -1,3 +1,33 @@
+<div class="button__monthly">
+  <h1>月間チェック一覧</h1>
+  <%= link_to "前月", "#", class: "btn btn-info" %>
+  <%= link_to "次月", "#", class: "btn btn-info" %>
+  <%= link_to "印刷する", "#", class: "btn btn-primary" %>
+</div>
+
 <div>
-  <h1>月間チェック一覧ページ</h1>
+  <table class="table table-bordered table-condensed table-hover table__general-contents--center">
+    <thead>
+      <tr>
+          <th><%= AlergyCheck.human_attribute_name(:worked_on) %></th>
+          <th><%= Student.human_attribute_name(:student_name) %></th>
+          <th><%= AlergyCheck.human_attribute_name(:menu) %></th>
+          <th><%= AlergyCheck.human_attribute_name(:support) %></th>
+          <th><%= AlergyCheck.human_attribute_name(:note) %></th>
+          <th><%= AlergyCheck.human_attribute_name(:applicant_id) %></th>
+          <th><%= AlergyCheck.human_attribute_name(:status) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
