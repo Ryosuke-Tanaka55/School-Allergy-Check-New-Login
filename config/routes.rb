@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  
+  
+
   root 'static_pages#top'
 
   # システム管理者用画面
@@ -35,6 +38,9 @@ Rails.application.routes.draw do
 
   resource :teachers, except: %i(show create edit update destroy) do
     get '/creator', to: 'teachers#creator'
+    get 'school_students/index'
+    get 'school_students/new'
+    get 'school_students/edit'
     resources :students do
       namespace :alergy_checks do
         resources :creators, only: %i(edit update destroy)

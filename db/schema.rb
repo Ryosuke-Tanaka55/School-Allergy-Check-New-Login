@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(version: 20211114065127) do
     t.string "teacher_of_student"
     t.string "student_classroom"
     t.string "alergy"
+    t.string "student_classs_room"
+    t.string "student_note"
     t.index ["classroom_id"], name: "index_students_on_classroom_id"
     t.index ["school_id"], name: "index_students_on_school_id"
   end
