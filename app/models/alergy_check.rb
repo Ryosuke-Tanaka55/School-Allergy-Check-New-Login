@@ -21,4 +21,7 @@ class AlergyCheck < ApplicationRecord
     end
     validates :applicant_id, presence: true
   end
+
+  # worked_onカラムが本日の日付であるものを取得する
+  scope :today, -> { where(worked_on: Date.current) }
 end

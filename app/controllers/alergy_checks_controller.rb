@@ -2,12 +2,12 @@ class AlergyChecksController < ApplicationController
   before_action :set_classroom, only: [:show, :today_index]
 
   def show
-    @alergy_check_sum = @classroom.alergy_checks.where(worked_on: Date.current).count
-    @submitted = @classroom.alergy_checks.where(worked_on: Date.current).where.not(status: "").count #報告済み件数
+    @alergy_check_sum = @classroom.alergy_checks.today.count
+    @submitted = @classroom.alergy_checks.today.where.not(status: "").count #報告済み件数
   end
 
   def today_index
-    @alergy_checks = @classroom.alergy_checks.where(worked_on: Date.current).order(:student_id)
+    @alergy_checks = @classroom.alergy_checks.today.order(:student_id)
     @teachers = Teacher.all ## 自クラス申請の場合は担任の名前のみ、管理職以外の代理申請の場合は管理職名以外の名前から選択可にする
   end
 
