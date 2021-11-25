@@ -1,0 +1,60 @@
+<h1>学校一覧</h1>
+
+<table class="table table-bordered table-condensed" id="index-school">
+  <thead>
+    <tr>
+      <th>学校削除</th>
+      <th>学校名</th>
+      <th>学校URL</th>
+      <th>学校管理者作成</th>
+      <th>学校管理者</th>
+      <th>メールアドレス</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @schools.each do |school| %>
+      <% teachers = school.teachers.where(admin: true) %>
+      <% if teachers.blank? %>
+      <tr>
+        <td><%= link_to "削除", system_admins_school_path(school), method: :delete, class: "btn btn-danger", data: {confirm: "削除してよろしいですか？" } %></td>
+        <td><%= school.school_name %></td>
+        <td><%= school.school_url %></td>
+        <td><%= link_to '学校管理職作成', new_system_admins_school_teacher_path(school), class: "btn btn-primary" %></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <% else %>
+        <% saved_school_name = nil %>
+        <% saved_school_url = nil %>
+        <% teachers.each do |teacher| %>
+          <tr>
+            <% if (school.school_name == saved_school_name) && (school.school_url == saved_school_url) %>
+              <td></td>
+              <td></td>
+              <td></td>
+            <% else %>
+              <td><%= link_to "削除", system_admins_school_path(school), method: :delete, class: "btn btn-danger", data: {confirm: "削除してよろしいですか？" } %></td>
+              <td><%= school.school_name %></td>
+              <td><%= school.school_url %></td>
+            <% end %>
+            <% if (school.school_name == saved_school_name) && (school.school_url == saved_school_url) %>
+              <td></td>
+              <td><%= teacher.teacher_name %></td>
+              <td><%= teacher.email %></td>
+            <% else %>
+              <% (saved_school_name = school.school_name) && (saved_school_url = school.school_url) %>
+              <td><%= link_to '学校管理職作成', new_system_admins_school_teacher_path(school), class: "btn btn-primary" %></td>
+              <td><%= teacher.teacher_name %></td>
+              <td><%= teacher.email %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '学校新規作成', new_system_admins_school_path %>

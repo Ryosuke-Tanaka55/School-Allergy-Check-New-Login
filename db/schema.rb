@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211118144549) do
+ActiveRecord::Schema.define(version: 20211122091408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,13 +34,14 @@ ActiveRecord::Schema.define(version: 20211118144549) do
     t.boolean "first_check", default: false, null: false
     t.boolean "second_check", default: false, null: false
     t.boolean "student_check", default: false, null: false
-    t.string "status"
+    t.string "status", default: "", null: false
     t.string "status_checker"
     t.bigint "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "menu", null: false
     t.string "support", null: false
+    t.integer "applicant_id"
     t.index ["student_id"], name: "index_alergy_checks_on_student_id"
   end
 
@@ -69,10 +70,21 @@ ActiveRecord::Schema.define(version: 20211118144549) do
 
   create_table "classrooms", force: :cascade do |t|
     t.string "class_name", default: "", null: false
+    t.integer "class_grade"
+    t.boolean "using_class", default: true
     t.bigint "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_id"], name: "index_classrooms_on_school_id"
+  end
+
+  create_table "menus", force: :cascade do |t|
+    t.string "menu_name"
+    t.string "menu_pdf"
+    t.bigint "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_menus_on_school_id"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -93,6 +105,7 @@ ActiveRecord::Schema.define(version: 20211118144549) do
     t.string "teacher_of_student"
     t.string "student_classroom"
     t.string "alergy"
+    t.string "student_note"
     t.index ["classroom_id"], name: "index_students_on_classroom_id"
     t.index ["school_id"], name: "index_students_on_school_id"
   end
@@ -110,7 +123,7 @@ ActiveRecord::Schema.define(version: 20211118144549) do
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.string "email", default: "", null: false
+    t.string "email"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -118,12 +131,18 @@ ActiveRecord::Schema.define(version: 20211118144549) do
     t.string "teacher_name", default: "", null: false
     t.boolean "admin", default: false, null: false
     t.boolean "creator", default: false, null: false
+    t.boolean "charger", default: false, null: false
+    t.string "tcode", default: "", null: false
     t.bigint "school_id"
     t.bigint "classroom_id"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classroom_id"], name: "index_teachers_on_classroom_id"
-    t.index ["email"], name: "index_teachers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
     t.index ["school_id"], name: "index_teachers_on_school_id"
   end
@@ -147,6 +166,7 @@ ActiveRecord::Schema.define(version: 20211118144549) do
   add_foreign_key "alergy_checks", "students"
   add_foreign_key "attendances", "users"
   add_foreign_key "classrooms", "schools"
+  add_foreign_key "menus", "schools"
   add_foreign_key "students", "classrooms"
   add_foreign_key "students", "schools"
   add_foreign_key "teachers", "classrooms"
