@@ -22,9 +22,19 @@
         </tr>
       </thead>
       <tbody>
-        <% @alergy_checks.each do |alergy_check| %>
+        <%# 日付被り非表示チェック用変数 %>
+        <% previous_worked_on = nil %>
+        <% @alergy_checks.each_with_index do |alergy_check, index| %>
           <tr>
-            <td><%= l(alergy_check.worked_on, format: :short) %></td>
+
+            <%# worked_onが1つ前の要素のworked_onと等しい場合 %>
+            <% if alergy_check.worked_on == previous_worked_on %>
+              <td></td>
+            <% else %>
+              <td><%= l(alergy_check.worked_on, format: :short) + "(#{$days_of_the_week[alergy_check.worked_on.wday]})" %></td>
+            <% end %>
+            <% previous_worked_on = alergy_check.worked_on %>
+
             <td><%= alergy_check.student.student_name %></td>
             <td><%= alergy_check.menu %></td>
             <td><%= alergy_check.support %></td>
@@ -38,6 +48,6 @@
       </tbody>
     </table>
   <% else %>
-    <h1 style="font-size:2em"><%= "#{@first_day.month}月のチェック情報はありません。" %></h2>
+    <h1 style="font-size:2em"><%= "#{@first_day.month}月のチェック情報はありません。" %></h1>
   <% end %>
 </div>
