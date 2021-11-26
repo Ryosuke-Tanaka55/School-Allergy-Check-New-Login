@@ -8,7 +8,8 @@ class AlergyChecksController < ApplicationController
 
   def today_index
     @alergy_checks = @classroom.alergy_checks.today.order(:student_id)
-    @teachers = Teacher.all ## 自クラス申請の場合は担任の名前のみ、管理職以外の代理申請の場合は管理職名以外の名前から選択可にする
+    @teachers = Teacher.where(school_id: current_teacher.school_id).where.not(admin: true) # 管理職以外の代理報告時
+    @all_teachers = Teacher.where(school_id: current_teacher.school_id) # 管理職の代理報告時
   end
 
   def update
