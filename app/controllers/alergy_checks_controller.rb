@@ -13,7 +13,7 @@ class AlergyChecksController < ApplicationController
 
   def update
     @alergy_check = AlergyCheck.find(params[:alergy_check][:alergy_check_id])
-    # 同じclassroom_idを持つ児童しか選択できない
+    # 同じschool_idを持つ児童しか選択できない
     if current_teacher.school.id != @alergy_check.student.school_id
       flash[:danger] = "許可されていない操作が行われました。"
       return redirect_to teachers_alergy_checks_url
@@ -39,7 +39,7 @@ class AlergyChecksController < ApplicationController
 
   private
     def set_classroom
-      @classroom = Classroom.find(current_teacher.classroom_id)
+      @classroom = current_teacher.classroom
     end
 
     def today_check_params
