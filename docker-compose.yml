@@ -23,6 +23,9 @@ services:
   # ローカルの3000番ポートをDockerの3000番ポートに接続
   ports:
    - "3000:3000"
+  # ローカル起動時はRAILS_ENVがdevelopmentになるような設定
+  environment:
+    RAILS_ENV: development
   # キーボードによる入力をコンテナに結びつける
   tty: true
   # 標準入出力とエラー出力をコンテナに結びつける
