@@ -1,3 +1,4 @@
+
 table.table__alergy-contents--center > tbody > tr > td,
 table.table__alergy-contents--center > thead > tr > th,
 table.table__alergy-contents--center > thead > tr > td {
@@ -5,4 +6,18 @@ table.table__alergy-contents--center > thead > tr > td {
   vertical-align: middle;
 }
 
+// 担任ページ
+.center .button__monthly-check {
+  margin-bottom: 10px;
+  margin-left: 15px;
+}
+// 月間チェック一覧ページ(担任)
+.button__monthly > .btn {
+  margin-bottom: 10px;
+}
 
+@media print {
+  .button__monthly {
+    display: none;
+  }
+}

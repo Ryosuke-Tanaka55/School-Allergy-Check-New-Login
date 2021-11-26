@@ -10,6 +10,8 @@
     <% end %>
     <li><%= link_to '本日の作業', show_teachers_path %></li>
     <li><%= link_to '献立表', teachers_menus_path %></li>
+    <li><%= link_to '児童アレルギー情報', "#" %></li>
+    <li><%= link_to '月間チェック一覧', one_month_index_teachers_alergy_checks_path %></li>
     <li class="divider"></li>
     <li>
       <li><%= link_to 'ログアウト', destroy_teacher_session_path, method: :delete %></li>
