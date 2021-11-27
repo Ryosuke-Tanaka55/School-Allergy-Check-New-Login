@@ -6,7 +6,11 @@
     <span style="font-size:2em"><br><%= I18n.l(Date.current, format: :long) %><br><br></span>
   </div>
   <div>
-    <%= form_with%>
+    <%= form_with(url: today_index_teachers_alergy_checks_path, method: :get) do |f| %>
+      <%= f.collection_select :select_classroom, @classrooms, :id, :class_name, 
+                              { include_blank: "クラス名を選択" }, { class: "form-control" } %>
+      <%= f.submit "代理報告する", class: "btn btn-primary btn-sm" %>
+    <% end %>
   </div>
 </div>
 

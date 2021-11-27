@@ -28,7 +28,12 @@ class AlergyChecksController < ApplicationController
     else
       flash[:danger] = "#{@alergy_check.student.student_name}のチェック報告に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>・")
     end
-    redirect_to teachers_alergy_checks_url
+    previous_path = Rails.application.routes.recognize_path(request.referrer)
+    if previous_path[:controller] == "charger_alergy_checks" && previous_path[:action] == "show"
+      redirect_to teachers_charger_alergy_checks_url
+    else
+      redirect_to teachers_alergy_checks_url
+    end
   end
 
   def one_month_index
@@ -40,7 +45,12 @@ class AlergyChecksController < ApplicationController
 
   private
     def set_classroom
-      @classroom = current_teacher.classroom
+      previous_path = Rails.application.routes.recognize_path(request.referrer)
+      if previous_path[:controller] == "charger_alergy_checks" && previous_path[:action] == "show"
+        @classroom = Classroom.find(params[:select_classroom])
+      else
+        @classroom = current_teacher.classroom
+      end
     end
 
     def today_check_params
