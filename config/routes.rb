@@ -66,6 +66,9 @@ Rails.application.routes.draw do
       end
     end
 
+    #代理報告ページ
+    resource :charger_alergy_checks, only: %i(show)
+
 
   end
   resource :students do
