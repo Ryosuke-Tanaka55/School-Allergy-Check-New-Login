@@ -8,7 +8,7 @@
   <div>
     <%= form_with(url: today_index_teachers_alergy_checks_path, method: :get) do |f| %>
       <%= f.collection_select :select_classroom, @classrooms, :id, :class_name, 
-                              { include_blank: "クラス名を選択" }, { class: "form-control" } %>
+                              { include_blank: "クラス名を選択" }, { class: "form-control", required: true } %>
       <%= f.submit "代理報告する", class: "btn btn-primary btn-sm" %>
     <% end %>
   </div>
