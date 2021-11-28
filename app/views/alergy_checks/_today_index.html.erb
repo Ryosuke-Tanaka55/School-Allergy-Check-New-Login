@@ -9,7 +9,7 @@
       <div class="modal-body">
         <% @alergy_checks.each do |alergy_check| %>
           <%= form_with(model: alergy_check, url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
-            <table border=2 width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
+            <table width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
               <thead>
                 <tr>
                   <th><%= Student.human_attribute_name(:student_name) %></th>

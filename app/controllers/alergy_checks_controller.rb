@@ -2,18 +2,19 @@ class AlergyChecksController < ApplicationController
   before_action :set_classroom, only: [:show, :today_index, :one_month_index]
 
   def show
-    @alergy_check_sum = @classroom.alergy_checks.today.count
     @submitted = @classroom.alergy_checks.today.where.not(status: "").count #報告済み件数
+    @alergy_check_sum = @classroom.alergy_checks.today.count
   end
 
   def today_index
     @alergy_checks = @classroom.alergy_checks.today.order(:student_id)
-    @teachers = Teacher.all ## 自クラス申請の場合は担任の名前のみ、管理職以外の代理申請の場合は管理職名以外の名前から選択可にする
+    @teachers = Teacher.where(school_id: current_teacher.school_id).where.not(admin: true) # 管理職以外の代理報告時
+    @all_teachers = Teacher.where(school_id: current_teacher.school_id) # 管理職の代理報告時
   end
 
   def update
     @alergy_check = AlergyCheck.find(params[:alergy_check][:alergy_check_id])
-    # 同じclassroom_idを持つ児童しか選択できない
+    # 同じschool_idを持つ児童しか選択できない
     if current_teacher.school.id != @alergy_check.student.school_id
       flash[:danger] = "許可されていない操作が行われました。"
       return redirect_to teachers_alergy_checks_url
@@ -27,7 +28,12 @@ class AlergyChecksController < ApplicationController
     else
       flash[:danger] = "#{@alergy_check.student.student_name}のチェック報告に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>・")
     end
-    redirect_to teachers_alergy_checks_url
+    previous_path = Rails.application.routes.recognize_path(request.referrer)
+    if previous_path[:controller] == "charger_alergy_checks" && previous_path[:action] == "show"
+      redirect_to teachers_charger_alergy_checks_url
+    else
+      redirect_to teachers_alergy_checks_url
+    end
   end
 
   def one_month_index
@@ -39,7 +45,12 @@ class AlergyChecksController < ApplicationController
 
   private
     def set_classroom
-      @classroom = Classroom.find(current_teacher.classroom_id)
+      previous_path = Rails.application.routes.recognize_path(request.referrer)
+      if previous_path[:controller] == "charger_alergy_checks" && previous_path[:action] == "show"
+        @classroom = Classroom.find(params[:select_classroom])
+      else
+        @classroom = current_teacher.classroom
+      end
     end
 
     def today_check_params
