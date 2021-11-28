@@ -2,16 +2,20 @@
 <h1>代理報告</h1>
 
 <div>
-  <div class="center">
-    <span style="font-size:2em"><br><%= I18n.l(Date.current, format: :long) %><br><br></span>
+  <div class="center contents__font-size">
+    <br><%= I18n.l(Date.current, format: :long) %><br><br>
   </div>
-  <div class="col-md-2 col-md-offset-5 form__select-classroom">
-    <%= form_with(url: today_index_teachers_alergy_checks_path, method: :get) do |f| %>
-      <%= f.collection_select :select_classroom, @classrooms, :id, :class_name, 
-                              { include_blank: "クラス名を選択" }, { class: "form-control", required: true } %>
-      <%= f.submit "代理報告する", class: "btn btn-primary button__proxy--position" %>
-    <% end %>
-  </div>
+  <% if @classrooms.empty? %>
+    <div class="center contents__font-size"><%= "本日のチェックはありません。" %></div>
+  <% else %>
+    <div class="col-md-2 col-md-offset-5 form__select-classroom">
+      <%= form_with(url: today_index_teachers_alergy_checks_path, method: :get) do |f| %>
+        <%= f.collection_select :select_classroom, @classrooms, :id, :class_name, 
+                                { include_blank: "クラス名を選択" }, { class: "form-control", required: true } %>
+        <%= f.submit "代理報告する", class: "btn btn-primary button__proxy--position" %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
 <!-- モーダル設定 -->
