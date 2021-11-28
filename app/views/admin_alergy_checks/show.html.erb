@@ -1,4 +1,4 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, @teacher.teacher_name) %>
 
 <%= link_to("URL") do %>
 　ここにHTMLのコードを記述する
@@ -12,23 +12,23 @@
   </div>
   <div class="area">
     <% if @lunch_check_sum > 0 %>
-      <%= link_to "有", lunch_check_info_user_attendances_path(@user), remote: true, class: "inline-block button" %>
+      <%= link_to "有", lunch_check_info_teachers_admin_alergy_check_path(@teacher), remote: true, class: "inline-block button" %>
     <% else %>
       <a class="inline-block button" href="#">無</a>
     <% end %>
   </div>
   
 </div>
-　<% if @user.superior? %>
+　<% if @teacher.admin? %>
     <div class="center">
       <% if @lunch_check_sum > 0 %>
         <p><font color="red">
-         <%= link_to "【アレルギーチェックのお知らせ】", lunch_check_info_user_attendances_path(@user), remote: true, style: "color:red;" %>
+         <%= link_to "【アレルギーチェックのお知らせ】", lunch_check_info_teachers_admin_alergy_check_path(@teacher), remote: true, style: "color:red;" %>
         <span class="box"><%= @lunch_check_sum %> 件のお知らせがあります!</span></font></p>
       <% else %>
         <p>【アレルギーチェックのお知らせ】</p>
       <% end %>
-      <%= link_to "管理者一覧", lunch_check_all_user_attendances_path(@user), remote: true, style: "color:red;" %>
+      <%= link_to "管理者一覧", lunch_check_all_teachers_admin_alergy_check_path(@teacher), remote: true, style: "color:red;" %>
     </div>
   <% end %>   
 

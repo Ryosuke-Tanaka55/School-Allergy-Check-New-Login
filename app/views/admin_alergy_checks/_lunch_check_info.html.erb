@@ -11,9 +11,10 @@
     </div>
     
     <div class="modal-body">
-      <%= form_with(model: @user, url: update_lunch_check_info_user_attendances_path(@user), local: true, method: :patch) do |f| %>   
-        <% @requesters.each do |user_id, attendances| %>
-         <h1 class="modal-title">【<%= "#{User.find(user_id).classroom}" %>からアレルギーチェック報告】</h1>
+      <%= form_with(model: @teacher, url: update_lunch_check_info_teachers_admin_alergy_check_path(@teacher), local: true, method: :patch) do |f| %>   
+        <% @requesters.each do |id, attendances| %>
+        
+         <h1 class="modal-title">【<%= "#{Teacher.find(id).teacher_name}" %>からアレルギーチェック報告】</h1>
           <table  border=2 width=100%, class="table table-bordered table-condensed user-table">
             <thead>
               <tr>
@@ -23,7 +24,7 @@
                 <th class=center>備考</th>
                 <th class=center>チェック</th>
                 <th class=center>報告状態</th>
-                <th></th>
+                <th class=center>申請者</th>
               </tr>
             </thead>
             <% attendances.each do |day| %>
@@ -39,13 +40,13 @@
                       end
                     %> 
                     <tr> 
-                      <td><%= l(day.worked_on, format: :short) %></td>
-                      <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
-                      <td><%= at.select :status, [' ', '対応食', 'その他'], class: "form-control" %></td>
-                      <td><%= day.note  %></td>
-                      <td><%= at.check_box :superior_checker, class: "form-control" %></td>
+                      <td><%= "#{Student.find(day.student_id).student_name}" %></td>
+                      <td class="<%= css_class %>"><%= "#{day.menu}" %></td>
+                      <td><%= day.support %></td>
+                      <td><%= day.note %></td>
+                      <td><%= at.check_box :status_checker, class: "form-control" %></td>
                       <td><%= at.select :status, [' ', '要再確認', '報告中', '確認済'], class: "form-control" %></td>
-                      <td><%= link_to "詳細",comfirmation_user_path(user_id, day: day.worked_on), class: "btn btn-primary btn-lg btn-block" %></td>
+                      <td><%= "#{Teacher.find(day.applicant_id).teacher_name}" %></td>
                     </tr> 
                  </tbody>    
               <% end %>

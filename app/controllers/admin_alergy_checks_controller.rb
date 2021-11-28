@@ -2,7 +2,8 @@ class AdminAlergyChecksController < ApplicationController
     UPDATE_ERROR_MSG = "登録に失敗しました。やり直してください。"
   
     def show
-      @lunch_check_sum = Attendance.where(lunch_check_superior: @user.name).where(status: "報告中").count
+      @teacher = Teacher.find(params[:id])
+      @lunch_check_sum = AlergyCheck.where(status: "報告中").count
       @users = User.joins(:attendances).where(attendances: {status: "確認済"})
       @checks = Attendance.where(worked_on: @first_day..@last_day).where(status: "確認済").order(:worked_on, :user_id)
       @un_checks = Attendance.where(worked_on: @first_day..@last_day).where.not(status: "報告中").where.not(status: "確認済").where.not(status: "要確認").order(:worked_on, :user_id)
@@ -54,20 +55,21 @@ class AdminAlergyChecksController < ApplicationController
     end
     
     def lunch_check_info 
-      @user = User.find(params[:user_id])
-      @requesters = Attendance.where(lunch_check_superior: @user.name, status: "報告中").order(:user_id).group_by(&:user_id)
+      #debugger
+      @teacher = Teacher.find(params[:id])
+      @requesters = AlergyCheck.where(status: "報告中").group_by(&:applicant_id)
     end 
     
     def update_lunch_check_info
       
-      @user = User.find(params[:user_id])
+      @user = Teacher.find(params[:id])
       ActiveRecord::Base.transaction do 
        lunch_check_info_params.each do |id, item|
-         if item[:superior_checker] == "1"
-           attendance = Attendance.find(id)
+         if item[:status_checker] == "1"
+           attendance = AlergyCheck.find(id)
            attendance.update_attributes!(item)
-            @info_sum = Attendance.where(status: "確認済").count
-            @unapproval_info_sum = Attendance.where(status: "要再確認").count
+            @info_sum = AlergyCheck.where(status: "確認済").count
+            @unapproval_info_sum = AlergyCheck.where(status: "要再確認").count
             flash[:success] = "確認済#{@info_sum}件、要再確認#{@unapproval_info_sum}件"
          end #if end 
        end #each end 
@@ -88,7 +90,7 @@ class AdminAlergyChecksController < ApplicationController
       @user = User.find(params[:user_id])
       ActiveRecord::Base.transaction do 
        lunch_check_all_params.each do |id, item|
-         if item[:superior_checker] == "1"
+         if item[:status_checker] == "1"
            attendance = Attendance.find(id)
            attendance.update_attributes!(item)
             @info_sum = Attendance.where(status: "確認済").count
@@ -109,7 +111,7 @@ class AdminAlergyChecksController < ApplicationController
      end 
      
      def lunch_check_info_params 
-       params.require(:user).permit(attendances: [:status, :superior_checker])[:attendances]
+       params.permit(:status, :status_checker)
      end  
      
      
