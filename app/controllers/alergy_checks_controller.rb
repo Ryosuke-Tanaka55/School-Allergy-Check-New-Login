@@ -1,8 +1,8 @@
 class AlergyChecksController < ApplicationController
   before_action :set_classroom, only: [:show, :today_index, :one_month_index]
+  before_action :set_alergy_check_sum, only: [:show, :today_index]
 
   def show
-    @alergy_check_sum = @classroom.alergy_checks.today.count
     @submitted = @classroom.alergy_checks.today.where.not(status: "").count #報告済み件数
   end
 
@@ -51,6 +51,10 @@ class AlergyChecksController < ApplicationController
       else
         @classroom = current_teacher.classroom
       end
+    end
+
+    def set_alergy_check_sum
+      @alergy_check_sum = @classroom.alergy_checks.today.count
     end
 
     def today_check_params
