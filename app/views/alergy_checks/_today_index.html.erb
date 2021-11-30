@@ -41,16 +41,22 @@
                     <td><%= f.check_box :first_check, { required: true }, true, false %></td>
                     <td><%= f.check_box :second_check, { required: true }, true, false %></td>
                     <td><%= f.check_box :student_check, { required: true }, true, false %></td>
-                    <td><%= f.collection_select :applicant, @teachers, :teacher_name, :teacher_name, 
-                                                { include_blank: "申請者名を選択" }, { class: "form-control", required: true } %></td>
+                    <!-- 代理報告の場合 -->
+                    <% if params[:proxy_flag] %>
+                      <td><%= f.collection_select :applicant, @teachers, :teacher_name, :teacher_name, 
+                                                  { include_blank: "申請者名を選択" }, { class: "form-control", required: true } %></td>
+                      <%= f.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
+                    <!-- 自クラス報告の場合 -->
+                    <% else %>
+                      <td><%= current_teacher.teacher_name %></td>
+                    <% end %>
                     <td><%= Teacher.human_attribute_name(:admin) %></td>
                     <td><%= f.submit "#{check_state(alergy_check.status)}", class: "btn btn-primary btn-sm" %></td>
                   <% else %>
                     <td><%= f.check_box :first_check, { disabled: true }, true, false %></td>
                     <td><%= f.check_box :second_check, { disabled: true }, true, false %></td>
                     <td><%= f.check_box :student_check, { disabled: true }, true, false %></td>
-                    <td><%= f.collection_select :applicant, @teachers, :teacher_name, :teacher_name, 
-                                                { include_blank: "申請者名を選択" }, { class: "form-control", disabled: true } %></td>
+                    <td><%= alergy_check.applicant %></td>
                     <td><%= Teacher.human_attribute_name(:admin) %></td>
                     <td><%= f.submit "#{check_state(alergy_check.status)}", { class: "btn btn-primary btn-sm", disabled: true } %></td>
                   <% end %>
