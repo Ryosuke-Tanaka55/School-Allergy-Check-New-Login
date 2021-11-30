@@ -1,8 +1,6 @@
 <% provide(:title, @teacher.teacher_name) %>
+<a class="btn" href="#"><span>月間一覧はこちら</span><span>Click</span></a>
 
-<%= link_to("URL") do %>
-　ここにHTMLのコードを記述する
-<% end %>
 <div>
   <div class="center">
     <span style="font-size:2em"><%= I18n.l Date.today, format: :long %><br><br><br></span>
@@ -28,7 +26,6 @@
       <% else %>
         <p>【アレルギーチェックのお知らせ】</p>
       <% end %>
-      <%= link_to "管理者一覧", lunch_check_all_teachers_admin_alergy_check_path(@teacher), remote: true, style: "color:red;" %>
     </div>
   <% end %>   
 

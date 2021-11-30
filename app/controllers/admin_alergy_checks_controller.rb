@@ -67,15 +67,15 @@ class AdminAlergyChecksController < ApplicationController
        lunch_check_info_params.each do |id, item|
          if item[:status_checker] == "1"
            attendance = AlergyCheck.find(id)
-           attendance.NEWcolumn = @user.teacher_name
-           attendance.update_attributes!(NEWcolumn: @user.teacher_name)
+           attendance.admin_name = @user.teacher_name
+           attendance.update_attributes!(admin_name: @user.teacher_name)
            attendance.update_attributes!(item)
             @info_sum = AlergyCheck.where(status: "確認済").count
             @unapproval_info_sum = AlergyCheck.where(status: "要再確認").count
             flash[:success] = "確認済#{@info_sum}件、要再確認#{@unapproval_info_sum}件"
          end #if end 
        end #each end 
-       redirect_to user_url(@user)
+       redirect_to teachers_admin_alergy_check_url(@user)
      end #Acctive do end    
     #def end
     rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
@@ -113,7 +113,7 @@ class AdminAlergyChecksController < ApplicationController
      end 
      
      def lunch_check_info_params 
-      params.require(:teacher).permit(attendances: [:status, :status_checker, :NEWcolumn])[:attendances]
+      params.require(:teacher).permit(attendances: [:status, :status_checker, :admin_name])[:attendances]
      end  
      
      
