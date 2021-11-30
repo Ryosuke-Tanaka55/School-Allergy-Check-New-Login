@@ -69,6 +69,13 @@ Rails.application.routes.draw do
     #代理報告ページ
     resource :charger_alergy_checks, only: %i(show)
 
+    #管理職月間チェック一覧ページ
+    collection do
+      namespace :admin_alergy_checks do
+        get 'one_month_index'
+      end
+    end
+
 
   end
   resource :students do
