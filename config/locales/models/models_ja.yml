@@ -51,8 +51,9 @@ ja:
           applicant_id: 報告者
         student:
           student_name: 児童名
-          student_number: 番号
+          student_number: 児童番号
           alergy: アレルギー食品
+          student_note: 備考
         menu:
           menu_name: 献立表名
           menu_pdf: 献立PDF
