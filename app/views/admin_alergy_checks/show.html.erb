@@ -24,7 +24,7 @@
       <% if @lunch_check_sum > 0 %>
         <p><font color="red">
          <%= link_to "【アレルギーチェックのお知らせ】", lunch_check_info_teachers_admin_alergy_check_path(@teacher), remote: true, style: "color:red;" %>
-        <span class="box"><%= @lunch_check_sum %> 件のお知らせがあります!</span></font></p>
+        <span class="box"><%= @lunch_check_sum %> 件のお知らせがあります</span></font></p>
       <% else %>
         <p>【アレルギーチェックのお知らせ】</p>
       <% end %>
