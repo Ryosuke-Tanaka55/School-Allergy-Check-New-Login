@@ -13,8 +13,8 @@
     <div class="modal-body">
       <%= form_with(model: @teacher, url: update_lunch_check_info_teachers_admin_alergy_check_path(@teacher), local: true, method: :patch) do |f| %>   
         <% @requesters.each do |id, attendances| %>
-        
-         <h1 class="modal-title">【<%= "#{Teacher.find(id).teacher_name}" %>からアレルギーチェック報告】</h1>
+         
+         <h1 class="modal-title">【<%= "#{id}" %>からアレルギーチェック報告】</h1>
           <table  border=2 width=100%, class="table table-bordered table-condensed user-table">
             <thead>
               <tr>
@@ -27,8 +27,8 @@
                 <th class=center>申請者</th>
               </tr>
             </thead>
-            <% attendances.each do |day| %>
-              <%= f.fields_for "attendances[]", day do |at| %> 
+             <% attendances.each do |day| %>
+              <%= f.fields_for "attendances[]", day do |at| %>
         　       <tbody>
           　         <% 
                       css_class = 
@@ -46,7 +46,7 @@
                       <td><%= day.note %></td>
                       <td><%= at.check_box :status_checker, class: "form-control" %></td>
                       <td><%= at.select :status, [' ', '要再確認', '報告中', '確認済'], class: "form-control" %></td>
-                      <td><%= "#{Teacher.find(day.applicant_id).teacher_name}" %></td>
+                      <td><%= "#{day.applicant}" %></td>
                     </tr> 
                  </tbody>    
               <% end %>

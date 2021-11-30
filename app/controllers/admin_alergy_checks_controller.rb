@@ -57,7 +57,7 @@ class AdminAlergyChecksController < ApplicationController
     def lunch_check_info 
       #debugger
       @teacher = Teacher.find(params[:id])
-      @requesters = AlergyCheck.where(status: "報告中").group_by(&:applicant_id)
+      @requesters = AlergyCheck.where(status: "報告中").group_by(&:applicant)
     end 
     
     def update_lunch_check_info
@@ -67,6 +67,8 @@ class AdminAlergyChecksController < ApplicationController
        lunch_check_info_params.each do |id, item|
          if item[:status_checker] == "1"
            attendance = AlergyCheck.find(id)
+           attendance.NEWcolumn = @user.teacher_name
+           attendance.update_attributes!(NEWcolumn: @user.teacher_name)
            attendance.update_attributes!(item)
             @info_sum = AlergyCheck.where(status: "確認済").count
             @unapproval_info_sum = AlergyCheck.where(status: "要再確認").count
@@ -111,7 +113,7 @@ class AdminAlergyChecksController < ApplicationController
      end 
      
      def lunch_check_info_params 
-       params.permit(:status, :status_checker)
+      params.require(:teacher).permit(attendances: [:status, :status_checker, :NEWcolumn])[:attendances]
      end  
      
      
