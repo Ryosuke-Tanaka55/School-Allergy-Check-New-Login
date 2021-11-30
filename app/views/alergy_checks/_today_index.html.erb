@@ -9,7 +9,7 @@
       <div class="modal-body">
         <% @alergy_checks.each do |alergy_check| %>
           <%= form_with(model: alergy_check, url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
-            <table border=2 width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
+            <table width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
               <thead>
                 <tr>
                   <th><%= Student.human_attribute_name(:student_name) %></th>
@@ -41,7 +41,7 @@
                     <td><%= f.check_box :first_check, { required: true }, true, false %></td>
                     <td><%= f.check_box :second_check, { required: true }, true, false %></td>
                     <td><%= f.check_box :student_check, { required: true }, true, false %></td>
-                    <td><%= f.collection_select :applicant_id, @teachers, :id, :teacher_name, 
+                    <td><%= f.collection_select :applicant, @teachers, :teacher_name, :teacher_name, 
                                                 { include_blank: "申請者名を選択" }, { class: "form-control", required: true } %></td>
                     <td><%= Teacher.human_attribute_name(:admin) %></td>
                     <td><%= f.submit "#{check_state(alergy_check.status)}", class: "btn btn-primary btn-sm" %></td>
@@ -49,7 +49,7 @@
                     <td><%= f.check_box :first_check, { disabled: true }, true, false %></td>
                     <td><%= f.check_box :second_check, { disabled: true }, true, false %></td>
                     <td><%= f.check_box :student_check, { disabled: true }, true, false %></td>
-                    <td><%= f.collection_select :applicant_id, @teachers, :id, :teacher_name, 
+                    <td><%= f.collection_select :applicant, @teachers, :teacher_name, :teacher_name, 
                                                 { include_blank: "申請者名を選択" }, { class: "form-control", disabled: true } %></td>
                     <td><%= Teacher.human_attribute_name(:admin) %></td>
                     <td><%= f.submit "#{check_state(alergy_check.status)}", { class: "btn btn-primary btn-sm", disabled: true } %></td>

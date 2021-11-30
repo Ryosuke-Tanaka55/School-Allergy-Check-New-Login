@@ -1,15 +1,16 @@
-<!-- userのshowのCSSも要確認 -->
 <div>
-  <div class="center">
-    <span style="font-size:2em"><%= I18n.l(Date.current, format: :long) %><br><br></span>
-    <span style="font-size:2em">クラス：<%= @classroom.class_name %><br><br></span>
+  <div class="center contents__font-size">
+    <br><%= I18n.l(Date.current, format: :long) %><br><br>
+    <span>クラス：<%= @classroom.class_name %></span>
+    <%= link_to "月間チェック", one_month_index_teachers_alergy_checks_path, class: "btn btn-warning btn-lg button__monthly-check" %><br><br>
     <% if @alergy_check_sum == @submitted %>  
-      <span style="font-size:2em">本日のチェックは完了しました<br><br></span>
+      本日のチェックは完了しました。
     <% else %>
-      <span style="font-size:2em">本日のアレルギーチェック：<%= "#{@alergy_check_sum}件" %><br><br></span>
+      本日のアレルギーチェック：<%= "#{@alergy_check_sum}件" %>
     <% end %>
   </div>
   <div class="area">
+    <br>
     <% if @alergy_check_sum > 0 %>
       <%= link_to "有", today_index_teachers_alergy_checks_path, remote: true, class: "inline-block button" %>
     <% else %>
