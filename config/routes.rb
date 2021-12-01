@@ -71,9 +71,7 @@ Rails.application.routes.draw do
 
     #管理職月間チェック一覧ページ
     collection do
-      namespace :admin_alergy_checks do
-        get 'one_month_index'
-      end
+      get '/admin_alergy_checks/one_month_index'
     end
 
 
