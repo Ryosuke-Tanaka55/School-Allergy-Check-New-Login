@@ -31,6 +31,12 @@ ja:
           school_url: 学校コード
           created_at: 作成日
           updated_at: 更新日
+        classroom:
+          class_name: 学級名
+          class_grade:
+          using_class:
+          created_at: 作成日
+          updated_at: 更新日
         teacher:
           email: メールアドレス
           teacher_name: 名前

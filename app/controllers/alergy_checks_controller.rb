@@ -1,5 +1,6 @@
 class AlergyChecksController < ApplicationController
   before_action :set_classroom, only: [:show, :today_index, :one_month_index]
+  before_action :set_first_last_day, only: :one_month_index
 
   def show
     @submitted = @classroom.alergy_checks.today.where.not(status: "").count #報告済み件数
@@ -37,9 +38,6 @@ class AlergyChecksController < ApplicationController
   end
 
   def one_month_index
-    @days_of_the_week = %w{日 月 火 水 木 金 土}
-    @first_day = params[:date].nil? ? Date.current.beginning_of_month : params[:date].to_date
-    @last_day = @first_day.end_of_month
     @alergy_checks = @classroom.alergy_checks.where(worked_on: @first_day..@last_day).order(:worked_on)
   end
 

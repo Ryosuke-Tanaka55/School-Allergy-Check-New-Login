@@ -31,7 +31,8 @@
             <% if alergy_check.worked_on == previous_worked_on %>
               <td></td>
             <% else %>
-              <td><%= l(alergy_check.worked_on, format: :short) + "(#{$days_of_the_week[alergy_check.worked_on.wday]})" %></td>
+              <td><%= l(alergy_check.worked_on, format: :short) + 
+                      "(#{$days_of_the_week[alergy_check.worked_on.wday]})" %></td>
             <% end %>
             <% previous_worked_on = alergy_check.worked_on %>
 
@@ -41,7 +42,7 @@
             <td><%= note(alergy_check.note) %></td>
             <td><%= alergy_check.applicant %></td>
             <td>
-              <%= monthly_check_state(alergy_check.status) %>
+              <%= monthly_check_state(status: alergy_check.status, name: alergy_check.admin_name) %>
             </td>
           </tr>
         <% end %>

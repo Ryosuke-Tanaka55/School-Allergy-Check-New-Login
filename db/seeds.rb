@@ -7,8 +7,10 @@ end
 
 puts "SystemAdmin Created"
 
-School.create!(school_name: "サンプル",
-               school_url: "sample1")
+2.times do |n|
+  School.create!(school_name: "サンプル#{n+1}",
+                school_url: "sample#{n+1}")
+end
 
 puts "School Created"
 
@@ -39,13 +41,20 @@ User.create!(name: "担当",
 
 puts "User Created"
 
-# 1-1のクラス作成
+# クラス作成
 classroom_id = 1
-Classroom.create!(class_name: "1-1",
-                school_id: 1)
+2.times do |n|
+  Classroom.create!(class_name: "#{n+1}-1",
+                  school_id: 1)
+end
+2.times do |n|
+  Classroom.create!(class_name: "#{n+1}-a",
+                  school_id: 2)
+  end
+puts "Classroom Created"           
 
 Teacher.create!(teacher_name: "管理職",
-              email: "admin@email.com",
+              email: "adminA@email.com",
               password: "password",
               password_confirmation: "password",
               admin: true,
@@ -84,11 +93,17 @@ end
 
 puts "1-1Student Created"
 
-classroom_id = 2
-Classroom.create!(class_name: "2-1",
-                school_id: 1)
+classroom_id = 3
+Teacher.create!(teacher_name: "管理職",
+  email: "adminB@email.com",
+  password: "password",
+  password_confirmation: "password",
+  admin: true,
+  school_id: 2,
+  tcode: "kanri2",
+  classroom_id: classroom_id) 
 
-3.times do |n|
+2.times do |n|
   name  = Faker::Name.name
   email = "teacher#{n+1}@email.com"
   tcode = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1, min_numeric: 1)
@@ -97,7 +112,7 @@ Classroom.create!(class_name: "2-1",
               email: email,
               password: password,
               password_confirmation: password,
-              school_id: 1,
+              school_id: 2,
               tcode: tcode,
               classroom_id: classroom_id)
 end
@@ -108,7 +123,7 @@ puts "2-1Teacher Created"
   number = 2100 + n + 1
   Student.create!(student_name: name,
                   student_number: number,
-                  school_id: 1,
+                  school_id: 2,
                   classroom_id: classroom_id)
 end
 
