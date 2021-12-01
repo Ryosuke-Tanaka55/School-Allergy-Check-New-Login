@@ -1,5 +1,6 @@
 <h1>学校一覧</h1>
 
+<%= link_to '学校新規作成', new_system_admins_school_path, remote: true, class: "btn btn-info" %>
 <table class="table table-bordered table-condensed" id="index-school">
   <thead>
     <tr>
@@ -20,7 +21,7 @@
         <td><%= link_to "削除", system_admins_school_path(school), method: :delete, class: "btn btn-danger", data: {confirm: "削除してよろしいですか？" } %></td>
         <td><%= school.school_name %></td>
         <td><%= school.school_url %></td>
-        <td><%= link_to '学校管理職作成', new_system_admins_school_teacher_path(school), class: "btn btn-primary" %></td>
+        <td><%= link_to '作成', new_system_admins_school_teacher_path(school), class: "btn btn-primary" %></td>
         <td></td>
         <td></td>
       </tr>
@@ -44,7 +45,7 @@
               <td><%= teacher.email %></td>
             <% else %>
               <% (saved_school_name = school.school_name) && (saved_school_url = school.school_url) %>
-              <td><%= link_to '学校管理職作成', new_system_admins_school_teacher_path(school), class: "btn btn-primary" %></td>
+              <td><%= link_to '作成', new_system_admins_school_teacher_path(school), class: "btn btn-primary" %></td>
               <td><%= teacher.teacher_name %></td>
               <td><%= teacher.email %></td>
             <% end %>
@@ -55,6 +56,4 @@
   </tbody>
 </table>
 
-<br>
-
-<%= link_to '学校新規作成', new_system_admins_school_path %>
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
