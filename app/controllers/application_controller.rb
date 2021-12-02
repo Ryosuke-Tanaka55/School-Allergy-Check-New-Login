@@ -1,11 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
-
-
-  # ---------下記既存アプリの記述-------------------
   $days_of_the_week = %w{日 月 火 水 木 金 土}
 
+  # ---------下記既存アプリの記述-------------------
   # ページ出力前に1ヶ月分のデータの存在を確認・セットします。
  def set_one_month
   @first_day = params[:date].nil? ?
@@ -45,5 +43,11 @@ class ApplicationController < ActionController::Base
   # 管理者かどうかの判定
   def admin_teacher
     redirect_to top_pathaaaa unless current_teacher.admin?
+  end
+
+  # 今日の日付からその月の初日と最終日を取得
+  def set_first_last_day
+    @first_day = params[:date].nil? ? Date.current.beginning_of_month : params[:date].to_date
+    @last_day = @first_day.end_of_month
   end
 end

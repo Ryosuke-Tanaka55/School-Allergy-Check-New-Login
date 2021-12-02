@@ -1,10 +1,7 @@
-<h1>月間チェック一覧</h1>
+<h1>全学級月間チェック一覧</h1>
 <div class="button__monthly">
-  <%= link_to "前月", one_month_index_teachers_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-info" %>
-  <%= link_to "次月", one_month_index_teachers_alergy_checks_path(date: @first_day.next_month), class: "btn btn-info" %>
-  <% if @alergy_checks.any? %>
-    <%= link_to "印刷する", "#", class: "btn btn-primary", onclick: "window.print(); return false;" %>
-  <% end %>
+  <%= link_to "前月", admin_alergy_checks_one_month_index_teachers_path(date: @first_day.prev_month), class: "btn btn-info" %>
+  <%= link_to "次月", admin_alergy_checks_one_month_index_teachers_path(date: @first_day.next_month), class: "btn btn-info" %>
 </div>
 
 <div>
@@ -13,6 +10,7 @@
       <thead>
         <tr>
             <th><%= AlergyCheck.human_attribute_name(:worked_on) %></th>
+            <th><%= Classroom.human_attribute_name(:class_name) %></th>
             <th><%= Student.human_attribute_name(:student_name) %></th>
             <th><%= AlergyCheck.human_attribute_name(:menu) %></th>
             <th><%= AlergyCheck.human_attribute_name(:support) %></th>
@@ -24,10 +22,9 @@
       <tbody>
         <%# 日付被り非表示チェック用変数 %>
         <% previous_worked_on = nil %>
-        <% @alergy_checks.each_with_index do |alergy_check, index| %>
+        <% @alergy_checks.each do |alergy_check| %>
           <tr>
-
-            <%# worked_onが1つ前の要素のworked_onと等しい場合 %>
+            <%# 日付被り非表示チェック %>
             <% if alergy_check.worked_on == previous_worked_on %>
               <td></td>
             <% else %>
@@ -36,6 +33,8 @@
             <% end %>
             <% previous_worked_on = alergy_check.worked_on %>
 
+            <%# 管理職用の月間チェックではクラス名を表示 %>
+            <td><%= alergy_check.student.classroom.class_name %></td>
             <td><%= alergy_check.student.student_name %></td>
             <td><%= alergy_check.menu %></td>
             <td><%= alergy_check.support %></td>

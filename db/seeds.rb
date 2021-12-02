@@ -1,5 +1,6 @@
 # coding: utf-8
-            
+
+# システム管理者作成（1人）
 SystemAdmin.find_or_create_by(id: 1) do |admin|
   admin.email = "system@email.com"
   admin.password = "password"
@@ -7,90 +8,47 @@ end
 
 puts "SystemAdmin Created"
 
-School.create!(school_name: "サンプル",
-               school_url: "sample1")
-
-School.create!(school_name: "あいうえお小学校",
-              school_url: "aiueosho1")
-
-School.create!(school_name: "かきくけこ小学校",
-              school_url: "sasisu1")
+# スクール作成（2校）
+2.times do |n|
+  School.create!(school_name: "学校#{n+1}",
+                school_url: "school#{n+1}")
+end
 
 puts "School Created"
 
-Classroom.create!([{class_name: "1-1", class_grade: 1, school_id: 1},
-                  {class_name: "1-2", class_grade: 1, school_id: 1},
-                  {class_name: "1-3", class_grade: 1, school_id: 1},
-                  {class_name: "1-4", class_grade: 1, school_id: 1},
-                  {class_name: "2-1", class_grade: 2, school_id: 1},
-                  {class_name: "2-2", class_grade: 2, school_id: 1},
-                  {class_name: "2-3", class_grade: 2, school_id: 1},
-                  {class_name: "2-4", class_grade: 2, school_id: 1},
-                  {class_name: "3-1", class_grade: 3, school_id: 1},
-                  {class_name: "3-2", class_grade: 3, school_id: 1},
-                  {class_name: "3-3", class_grade: 3, school_id: 1},
-                  {class_name: "3-4", class_grade: 3, school_id: 1},
-                  {class_name: "4-1", class_grade: 4, school_id: 1},
-                  {class_name: "4-2", class_grade: 4, school_id: 1},
-                  {class_name: "4-3", class_grade: 4, school_id: 1},
-                  {class_name: "4-4", class_grade: 4, school_id: 1},
-                  {class_name: "特別学級１", class_grade: 7, school_id: 1},
-                  {class_name: "特別学級２", class_grade: 7, school_id: 1},
-                  {class_name: "特別学級３", class_grade: 7, school_id: 1},
-                  ])
+# school_id: 1のクラス作成
+4.times do |n|
+  Classroom.create!([{class_name: "1-#{n+1}", class_grade: 1, school_id: 1},
+                    {class_name: "2-#{n+1}", class_grade: 2, school_id: 1},
+                    {class_name: "3-#{n+1}", class_grade: 3, school_id: 1},
+                    {class_name: "特別学級#{n+1}", class_grade: 7, school_id: 1},
+                    ])
+end
 
-Classroom.create!([{class_name: "1-1", class_grade: 1, school_id: 2},
-                  {class_name: "1-2", class_grade: 1, school_id: 2},
-                  {class_name: "1-3", class_grade: 1, school_id: 2},
-                  {class_name: "1-4", class_grade: 1, school_id: 2},
-                  {class_name: "2-1", class_grade: 2, school_id: 2},
-                  {class_name: "2-2", class_grade: 2, school_id: 2},
-                  {class_name: "2-3", class_grade: 2, school_id: 2},
-                  {class_name: "2-4", class_grade: 2, school_id: 2},
-                  {class_name: "3-1", class_grade: 3, school_id: 2},
-                  {class_name: "3-2", class_grade: 3, school_id: 2},
-                  {class_name: "3-3", class_grade: 3, school_id: 2},
-                  {class_name: "3-4", class_grade: 3, school_id: 2},
-                  {class_name: "4-1", class_grade: 4, school_id: 2},
-                  {class_name: "4-2", class_grade: 4, school_id: 2},
-                  {class_name: "4-3", class_grade: 4, school_id: 2},
-                  {class_name: "4-4", class_grade: 4, school_id: 2},
-                  {class_name: "特別学級１", class_grade: 7, school_id: 2},
-                  {class_name: "特別学級２", class_grade: 7, school_id: 2},
-                  {class_name: "特別学級３", class_grade: 7, school_id: 2},
-                  ])
+# school_id: 2のクラス作成
+4.times do |n|
+  Classroom.create!([{class_name: "1-#{n+1}", class_grade: 1, school_id: 2},
+                    {class_name: "2-#{n+1}", class_grade: 2, school_id: 2},
+                    {class_name: "3-#{n+1}", class_grade: 3, school_id: 2},
+                    {class_name: "特別学級#{n+1}", class_grade: 7, school_id: 2},
+                    ])
+end
 
-Classroom.create!([{class_name: "1-1", class_grade: 1, school_id: 3},
-                  {class_name: "1-2", class_grade: 1, school_id: 3},
-                  {class_name: "1-3", class_grade: 1, school_id: 3},
-                  {class_name: "1-4", class_grade: 1, school_id: 3},
-                  {class_name: "2-1", class_grade: 2, school_id: 3},
-                  {class_name: "2-2", class_grade: 2, school_id: 3},
-                  {class_name: "2-3", class_grade: 2, school_id: 3},
-                  {class_name: "2-4", class_grade: 2, school_id: 3},
-                  {class_name: "3-1", class_grade: 3, school_id: 3},
-                  {class_name: "3-2", class_grade: 3, school_id: 3},
-                  {class_name: "3-3", class_grade: 3, school_id: 3},
-                  {class_name: "3-4", class_grade: 3, school_id: 3},
-                  {class_name: "4-1", class_grade: 4, school_id: 3},
-                  {class_name: "4-2", class_grade: 4, school_id: 3},
-                  {class_name: "4-3", class_grade: 4, school_id: 3},
-                  {class_name: "4-4", class_grade: 4, school_id: 3},
-                  {class_name: "特別学級１", class_grade: 7, school_id: 3},
-                  {class_name: "特別学級２", class_grade: 7, school_id: 3},
-                  {class_name: "特別学級３", class_grade: 7, school_id: 3},
-                  ])
+# school_id: 3のクラス作成
+4.times do |n|
+  Classroom.create!([{class_name: "1-#{n+1}", class_grade: 1, school_id: 3},
+                    {class_name: "2-#{n+1}", class_grade: 2, school_id: 3},
+                    {class_name: "3-#{n+1}", class_grade: 3, school_id: 3},
+                    {class_name: "特別学級#{n+1}", class_grade: 7, school_id: 3},
+                    ])
+end
 
 puts "Classroom Created"
 
-# # 1-1のクラス作成
-# classroom_id = 1
-# Classroom.create!(class_name: "1-1",
-#                 school_id: 1)
-
-# school_id: 1
-Teacher.create!(teacher_name: "管理職",
-              email: "admin@email.com",
+# school_id: 1の先生作成
+# school_id: 1の権限者作成
+Teacher.create!(teacher_name: "管理者A",
+              email: "adminA@email.com",
               password: "password",
               password_confirmation: "password",
               admin: true,
@@ -98,26 +56,38 @@ Teacher.create!(teacher_name: "管理職",
               tcode: "kanri1",
               classroom_id: 1) 
 
-Teacher.create!(teacher_name: "入力担当者",
-            email: "creator@email.com",
+Teacher.create!(teacher_name: "入力担当者A",
             password: "password",
             password_confirmation: "password",
             creator: true,
             school_id: 1,
             tcode: "taiou1",
-            classroom_id: 1) 
+            classroom_id: 1)
 
-Teacher.create!(teacher_name: "一般",
-            email: "teacher@email.com",
+Teacher.create!(teacher_name: "代理申請者A",
             password: "password",
             password_confirmation: "password",
+            charger: true,
             school_id: 1,
-            tcode: "11aa",
-            classroom_id: 1) 
+            tcode: "dairi1",
+            classroom_id: 1)
 
-puts "school1 KanriTeacher Created"
+# school_id: 1の一般職員作成
+3.times do |n|
+  name  = Faker::Name.name
+  tcode = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1, min_numeric: 1)
+  password = "password"
+  Teacher.create!(teacher_name: name,
+              password: password,
+              password_confirmation: password,
+              school_id: 1,
+              tcode: tcode,
+              classroom_id: n+1)
+end
 
-# 児童データ作成
+puts "school1 Teacher Created"
+
+# school_id: 1の児童作成
 4.times do |n|
   name  = "student1-1-#{n+1}"
   number = 1100 + n + 1
@@ -128,7 +98,35 @@ puts "school1 KanriTeacher Created"
 end
 puts "school1 1-1Student Created"
 
-# 1-1の一般職員作成
+
+# school_id: 2の先生作成
+# school_id: 2の権限者作成
+Teacher.create!(teacher_name: "管理者B",
+              email: "adminB@email.com",
+              password: "password",
+              password_confirmation: "password",
+              admin: true,
+              school_id: 2,
+              tcode: "kanri2",
+              classroom_id: 1) 
+
+Teacher.create!(teacher_name: "入力担当者B",
+            password: "password",
+            password_confirmation: "password",
+            creator: true,
+            school_id: 2,
+            tcode: "taiou2",
+            classroom_id: 1)
+
+Teacher.create!(teacher_name: "代理申請者B",
+            password: "password",
+            password_confirmation: "password",
+            charger: true,
+            school_id: 2,
+            tcode: "dairi2",
+            classroom_id: 1)
+
+# school_id: 2の一般職員作成
 3.times do |n|
   name  = Faker::Name.name
   tcode = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1, min_numeric: 1)
@@ -136,32 +134,14 @@ puts "school1 1-1Student Created"
   Teacher.create!(teacher_name: name,
               password: password,
               password_confirmation: password,
-              school_id: 1,
+              school_id: 2,
               tcode: tcode,
-              classroom_id: 1)
+              classroom_id: n+1)
 end
-puts "school1 1-1IppanTeacher Created"
 
+puts "school2 Teacher Created"
 
-# # 2-1のクラス作成
-# classroom_id = 2
-# Classroom.create!(class_name: "2-1",
-#                 school_id: 1)
-
-# 2-1の一般職員作成
-3.times do |n|
-  name  = Faker::Name.name
-  tcode = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1, min_numeric: 1)
-  password = "password"
-  Teacher.create!(teacher_name: name,
-              password: password,
-              password_confirmation: password,
-              school_id: 1,
-              tcode: tcode,
-              classroom_id: 5)
-end
-puts "school1 2-1IppanTeacher Created"
-
+# school_id: 2の児童作成
 4.times do |n|
   name  = "student2-1-#{n+1}"
   number = 2100 + n + 1
@@ -172,29 +152,3 @@ puts "school1 2-1IppanTeacher Created"
 end
 
 puts "school1 2-1Student Created"
-
-
-# school_id: 2
-Teacher.create!(teacher_name: "あいうえお管理者１",
-            email: "aiueo1@email.com",
-            password: "password",
-            password_confirmation: "password",
-            admin: true,
-            school_id: 2,
-            tcode: "aiueo1",
-            classroom_id: 20)
-puts "school2 KanriTeacher Created"
-
-# 1-1の一般職員作成
-3.times do |n|
-  name  = Faker::Name.name
-  tcode = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1, min_numeric: 1)
-  password = "password"
-  Teacher.create!(teacher_name: name,
-              password: password,
-              password_confirmation: password,
-              school_id: 2,
-              tcode: tcode,
-              classroom_id: 20)
-end
-puts "school2 1-1IppanTeacher Created"
