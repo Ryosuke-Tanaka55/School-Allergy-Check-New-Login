@@ -17,31 +17,26 @@ end
 puts "School Created"
 
 # school_id: 1のクラス作成
-4.times do |n|
-  Classroom.create!([{class_name: "1-#{n+1}", class_grade: 1, school_id: 1},
-                    {class_name: "2-#{n+1}", class_grade: 2, school_id: 1},
-                    {class_name: "3-#{n+1}", class_grade: 3, school_id: 1},
-                    {class_name: "特別学級#{n+1}", class_grade: 7, school_id: 1},
-                    ])
-end
+Classroom.create!([{class_name: "1-1", class_grade: 1, school_id: 1},
+                  {class_name: "1-2", class_grade: 1, school_id: 1},
+                  {class_name: "1-3", class_grade: 1, school_id: 1},
+                  {class_name: "2-1", class_grade: 2, school_id: 1},
+                  {class_name: "2-2", class_grade: 2, school_id: 1},
+                  {class_name: "2-3", class_grade: 2, school_id: 1},
+                  {class_name: "特別学級1", class_grade: 7, school_id: 1},
+                  {class_name: "特別学級2", class_grade: 7, school_id: 1},
+                  ])
 
 # school_id: 2のクラス作成
-4.times do |n|
-  Classroom.create!([{class_name: "1-#{n+1}", class_grade: 1, school_id: 2},
-                    {class_name: "2-#{n+1}", class_grade: 2, school_id: 2},
-                    {class_name: "3-#{n+1}", class_grade: 3, school_id: 2},
-                    {class_name: "特別学級#{n+1}", class_grade: 7, school_id: 2},
-                    ])
-end
-
-# school_id: 3のクラス作成
-4.times do |n|
-  Classroom.create!([{class_name: "1-#{n+1}", class_grade: 1, school_id: 3},
-                    {class_name: "2-#{n+1}", class_grade: 2, school_id: 3},
-                    {class_name: "3-#{n+1}", class_grade: 3, school_id: 3},
-                    {class_name: "特別学級#{n+1}", class_grade: 7, school_id: 3},
-                    ])
-end
+Classroom.create!([{class_name: "1-1", class_grade: 1, school_id: 2},
+                  {class_name: "1-2", class_grade: 1, school_id: 2},
+                  {class_name: "1-3", class_grade: 1, school_id: 2},
+                  {class_name: "2-1", class_grade: 2, school_id: 2},
+                  {class_name: "2-2", class_grade: 2, school_id: 2},
+                  {class_name: "2-3", class_grade: 2, school_id: 2},
+                  {class_name: "特別学級1", class_grade: 7, school_id: 2},
+                  {class_name: "特別学級2", class_grade: 7, school_id: 2},
+                  ])
 
 puts "Classroom Created"
 
@@ -82,7 +77,7 @@ Teacher.create!(teacher_name: "代理申請者A",
               password_confirmation: password,
               school_id: 1,
               tcode: tcode,
-              classroom_id: n+1)
+              classroom_id: n+2)
 end
 
 puts "school1 Teacher Created"
@@ -108,7 +103,7 @@ Teacher.create!(teacher_name: "管理者B",
               admin: true,
               school_id: 2,
               tcode: "kanri2",
-              classroom_id: 1) 
+              classroom_id: 9) 
 
 Teacher.create!(teacher_name: "入力担当者B",
             password: "password",
@@ -116,7 +111,7 @@ Teacher.create!(teacher_name: "入力担当者B",
             creator: true,
             school_id: 2,
             tcode: "taiou2",
-            classroom_id: 1)
+            classroom_id: 9)
 
 Teacher.create!(teacher_name: "代理申請者B",
             password: "password",
@@ -124,7 +119,7 @@ Teacher.create!(teacher_name: "代理申請者B",
             charger: true,
             school_id: 2,
             tcode: "dairi2",
-            classroom_id: 1)
+            classroom_id: 9)
 
 # school_id: 2の一般職員作成
 3.times do |n|
@@ -136,7 +131,7 @@ Teacher.create!(teacher_name: "代理申請者B",
               password_confirmation: password,
               school_id: 2,
               tcode: tcode,
-              classroom_id: n+1)
+              classroom_id: n+10)
 end
 
 puts "school2 Teacher Created"
@@ -147,8 +142,8 @@ puts "school2 Teacher Created"
   number = 2100 + n + 1
   Student.create!(student_name: name,
                   student_number: number,
-                  school_id: 1,
-                  classroom_id: 5)
+                  school_id: 2,
+                  classroom_id: 9)
 end
 
 puts "school1 2-1Student Created"
