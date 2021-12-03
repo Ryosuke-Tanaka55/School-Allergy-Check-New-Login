@@ -10,8 +10,8 @@ puts "SystemAdmin Created"
 
 # スクール作成（2校）
 2.times do |n|
-  School.create!(school_name: "学校#{n+1}",
-                school_url: "school#{n+1}")
+  School.create!(school_name: "サンプル#{n+1}",
+                school_url: "sample#{n+1}")
 end
 
 puts "School Created"

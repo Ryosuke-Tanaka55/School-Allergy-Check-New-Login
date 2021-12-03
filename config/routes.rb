@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   namespace :system_admins do
     resources :schools do
-      resources :teachers, param: :tcode, only: %i[show new create edit update]
+      resources :teachers, param: :tcode, only: %i[show new create edit update destroy]
     end
   end
 

@@ -4,10 +4,10 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h1>学校新規作成</h1>
+      <h1>学校情報編集</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @school, url: system_admins_schools_path, local: true) do |f| %>
+      <%= form_with(model: @school, url: system_admins_school_path, local: true, method: :patch) do |f| %>
         <%= render 'layouts/flash_messages' %>
         <%= render 'layouts/model_error_messages', model: @school %>
 
@@ -20,7 +20,7 @@
         </div>
 
         <div class="actions">
-          <%= f.submit "作成する", class: "btn btn-primary btn-block" %>
+          <%= f.submit "更新する", class: "btn btn-primary btn-block" %>
         </div>
       <% end %>
     </div>

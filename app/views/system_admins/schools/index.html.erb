@@ -4,12 +4,15 @@
 <table class="table table-bordered table-condensed" id="index-school">
   <thead>
     <tr>
-      <th>学校削除</th>
-      <th>学校名</th>
-      <th>学校URL</th>
-      <th>学校管理者作成</th>
-      <th>学校管理者</th>
-      <th>メールアドレス</th>
+      <th style="background-color:#D2B48C;">学校名</th>
+      <th style="background-color:#D2B48C;">学校URL</th>
+      <th style="background-color:#D2B48C;">学校編集</th>
+      <th style="background-color:#D2B48C; border-right-style:dashed;">学校削除</th>
+      <th style="background-color:khaki;">学校管理者作成</th>
+      <th style="background-color:khaki;">学校管理者</th>
+      <th style="background-color:khaki;">メールアドレス</th>
+      <th style="background-color:khaki;">学校管理者編集</th>
+      <th style="background-color:khaki;">学校管理者削除</th>
     </tr>
   </thead>
 
@@ -18,10 +21,13 @@
       <% teachers = school.teachers.where(admin: true) %>
       <% if teachers.blank? %>
       <tr>
-        <td><%= link_to "削除", system_admins_school_path(school), method: :delete, class: "btn btn-danger", data: {confirm: "削除してよろしいですか？" } %></td>
         <td><%= school.school_name %></td>
         <td><%= school.school_url %></td>
-        <td><%= link_to '作成', new_system_admins_school_teacher_path(school), class: "btn btn-primary" %></td>
+        <td><%= link_to '編集', edit_system_admins_school_path(school), remote: true, class: "btn btn-primary" %></td>
+        <td><%= link_to "削除", system_admins_school_path(school), method: :delete, class: "btn btn-danger", data: {confirm: "#{school.school_name}を削除してよろしいですか？" } %></td>
+        <td><%= link_to '作成', new_system_admins_school_teacher_path(school), class: "btn btn-info" %></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
       </tr>
@@ -34,20 +40,26 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             <% else %>
-              <td><%= link_to "削除", system_admins_school_path(school), method: :delete, class: "btn btn-danger", data: {confirm: "削除してよろしいですか？" } %></td>
               <td><%= school.school_name %></td>
               <td><%= school.school_url %></td>
+              <td><%= link_to '編集', edit_system_admins_school_path(school), remote: true, class: "btn btn-primary" %></td>
+              <td><%= link_to "削除", system_admins_school_path(school), method: :delete, class: "btn btn-danger", data: {confirm: "#{school.school_name}を削除してよろしいですか？" } %></td>
             <% end %>
             <% if (school.school_name == saved_school_name) && (school.school_url == saved_school_url) %>
               <td></td>
               <td><%= teacher.teacher_name %></td>
               <td><%= teacher.email %></td>
+              <td><%= link_to '編集', '#', class: "btn btn-primary" %></td>
+              <td><%= link_to "削除", system_admins_school_teacher_path(school, tcode: teacher.tcode), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
             <% else %>
               <% (saved_school_name = school.school_name) && (saved_school_url = school.school_url) %>
-              <td><%= link_to '作成', new_system_admins_school_teacher_path(school), class: "btn btn-primary" %></td>
+              <td><%= link_to '作成', new_system_admins_school_teacher_path(school), class: "btn btn-info" %></td>
               <td><%= teacher.teacher_name %></td>
               <td><%= teacher.email %></td>
+              <td><%= link_to '編集', '#', class: "btn btn-primary" %></td>
+              <td><%= link_to "削除", system_admins_school_teacher_path(school, tcode: teacher.tcode), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
             <% end %>
           </tr>
         <% end %>
@@ -57,3 +69,4 @@
 </table>
 
 <div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
