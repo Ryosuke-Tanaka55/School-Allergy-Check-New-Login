@@ -32,8 +32,8 @@ class SystemAdmins::SchoolsController < ApplicationController
       flash[:success] = "学校情報を更新しました。"
     else
       flash[:danger] = "更新に失敗しました。<br>・#{@school.errors.full_messages.join('<br>・')}"
-  end
-  redirect_to system_admins_schools_url
+    end
+    redirect_to system_admins_schools_url
   end
 
   def destroy

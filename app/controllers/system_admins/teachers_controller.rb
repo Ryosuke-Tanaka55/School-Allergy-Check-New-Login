@@ -1,6 +1,6 @@
 class SystemAdmins::TeachersController < ApplicationController
   before_action :authenticate_system_admin!
-  before_action :set_school, only: %i[ new create destroy]
+  before_action :set_school, only: %i[ new create edit update destroy]
   before_action :set_admin_teacher, only: %i[ show edit update destroy ]
 
   def index
@@ -15,11 +15,22 @@ class SystemAdmins::TeachersController < ApplicationController
     @admin_teacher.admin = true
     if @admin_teacher.save
       flash[:info] = "学校管理者を作成しました"
-      redirect_to system_admins_schools_path
     else
       flash[:danger] = "作成に失敗しました"
-      render :new
     end
+    redirect_to system_admins_schools_path
+  end
+
+  def edit
+  end
+
+  def update
+    if @admin_teacher.update_attributes(admin_teacher_params)
+      flash[:success] = "学校管理者情報を更新しました。"
+    else
+      flash[:danger] = "更新に失敗しました。<br>・#{@admin_teacher.errors.full_messages.join('<br>・')}"
+    end
+    redirect_to system_admins_schools_path
   end
 
   def destroy
@@ -40,7 +51,7 @@ class SystemAdmins::TeachersController < ApplicationController
     end
 
     def admin_teacher_params
-      params.require(:teacher).permit(:teacher_name, :tcode, :email, :password, :password_confirmation, :school_id)
+      params.require(:teacher).permit(:teacher_name, :tcode, :email, :admin, :password, :password_confirmation, :school_id)
     end
 
 end

@@ -25,7 +25,7 @@
         <td><%= school.school_url %></td>
         <td><%= link_to '編集', edit_system_admins_school_path(school), remote: true, class: "btn btn-primary" %></td>
         <td><%= link_to "削除", system_admins_school_path(school), method: :delete, class: "btn btn-danger", data: {confirm: "#{school.school_name}を削除してよろしいですか？" } %></td>
-        <td><%= link_to '作成', new_system_admins_school_teacher_path(school), class: "btn btn-info" %></td>
+        <td><%= link_to '作成', new_system_admins_school_teacher_path(school), remote: true, class: "btn btn-info" %></td>
         <td></td>
         <td></td>
         <td></td>
@@ -51,14 +51,14 @@
               <td></td>
               <td><%= teacher.teacher_name %></td>
               <td><%= teacher.email %></td>
-              <td><%= link_to '編集', '#', class: "btn btn-primary" %></td>
+              <td><%= link_to '編集', edit_system_admins_school_teacher_path(school, tcode: teacher.tcode), remote: true, class: "btn btn-primary" %></td>
               <td><%= link_to "削除", system_admins_school_teacher_path(school, tcode: teacher.tcode), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
             <% else %>
               <% (saved_school_name = school.school_name) && (saved_school_url = school.school_url) %>
-              <td><%= link_to '作成', new_system_admins_school_teacher_path(school), class: "btn btn-info" %></td>
+              <td><%= link_to '作成', new_system_admins_school_teacher_path(school), remote: true, class: "btn btn-info" %></td>
               <td><%= teacher.teacher_name %></td>
               <td><%= teacher.email %></td>
-              <td><%= link_to '編集', '#', class: "btn btn-primary" %></td>
+              <td><%= link_to '編集', edit_system_admins_school_teacher_path(school, tcode: teacher.tcode), remote: true, class: "btn btn-primary" %></td>
               <td><%= link_to "削除", system_admins_school_teacher_path(school, tcode: teacher.tcode), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
             <% end %>
           </tr>
@@ -70,3 +70,5 @@
 
 <div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="new-teacher" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit-teacher" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
