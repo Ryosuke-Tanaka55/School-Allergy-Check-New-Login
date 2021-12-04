@@ -140,4 +140,13 @@ p {
   @extend .alert-danger;
 }
 
+/* システム管理者・学校職員メニュー */
+.list-group-flush {
+  padding-top: 10px;
+  text-align: center;
+}
 
+.today--menu {
+  list-style: none;
+  display: inline-block;
+}

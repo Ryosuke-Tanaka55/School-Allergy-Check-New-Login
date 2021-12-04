@@ -1,0 +1,71 @@
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1>【チェック児童一覧】</h1>
+
+      <div class="modal-body">
+        <% @alergy_checks.each do |alergy_check| %>
+          <%= form_with(model: alergy_check, url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
+            <table width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
+              <thead>
+                <tr>
+                  <th><%= Student.human_attribute_name(:student_name) %></th>
+                  <th><%= AlergyCheck.human_attribute_name(:menu) %></th>
+                  <th><%= AlergyCheck.human_attribute_name(:support) %></th>
+                  <th><%= AlergyCheck.human_attribute_name(:note) %></th>
+                  <th><%= AlergyCheck.human_attribute_name(:first_check) %></th>
+                  <th><%= AlergyCheck.human_attribute_name(:second_check) %></th>
+                  <th><%= AlergyCheck.human_attribute_name(:student_check) %></th>
+                  <th><%= AlergyCheck.human_attribute_name(:applicant_id) %></th>
+                  <th><%= AlergyCheck.human_attribute_name(:status_checker) %></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><%= alergy_check.student.student_name %></td>
+                  <td><%= alergy_check.menu %></td>
+                  <td><%= alergy_check.support %></td>
+                  <td>
+                    <% if alergy_check.note.present? %>
+                      <%= alergy_check.note %>
+                    <% else %>
+                      なし
+                    <% end %>
+                  </td>
+                  <% if alergy_check.status.blank? %>
+                    <%= f.hidden_field :alergy_check_id, :value => alergy_check.id %>
+                    <td><%= f.check_box :first_check, { required: true }, true, false %></td>
+                    <td><%= f.check_box :second_check, { required: true }, true, false %></td>
+                    <td><%= f.check_box :student_check, { required: true }, true, false %></td>
+                    <!-- 代理報告の場合 -->
+                    <% if params[:proxy_flag] %>
+                      <td><%= f.collection_select :applicant, @teachers, :teacher_name, :teacher_name, 
+                                                  { include_blank: "申請者名を選択" }, { class: "form-control", required: true } %></td>
+                      <%= f.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
+                    <!-- 自クラス報告の場合 -->
+                    <% else %>
+                      <td><%= current_teacher.teacher_name %></td>
+                    <% end %>
+                    <td><%= Teacher.human_attribute_name(:admin) %></td>
+                    <td><%= f.submit "#{check_state(alergy_check.status)}", class: "btn btn-primary btn-sm" %></td>
+                  <% else %>
+                    <td><%= f.check_box :first_check, { disabled: true }, true, false %></td>
+                    <td><%= f.check_box :second_check, { disabled: true }, true, false %></td>
+                    <td><%= f.check_box :student_check, { disabled: true }, true, false %></td>
+                    <td><%= alergy_check.applicant %></td>
+                    <td><%= Teacher.human_attribute_name(:admin) %></td>
+                    <td><%= f.submit "#{check_state(alergy_check.status)}", { class: "btn btn-primary btn-sm", disabled: true } %></td>
+                  <% end %>
+                </tr>
+              </tbody>
+            </table>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,21 +3,25 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @student, url: student_path(@student), local: true, method: :patch) do |f| %>
-      
+    
       <%= f.label :"番号", class: "label-signup"%>
       <%= f.number_field :student_id, class: "form-control" %>
 
-      <%= f.label :"学級", class: "label-signup" %>
-      <%= f.text_field :student_classroom, class: "form-control" %>
-      
-      <%= f.label :"担任", class: "label-signup" %>
-      <%= f.text_field :teacher_of_student, class: "form-control" %>
-      
-      <%= f.label :"児童名", class: "label-signup" %>
+      <%= f.label :"学級名",class: "label-signup" %>
+      <%= f.text_field :classroom_name, class: "form-control" %>
+
+      <%= f.label :"児童名",class: "label-signup" %>
       <%= f.text_field :student_name, class: "form-control" %>
-      
+
       <%= f.label :"アレルギー食品", class: "label-signup" %>
       <%= f.text_field :alergy, class: "form-control" %>
+      
+      <%= f.label :"担任",class: "label-signup" %>
+      <%= f.text_field :teacher_of_student, class: "form-control" %>
+
+      <%= f.label :"備考",class: "label-signup" %>
+      <%= f.text_field :student_note, class: "form-control" %>  
+      
       
 
       <%= f.submit "更新", class: "btn btn-primary btn-block btn-user--edit" %>
