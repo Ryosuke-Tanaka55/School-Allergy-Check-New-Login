@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     get 'school_students/index'
     get 'school_students/new'
     get 'school_students/edit'
+    # 対応法担当者
     resources :students do
       namespace :alergy_checks do
         resources :creators, only: %i(edit update destroy)
@@ -51,6 +52,7 @@ Rails.application.routes.draw do
         resource :creator, only: %i(new create)
       end
     end
+
     resources :menus
     post 'create'
     get 'show', as: :show
