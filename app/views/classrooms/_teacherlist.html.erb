@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-    <% teachers = @school.teachers.where(classroom_id: nil) %>
+    <% teachers = @school.teachers.where(classroom_id: nil).where.not(id: current_teacher.id) %>
     <% teachers.each do |teacher| %>
       <tr>
         <td><%= teacher.teacher_name %></td>

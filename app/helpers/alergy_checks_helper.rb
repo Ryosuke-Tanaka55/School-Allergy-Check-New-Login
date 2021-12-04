@@ -10,14 +10,14 @@ module AlergyChecksHelper
   end
 
   # 月間チェック一覧ページステータス表示
-  def monthly_check_state(status)
+  def monthly_check_state(status:, name:)
     case status
     when "" then
       return "未報告"
     when "報告中" then
-      return "管理職へ#{status}"
+      return "#{name}へ#{status}"
     when "確認済"
-      return "管理職#{status}"
+      return "#{name} #{status}"
     end
   end
 

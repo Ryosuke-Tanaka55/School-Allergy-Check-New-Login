@@ -3,10 +3,14 @@
     <br><%= I18n.l(Date.current, format: :long) %><br><br>
     <span>クラス：<%= @classroom.class_name %></span>
     <%= link_to "月間チェック", one_month_index_teachers_alergy_checks_path, class: "btn btn-warning btn-lg button__monthly-check" %><br><br>
-    <% if @alergy_check_sum == @submitted %>  
-      本日のチェックは完了しました。
+    <% if @alergy_check_sum == 0 %>
+      本日のチェックはありません。
     <% else %>
-      本日のアレルギーチェック：<%= "#{@alergy_check_sum}件" %>
+      <% if @alergy_check_sum == @submitted %>  
+        本日のチェックは完了しました。
+      <% else %>
+        本日のチェック：<%= "#{@alergy_check_sum}件" %>
+      <% end %>
     <% end %>
   </div>
   <div class="area">

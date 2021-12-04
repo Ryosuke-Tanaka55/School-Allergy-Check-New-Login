@@ -15,11 +15,11 @@
 
   <tbody>
     <% classrooms.each do |classroom| %>
-      <% teachers = Teacher.where(classroom_id: classroom.id) %>
+      <% teachers = Teacher.where(classroom_id: classroom.id).where.not(id: current_teacher.id) %>
       <% if teachers.blank? %>
       <tr>
         <td><%= classroom.class_name %></td>
-        <td><%= link_to '担任登録', new_teachers_path(classroom_id: classroom.id), remote: true, class: "btn btn-primary" %></td>
+        <td><%= link_to '担任登録', new_teachers_path(classroom_id: classroom.id), remote: true, class: "btn btn-info" %></td>
         <td></td>
         <td></td>
         <td></td>
@@ -47,7 +47,7 @@
             <td><%= link_to "編集", edit_info_teachers_path(id: teacher.id), remote: true, class: "btn btn-primary" %></td>
           <% else %>
             <% saved_class_name = classroom.class_name %>
-            <td><%= link_to '担任登録', new_teachers_path(classroom_id: classroom.id), remote: true, class: "btn btn-primary" %></td>
+            <td><%= link_to '担任登録', new_teachers_path(classroom_id: classroom.id), remote: true, class: "btn btn-info" %></td>
             <td><%= teacher.teacher_name %></td>
             <td><%= teacher.tcode %></td>
             <td><%= teacher.admin ? '⭕️': '❌' %></td>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211123072851) do
+ActiveRecord::Schema.define(version: 20211201110653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20211123072851) do
     t.string "menu", null: false
     t.string "support", null: false
     t.string "applicant"
+    t.string "admin_name"
     t.index ["student_id"], name: "index_alergy_checks_on_student_id"
   end
 
