@@ -21,9 +21,11 @@ class SystemAdmins::TeachersController < ApplicationController
     redirect_to system_admins_schools_path
   end
 
+  # 必要かどうか確認↓
   def edit
   end
 
+  # 必要かどうか確認↓
   def update
     if @admin_teacher.update_attributes(admin_teacher_params)
       flash[:success] = "学校管理者情報を更新しました。"
