@@ -5,10 +5,10 @@ class TeachersController < ApplicationController
   before_action :admin_teacher, only: [:new, :create, :edit_info, :update_info, :destroy]
   before_action :set_first_last_day, only: :creator
 
-
-  def index
-    @teachers = current_school.teachers.all
-  end
+  # 多分使ってない↓
+  # def index
+  #   @teachers = current_school.teachers.all
+  # end
 
   def show
     # @teacher = Teacher.find(params[:id])

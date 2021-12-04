@@ -3,18 +3,19 @@
     メニュー <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
-    <% if current_teacher.admin? %>
-      <li><%= link_to '職員登録', new_teacher_registration_path %></li>
-      <li><%= link_to '職員一覧', classrooms_path %></li>
-      <li><%= link_to 'クラス編集', edit_using_class_classrooms_path %></li>
-    <% end %>
     <li><%= link_to '本日の作業', show_teachers_path %></li>
     <li><%= link_to '献立表', teachers_menus_path %></li>
-    <li><%= link_to '児童アレルギー情報', "#" %></li>
+    <li><%= link_to '児童一覧', "#" %></li>
     <% unless current_teacher.charger? %>
       <li><%= link_to '月間チェック一覧', one_month_index_teachers_alergy_checks_path %></li>
     <% end %>
     <li><%= link_to '全学級月間チェック一覧', admin_alergy_checks_one_month_index_teachers_path %></li>
+    <% if current_teacher.admin? %>
+      <li><%= link_to '職員登録', new_teacher_registration_path %></li>
+      <li><%= link_to '職員一覧', classrooms_path %></li>
+      <li><%= link_to 'クラス編集', edit_using_class_classrooms_path %></li>
+      <li><%= link_to 'アカウント', edit_teacher_registration_path %></li>
+    <% end %>
     <li class="divider"></li>
     <li>
       <li><%= link_to 'ログアウト', destroy_teacher_session_path, method: :delete %></li>

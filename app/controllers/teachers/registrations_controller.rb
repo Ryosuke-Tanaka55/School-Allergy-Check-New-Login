@@ -4,6 +4,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :require_no_authentication, only: [:cancel] # ログイン後も新規登録を可能にする為、new、createを外す
   before_action :creatable?, only: [:new, :create]
   before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   # def new
@@ -67,6 +68,11 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
     # elsif current_teacher.present? && current_teacher.admin?
       # devise_parameter_sanitizer.permit(:sign_up, keys: %i(teacher_name tcode password school_id classroom_id))
     # end
+  end
+
+  # 学校管理者アカウント編集時のストロングパラメーター
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:teacher_name, :tcode, :email, :password, :password_confirmation, :admin, :creator, :charger, :school_id])
   end
 
   # 一般職員新規登録時のストロングパラメーター

@@ -1,0 +1,39 @@
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1>学校管理者編集</h1>
+    </div>
+    <div class="modal-body">
+      <%= form_with(model: @admin_teacher, url: system_admins_school_teacher_path(@school, @admin_teacher), local: true, method: :patch) do |f| %>
+        <%= render 'layouts/flash_messages' %>
+
+        <div class="field">
+          <%= f.label :teacher_name %>
+          <%= f.text_field :teacher_name, class: "form-control" %>
+
+          <%= f.label :tcode %>
+          <%= f.text_field :tcode, autofocus: true, class: 'form-control' %>
+
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
+
+          <%= f.label :password %>
+          <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
+
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %><br>
+        </div>
+        <div class="actions">
+          <%= f.submit "更新する", class: "btn btn-primary btn-block" %>
+        </div>
+      <% end %>
+      <button type="button" class="btn btn-block btn-default %>" data-dismiss="modal">
+        キャンセル
+      </button>
+    </div>
+  </div>
+</div>
+

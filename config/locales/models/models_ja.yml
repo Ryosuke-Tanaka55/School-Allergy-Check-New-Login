@@ -28,7 +28,7 @@ ja:
           user: ユーザーID
         school:
           school_name: 学校名
-          school_url: 学校コード
+          school_url: 学校URL
           created_at: 作成日
           updated_at: 更新日
         classroom:
