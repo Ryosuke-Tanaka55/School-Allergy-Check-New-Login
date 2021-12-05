@@ -1,6 +1,13 @@
 class AdminAlergyChecksController < ApplicationController
     UPDATE_ERROR_MSG = "登録に失敗しました。やり直してください。"
-  
+    before_action :set_first_last_day
+
+    def one_month_index
+      @alergy_checks = AlergyCheck.joins({student: {classroom: :school}})
+                                  .where(:schools =>{:id => current_teacher.school_id}, worked_on: @first_day..@last_day)
+                                  .order(:worked_on)
+    end
+
     def show
       @teacher = Teacher.find(params[:id])
       @lunch_check_sum = AlergyCheck.where(status: "報告中").count
@@ -118,12 +125,3 @@ class AdminAlergyChecksController < ApplicationController
      
      
   end
-before_action :set_first_last_day
-
-  def one_month_index
-    @alergy_checks = AlergyCheck.joins({student: {classroom: :school}})
-                                .where(:schools =>{:id => current_teacher.school_id}, worked_on: @first_day..@last_day)
-                                .order(:worked_on)
-  end
-
-end
