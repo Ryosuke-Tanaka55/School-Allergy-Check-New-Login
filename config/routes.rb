@@ -37,8 +37,10 @@ Rails.application.routes.draw do
   end
 
   resource :teachers, except: %i(show create edit update destroy) do
-    get '/creator', to: 'teachers#creator'
     resources :school_students
+    # 対応法作成ページ
+    resources :creator_alergy_checks, expect: %i(show)
+    # get '/creator', to: 'teachers#creator'
     resources :students do
       namespace :alergy_checks do
         resources :creators, only: %i(edit update destroy)
