@@ -38,10 +38,7 @@ Rails.application.routes.draw do
 
   resource :teachers, except: %i(show create edit update destroy) do
     get '/creator', to: 'teachers#creator'
-    get 'school_students/index'
-    get 'school_students/new'
-    get 'school_students/edit'
-    # 対応法担当者
+    resources :school_students
     resources :students do
       namespace :alergy_checks do
         resources :creators, only: %i(edit update destroy)
