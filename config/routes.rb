@@ -40,14 +40,10 @@ Rails.application.routes.draw do
     resources :school_students
     # 対応法作成ページ
     resources :creator_alergy_checks, expect: %i(show)
+    
     resources :students do
       namespace :alergy_checks do
         resources :creators, only: %i(edit update destroy)
-      end
-    end
-    resource :students do
-      namespace :alergy_checks do
-        resource :creator, only: %i(new create)
       end
     end
 

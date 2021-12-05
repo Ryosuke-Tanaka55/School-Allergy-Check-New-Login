@@ -29,7 +29,7 @@
       <% @one_month.each do |day| %>
         <tr>
           <td><%= l(day, format: :short) + "(#{$days_of_the_week[day.wday]})" %></td>
-          <td><%= link_to "入力", new_teachers_students_alergy_checks_creator_path(day: day), class: "btn btn-primary", remote: true %></td>
+          <td><%= link_to "入力", new_teachers_creator_alergy_check_path(day: day), class: "btn btn-primary", remote: true %></td>
           <td></td>
           <td></td>
           <td></td>
@@ -44,7 +44,7 @@
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= Classroom.find(student.classroom_id).class_name %></td>
+                <td><%= student.classroom.class_name %></td>
                 <td><%= student.student_name %></td>
                 <td><%= alergy_check.menu %></td>
                 <td><%= alergy_check.support %></td>
