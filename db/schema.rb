@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211019124554) do
+ActiveRecord::Schema.define(version: 20211122091408) do
+ActiveRecord::Schema.define(version: 20211201110653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_alergy_checks", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "worked_on"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.string "note"
+    t.string "status", default: "f"
+    t.string "lunch_check_superior"
+    t.boolean "superior_checker"
+  end
 
   create_table "alergy_checks", force: :cascade do |t|
     t.date "worked_on", null: false
@@ -21,13 +35,15 @@ ActiveRecord::Schema.define(version: 20211019124554) do
     t.boolean "first_check", default: false, null: false
     t.boolean "second_check", default: false, null: false
     t.boolean "student_check", default: false, null: false
-    t.string "status"
+    t.string "status", default: "", null: false
     t.string "status_checker"
     t.bigint "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "menu", null: false
     t.string "support", null: false
+    t.string "applicant"
+    t.string "admin_name"
     t.index ["student_id"], name: "index_alergy_checks_on_student_id"
   end
 
@@ -62,6 +78,15 @@ ActiveRecord::Schema.define(version: 20211019124554) do
     t.index ["school_id"], name: "index_classrooms_on_school_id"
   end
 
+  create_table "menus", force: :cascade do |t|
+    t.string "menu_name"
+    t.string "menu_pdf"
+    t.bigint "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_menus_on_school_id"
+  end
+
   create_table "schools", force: :cascade do |t|
     t.string "school_name", default: "", null: false
     t.string "school_url", default: "", null: false
@@ -80,6 +105,7 @@ ActiveRecord::Schema.define(version: 20211019124554) do
     t.string "teacher_of_student"
     t.string "student_classroom"
     t.string "alergy"
+    t.string "student_note"
     t.index ["classroom_id"], name: "index_students_on_classroom_id"
     t.index ["school_id"], name: "index_students_on_school_id"
   end
@@ -97,7 +123,7 @@ ActiveRecord::Schema.define(version: 20211019124554) do
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.string "email", default: "", null: false
+    t.string "email"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -110,7 +136,6 @@ ActiveRecord::Schema.define(version: 20211019124554) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classroom_id"], name: "index_teachers_on_classroom_id"
-    t.index ["email"], name: "index_teachers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
     t.index ["school_id"], name: "index_teachers_on_school_id"
   end
@@ -134,6 +159,7 @@ ActiveRecord::Schema.define(version: 20211019124554) do
   add_foreign_key "alergy_checks", "students"
   add_foreign_key "attendances", "users"
   add_foreign_key "classrooms", "schools"
+  add_foreign_key "menus", "schools"
   add_foreign_key "students", "classrooms"
   add_foreign_key "students", "schools"
   add_foreign_key "teachers", "classrooms"

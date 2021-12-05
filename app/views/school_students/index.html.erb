@@ -1,0 +1,52 @@
+<h1>児童一覧ページ</h1>
+
+<!--児童追加ボタン-->
+<% if current_teacher.admin? %>
+  <div class="btn-student-new">
+    <%= link_to "児童追加", new_teachers_school_student_path, remote: true, class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<table class="table table-bordered table-condensed" id="index-classroom">
+  <thead>
+    <tr> 
+      <th>クラス名</th>
+      <th>児童番号</th>
+      <th>児童名</th>
+      <th>アレルギー食品</th>
+      <th>担任名</th>
+      <th>備考</th>
+      <% if current_teacher.admin? %>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @school_students.each do |student| %>   
+      <% teacher = Teacher.where(classroom_id: student.classroom_id, school_id: student.school_id) %>
+      <tr>
+        <td><%= Classroom.find(student.classroom_id).class_name %></td> 
+        <td><%= student.student_number %></td>
+        <td><%= student.student_name %></td> 
+        <td><%= student.alergy %></td>
+        <% if teacher.blank? %>
+          <td></td>
+        <% else %>
+          <% teacher.each do |t| %>
+            <td><%= t.teacher_name %></td>
+          <% end %>
+        <% end %>
+        <td><%= student.student_note %></td>
+        <% if current_teacher.admin? %>
+          <td><%= link_to "編集", edit_teachers_school_student_path(student), remote: true, class: "btn btn-primary" %></td>
+          <td><%= link_to "削除" ,teachers_school_student_path(student), method: :delete,  class: "btn btn-danger", data: {confirm: "#{student.student_name}を削除してよろしいですか？" } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody> 
+</table>
+
+
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

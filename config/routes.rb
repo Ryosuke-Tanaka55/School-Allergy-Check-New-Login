@@ -44,6 +44,18 @@ Rails.application.routes.draw do
         resources :creators, only: %i(edit update destroy)
       end
     end
+    resources :admin_alergy_checks, only: [:edit, :update] do
+      collection do  
+        get 'lunch_check'
+        patch 'update_lunch_check'
+      end   
+      member do
+         get 'lunch_check_info'
+         patch 'update_lunch_check_info'
+         get 'lunch_check_all'
+         patch 'update_lunch_check_all' 
+      end #collection do end
+     end #resouces do end
     resources :admin_alergy_checks do
     end
     resource :students do

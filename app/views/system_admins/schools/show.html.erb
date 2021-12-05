@@ -1,0 +1,12 @@
+<h1>学校詳細</h1>
+
+  <strong>学校名：</strong>
+  <%= @school.school_name %><br>
+  <strong>学校URL：</strong>
+  <%= @school.school_url%><br>
+
+<%= link_to '学校管理者作成', new_teacher_registration_path(@school), class: "btn btn-primary" %><br>
+
+
+<%= link_to '編集', '#' %> |
+<%= link_to '戻る', system_admins_path, class: 'btn btn-info' %>

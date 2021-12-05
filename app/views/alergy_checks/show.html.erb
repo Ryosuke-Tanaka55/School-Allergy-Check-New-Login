@@ -1,0 +1,27 @@
+<div>
+  <div class="center contents__font-size">
+    <br><%= I18n.l(Date.current, format: :long) %><br><br>
+    <span>クラス：<%= @classroom.class_name %></span>
+    <%= link_to "月間チェック", one_month_index_teachers_alergy_checks_path, class: "btn btn-warning btn-lg button__monthly-check" %><br><br>
+    <% if @alergy_check_sum == 0 %>
+      本日のチェックはありません。
+    <% else %>
+      <% if @alergy_check_sum == @submitted %>  
+        本日のチェックは完了しました。
+      <% else %>
+        本日のチェック：<%= "#{@alergy_check_sum}件" %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="area">
+    <br>
+    <% if @alergy_check_sum > 0 %>
+      <%= link_to "有", today_index_teachers_alergy_checks_path, remote: true, class: "inline-block button" %>
+    <% else %>
+      <a class="inline-block button" href="#">無</a>
+    <% end %>
+  </div>
+</div>
+
+<!-- モーダル設定 -->
+<div id="today-index" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

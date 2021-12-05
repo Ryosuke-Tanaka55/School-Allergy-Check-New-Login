@@ -1,0 +1,81 @@
+<h1>職員一覧</h1>
+
+<!--タブ部分-->
+<ul class="tab-list list-unstyled">
+  <li class="tab tab-active">
+    １学年
+  </li>
+  <li class="tab">
+    ２学年
+  </li>
+  <li class="tab">
+    ３学年
+  </li>
+  <li class="tab">
+    ４学年
+  </li>
+  <li class="tab">
+    ５学年
+  </li>
+  <li class="tab">
+    ６学年
+  </li>
+  <li class="tab">
+    特別学級
+  </li>
+  <li class="tab">
+    その他
+  </li>
+</ul>
+<!--タブで選択された要素部分-->
+<div class="tabbox-contents">
+  <div class="tabbox box-show">
+    <%= render 'classrooms/classlist', classrooms: @first_grade %>    
+  </div>
+  <div class="tabbox">
+    <%= render 'classrooms/classlist', classrooms: @second_grade %>    
+  </div>
+  <div class="tabbox">
+    <%= render 'classrooms/classlist', classrooms: @third_grade %>    
+  </div>
+  <div class="tabbox">
+    <%= render 'classrooms/classlist', classrooms: @fourth_grade %>    
+  </div>
+  <div class="tabbox">
+    <%= render 'classrooms/classlist', classrooms: @fifth_grade %>    
+  </div>
+  <div class="tabbox">
+    <%= render 'classrooms/classlist', classrooms: @sixth_grade %>    
+  </div>
+  <div class="tabbox">
+    <%= render 'classrooms/classlist', classrooms: @other_grade %>    
+  </div>
+  <div class="tabbox">
+    <%= render 'classrooms/teacherlist', classrooms: @other %>    
+  </div>
+</div>
+
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+
+<script>
+  // turbolinksの無効化
+  $(document).on('turbolinks:load', function() {
+    $(function() {
+      // .tabがクリックされたときを指定
+      $('.tab').click(function(){
+        // 今ある.tab-activeを削除
+        $('.tab-active').removeClass('tab-active');
+        // クリックされた.tabに.tab-activeを追加
+        $(this).addClass('tab-active');
+        // 今ある.box-showを削除
+        $('.box-show').removeClass('box-show');
+        // indexに.tabのindex番号を代入
+        const index = $(this).index();
+        // .tabboxとindexの番号が同じ要素に.box-showを追加
+        $('.tabbox').eq(index).addClass('box-show');
+      });
+    });
+  });
+</script>
