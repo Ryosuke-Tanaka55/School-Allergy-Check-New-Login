@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   resource :teachers, except: %i(show create edit update destroy) do
     resources :school_students
     # 対応法作成ページ
-    resources :creator_alergy_checks, expect: %i(show)
+    resources :creator_alergy_checks, except: %i(show)
     
     resources :students do
       namespace :alergy_checks do
