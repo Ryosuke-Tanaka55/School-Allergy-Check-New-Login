@@ -44,6 +44,20 @@ Rails.application.routes.draw do
         resources :creators, only: %i(edit update destroy)
       end
     end
+    resources :admin_alergy_checks, only: [:edit, :update] do
+      collection do  
+        get 'lunch_check'
+        patch 'update_lunch_check'
+      end   
+      member do
+         get 'lunch_check_info'
+         patch 'update_lunch_check_info'
+         get 'lunch_check_all'
+         patch 'update_lunch_check_all' 
+      end #collection do end
+     end #resouces do end
+    resources :admin_alergy_checks do
+    end
     resource :students do
       namespace :alergy_checks do
         resource :creator, only: %i(new create)
@@ -93,6 +107,21 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
+
+  resource :teachers do
+  resources :admin_alergy_checks, only: [:edit, :update] do
+    collection do  
+      get 'lunch_check'
+      patch 'update_lunch_check'
+    end   
+    member do
+       get 'lunch_check_info'
+       patch 'update_lunch_check_info'
+       get 'lunch_check_all'
+       patch 'update_lunch_check_all' 
+    end #collection do end
+   end #resouces do end
+  end #teachers do end
 
   # 下記山田さん既存のルート
   resources :students do
