@@ -23,26 +23,41 @@
     </tr>
   </thead>
   <tbody>
-    <% @school_students.each do |student| %>   
-      <% teacher = Teacher.where(classroom_id: student.classroom_id, school_id: student.school_id) %>
-      <tr>
-        <td><%= Classroom.find(student.classroom_id).class_name %></td> 
-        <td><%= student.student_number %></td>
-        <td><%= student.student_name %></td> 
-        <td><%= student.alergy %></td>
-        <% if teacher.blank? %>
-          <td></td>
-        <% else %>
-          <% teacher.each do |t| %>
+    <%# 表示被りチェック用変数 %>
+    <% @school_students.each do |student| %>
+      <% previous_student = nil %>
+      <% previous_teacher = nil %>
+      <% student.classroom.teachers.all.each do |t| %>
+        <% if previous_student == student.id && previous_teacher != t.id %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td><%= t.teacher_name %></td>
-          <% end %>
+            <td></td>
+            <% if current_teacher.admin? %>
+              <td></td>
+              <td></td>
+            <% end %>
+          </tr>
+        <% elsif previous_student.nil? && previous_teacher.nil? %>
+          <tr>
+            <td><%= student.classroom.class_name %></td> 
+            <td><%= student.student_number %></td>
+            <td><%= student.student_name %></td> 
+            <td><%= student.alergy %></td>
+            <td><%= t.teacher_name %></td>
+            <td><%= student.student_note %></td>
+            <% if current_teacher.admin? %>
+              <td><%= link_to "編集", edit_teachers_school_student_path(student), remote: true, class: "btn btn-primary" %></td>
+              <td><%= link_to "削除" ,teachers_school_student_path(student), method: :delete,  class: "btn btn-danger", data: {confirm: "#{student.student_name}を削除してよろしいですか？" } %></td>
+            <% end %>
+          </tr>
         <% end %>
-        <td><%= student.student_note %></td>
-        <% if current_teacher.admin? %>
-          <td><%= link_to "編集", edit_teachers_school_student_path(student), remote: true, class: "btn btn-primary" %></td>
-          <td><%= link_to "削除" ,teachers_school_student_path(student), method: :delete,  class: "btn btn-danger", data: {confirm: "#{student.student_name}を削除してよろしいですか？" } %></td>
-        <% end %>
-      </tr>
+        <% previous_student = student.id if previous_student != student.id %>
+        <% previous_teacher = t.id %>
+      <% end %>
     <% end %>
   </tbody> 
 </table>
