@@ -3,15 +3,8 @@ class TeachersController < ApplicationController
 
   before_action :authenticate_teacher!
   before_action :admin_teacher, only: [:new, :create, :edit_info, :update_info, :destroy]
-  before_action :set_first_last_day, only: :creator
-
-  # 多分使ってない↓
-  # def index
-  #   @teachers = current_school.teachers.all
-  # end
 
   def show
-    # @teacher = Teacher.find(params[:id])
   end
 
   def new
@@ -49,14 +42,6 @@ class TeachersController < ApplicationController
     flash[:danger] = "#{@teacher.teacher_name}を削除しました。"
     redirect_to classrooms_path
   end
-
-  # 対応法担当者ページ(show)
-  def creator
-    @days_of_the_week = %w{日 月 火 水 木 金 土}
-    @one_month = [*@first_day..@last_day]
-    @students = Student.all
-  end
-
 
   private
 

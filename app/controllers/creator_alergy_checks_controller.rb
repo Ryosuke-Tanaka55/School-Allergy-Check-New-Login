@@ -1,6 +1,10 @@
-class AlergyChecks::CreatorsController < ApplicationController
+class CreatorAlergyChecksController < ApplicationController
+  before_action :set_first_last_day, only: :index
 
-  $days_of_the_week = %w{日 月 火 水 木 金 土}
+  def index
+    @one_month = [*@first_day..@last_day]
+    @students = Student.all
+  end
 
   def new
     @student = Student.new
@@ -23,23 +27,22 @@ class AlergyChecks::CreatorsController < ApplicationController
       end
     end
     flash[:success] = 'アレルギー情報を登録しました。'
-    redirect_to creator_teachers_url
+    redirect_to teachers_creator_alergy_checks_url
 
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     flash[:danger] = e.message
-    redirect_to creator_teachers_url
+    redirect_to teachers_creator_alergy_checks_url
   end
 
   def edit
-    @student = current_teacher.school.students.find(params[:student_id])
+    @alergy_check = AlergyCheck.find(params[:id])
+    @student = @alergy_check.student
     @classroom = current_teacher.school.classrooms.find(@student.classroom_id)
-    @alergy_check = @student.alergy_checks.find(params[:id])
     @classrooms = current_teacher.school.classrooms
   end
 
   def update
     if params[:alergy_check][:student_id].present?
-      @student = Student.find(params[:student_id])
       @alergy_check = AlergyCheck.find(params[:id])
       if @alergy_check.update(edit_creator_params)
         flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}の情報を更新しました。"
@@ -51,15 +54,15 @@ class AlergyChecks::CreatorsController < ApplicationController
     else
       flash[:danger] = "登録に失敗しました。児童名を選択してください。"
     end
-    redirect_to creator_teachers_url
+    redirect_to teachers_creator_alergy_checks_url
   end
 
   def destroy
-    @student = Student.find(params[:student_id])
     @alergy_check = AlergyCheck.find(params[:id])
+    @student = @alergy_check.student
     @alergy_check.destroy
     flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}の情報を削除しました。"
-    redirect_to creator_teachers_url
+    redirect_to teachers_creator_alergy_checks_url
   end
 
   def search_student

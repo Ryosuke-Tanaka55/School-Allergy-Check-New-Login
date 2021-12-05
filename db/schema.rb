@@ -10,24 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211122091408) do
 ActiveRecord::Schema.define(version: 20211201110653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "admin_alergy_checks", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.date "worked_on"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.string "note"
-    t.string "status", default: "f"
-    t.string "lunch_check_superior"
-    t.boolean "superior_checker"
-  end
 
   create_table "alergy_checks", force: :cascade do |t|
     t.date "worked_on", null: false
@@ -72,6 +58,8 @@ ActiveRecord::Schema.define(version: 20211201110653) do
 
   create_table "classrooms", force: :cascade do |t|
     t.string "class_name", default: "", null: false
+    t.integer "class_grade"
+    t.boolean "using_class", default: true
     t.bigint "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -131,8 +119,15 @@ ActiveRecord::Schema.define(version: 20211201110653) do
     t.string "teacher_name", default: "", null: false
     t.boolean "admin", default: false, null: false
     t.boolean "creator", default: false, null: false
+    t.boolean "charger", default: false, null: false
+    t.string "tcode", default: "", null: false
     t.bigint "school_id"
     t.bigint "classroom_id"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classroom_id"], name: "index_teachers_on_classroom_id"
