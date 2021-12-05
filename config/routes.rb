@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   namespace :system_admins do
     resources :schools do
-      resources :teachers, param: :tcode, only: %i[show new create edit update]
+      resources :teachers, param: :tcode, only: %i[show new create edit update destroy]
     end
   end
 
@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     get 'school_students/index'
     get 'school_students/new'
     get 'school_students/edit'
+    resources :school_students
     resources :students do
       namespace :alergy_checks do
         resources :creators, only: %i(edit update destroy)
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
         resource :creator, only: %i(new create)
       end
     end
+
     resources :menus
     post 'create'
     get 'show', as: :show
@@ -71,6 +73,10 @@ Rails.application.routes.draw do
     #代理報告ページ
     resource :charger_alergy_checks, only: %i(show)
 
+    #管理職月間チェック一覧ページ
+    collection do
+      get '/admin_alergy_checks/one_month_index'
+    end
 
   end
   resource :students do
@@ -86,6 +92,10 @@ Rails.application.routes.draw do
       get 'edit_using_class'
       patch 'update_using_class'
     end
+  end
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
   if Rails.env.development?
@@ -134,10 +144,8 @@ Rails.application.routes.draw do
      collection do
         get 'lunch_check_info'
         patch 'update_lunch_check_info'
-        get 'lunch_check_all'
-        patch 'update_lunch_check_all' 
      end #collection do end
     end #resouces do end
   end #user resouces do end
 end
-#draw to end.
+#draw do end.
