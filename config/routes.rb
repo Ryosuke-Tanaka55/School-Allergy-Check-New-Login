@@ -38,9 +38,6 @@ Rails.application.routes.draw do
 
   resource :teachers, except: %i(show create edit update destroy) do
     get '/creator', to: 'teachers#creator'
-    get 'school_students/index'
-    get 'school_students/new'
-    get 'school_students/edit'
     resources :school_students
     resources :students do
       namespace :alergy_checks do
@@ -78,6 +75,7 @@ Rails.application.routes.draw do
       get '/admin_alergy_checks/one_month_index'
     end
 
+
   end
   resource :students do
     namespace :alergy_checks do
@@ -92,10 +90,6 @@ Rails.application.routes.draw do
       get 'edit_using_class'
       patch 'update_using_class'
     end
-  end
-
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
   if Rails.env.development?
@@ -148,4 +142,4 @@ Rails.application.routes.draw do
     end #resouces do end
   end #user resouces do end
 end
-#draw do end.
+#draw do end
