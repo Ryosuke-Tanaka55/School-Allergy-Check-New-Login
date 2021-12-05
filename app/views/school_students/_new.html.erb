@@ -1,0 +1,35 @@
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1>児童追加</h1>
+    </div>
+    <div class="modal-body">
+      <%= form_with model: @school_student, url: teachers_school_students_path, local: true do |f| %>
+        <table class="table table-bordered table-condensed table-hover">
+          <thead>
+            <tr>
+              <th>クラス名</th>
+              <th>児童番号</th>
+              <th>児童名</th>
+              <th>アレルギー食品</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= f.collection_select :classroom_id, @classrooms, :id, :class_name, { include_blank: "クラスを選択" }, class: "form-control", required: true %></td>
+              <td><%= f.number_field :student_number, class: "form-control", min: 0, required: true %></td>
+              <td><%= f.text_field :student_name, class: "form-control", required: true %></td>
+              <td><%= f.text_area :alergy, class: "form-control" %></td>
+              <td><%= f.text_field :student_note, class: "form-control" %></td>
+            </tr>
+          </tbody>
+        </table>
+        <%= f.submit "追加する", class: "btn btn-primary btn-block" %>
+      <% end %>
+    </div>
+  </div>
+</div>

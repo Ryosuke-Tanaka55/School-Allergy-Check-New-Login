@@ -1,14 +1,12 @@
 class SystemAdmins::SchoolsController < ApplicationController
   before_action :authenticate_system_admin!
+  before_action :set_school, only: [:edit, :update, :destroy]
 
   def index
     @schools = School.all
   end
 
   def show
-  end
-
-  def edit
   end
 
   def new
@@ -20,22 +18,37 @@ class SystemAdmins::SchoolsController < ApplicationController
     set_class
     if @school.save
       flash[:info] = "学校を新規作成しました"
-      redirect_to system_admins_schools_url
     else
-      render :new
+      flash[:danger] = "作成に失敗しました。<br>・#{@school.errors.full_messages.join('<br>・')}"
     end
+    redirect_to system_admins_schools_url
+  end
+
+  def edit
   end
 
   def update
+    if @school.update_attributes(school_params)
+      flash[:success] = "学校情報を更新しました。"
+    else
+      flash[:danger] = "更新に失敗しました。<br>・#{@school.errors.full_messages.join('<br>・')}"
+    end
+    redirect_to system_admins_schools_url
   end
 
   def destroy
+    @school.destroy
+    flash[:success] = "#{@school.school_name}を削除しました。"
+    redirect_to system_admins_schools_url
   end
 
   private
 
-
-
+    # schoolの特定
+    def set_school
+      @school = School.find_by!(school_url: params[:id])
+    end
+  
 
     def school_params
       # params.require(:school).permit(:school_name, :school_url, classrooms_attributes:[:school_id, :class_name])

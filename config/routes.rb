@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   namespace :system_admins do
     resources :schools do
-      resources :teachers, param: :tcode, only: %i[show new create edit update]
+      resources :teachers, param: :tcode, only: %i[show new create edit update destroy]
     end
   end
 
@@ -38,9 +38,7 @@ Rails.application.routes.draw do
 
   resource :teachers, except: %i(show create edit update destroy) do
     get '/creator', to: 'teachers#creator'
-    get 'school_students/index'
-    get 'school_students/new'
-    get 'school_students/edit'
+    resources :school_students
     resources :students do
       namespace :alergy_checks do
         resources :creators, only: %i(edit update destroy)
@@ -65,6 +63,7 @@ Rails.application.routes.draw do
         resource :creator, only: %i(new create)
       end
     end
+
     resources :menus
     post 'create'
     get 'show', as: :show
@@ -78,6 +77,14 @@ Rails.application.routes.draw do
         get 'today_index'
         get 'one_month_index'
       end
+    end
+
+    #代理報告ページ
+    resource :charger_alergy_checks, only: %i(show)
+
+    #管理職月間チェック一覧ページ
+    collection do
+      get '/admin_alergy_checks/one_month_index'
     end
 
 

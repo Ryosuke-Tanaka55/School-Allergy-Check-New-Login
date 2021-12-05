@@ -1,9 +1,9 @@
 <h1>献立表一覧</h1>
 
-<!--園児登録ボタン-->
+<!--献立追加ボタン-->
 <% if current_teacher.admin? %>
   <div class="btn-menu-new">
-    <%= link_to "献立表追加", new_teachers_menu_path, remote: true, class: "btn btn-primary" %>
+    <%= link_to "献立表追加", new_teachers_menu_path, remote: true, class: "btn btn-info" %>
   </div>
 <% end %>
 

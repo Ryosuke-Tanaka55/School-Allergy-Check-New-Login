@@ -3,11 +3,12 @@ class TeachersController < ApplicationController
 
   before_action :authenticate_teacher!
   before_action :admin_teacher, only: [:new, :create, :edit_info, :update_info, :destroy]
+  before_action :set_first_last_day, only: :creator
 
-
-  def index
-    @teachers = current_school.teachers.all
-  end
+  # 多分使ってない↓
+  # def index
+  #   @teachers = current_school.teachers.all
+  # end
 
   def show
     # @teacher = Teacher.find(params[:id])
@@ -52,8 +53,6 @@ class TeachersController < ApplicationController
   # 対応法担当者ページ(show)
   def creator
     @days_of_the_week = %w{日 月 火 水 木 金 土}
-    @first_day = params[:date].nil? ? Date.current.beginning_of_month : params[:date].to_date
-    @last_day = @first_day.end_of_month
     @one_month = [*@first_day..@last_day]
     @students = Student.all
   end
