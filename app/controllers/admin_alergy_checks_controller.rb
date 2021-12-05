@@ -126,4 +126,4 @@ before_action :set_first_last_day
                                 .order(:worked_on)
   end
 
-end  
+end
