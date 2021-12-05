@@ -4,13 +4,7 @@ class TeachersController < ApplicationController
   before_action :authenticate_teacher!
   before_action :admin_teacher, only: [:new, :create, :edit_info, :update_info, :destroy]
 
-  # 多分使ってない↓
-  # def index
-  #   @teachers = current_school.teachers.all
-  # end
-
   def show
-    # @teacher = Teacher.find(params[:id])
   end
 
   def new

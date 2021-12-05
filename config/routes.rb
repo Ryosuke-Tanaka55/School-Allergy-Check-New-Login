@@ -40,12 +40,6 @@ Rails.application.routes.draw do
     resources :school_students
     # 対応法作成ページ
     resources :creator_alergy_checks, except: %i(show)
-    
-    resources :students do
-      namespace :alergy_checks do
-        resources :creators, only: %i(edit update destroy)
-      end
-    end
 
     resources :admin_alergy_checks, only: [:edit, :update] do
       collection do  
