@@ -35,6 +35,10 @@ class CreatorAlergyChecksController < ApplicationController
   end
 
   def edit
+    @student = current_teacher.school.students.find(params[:id])
+    @classroom = current_teacher.school.classrooms.find(@student.classroom_id)
+    @alergy_check = @student.alergy_checks.find(params[:id])
+    @classrooms = current_teacher.school.classrooms
   end
 
   def update

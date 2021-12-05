@@ -49,7 +49,7 @@
                 <td><%= alergy_check.menu %></td>
                 <td><%= alergy_check.support %></td>
                 <td><%= alergy_check.note %></td>
-                <td><%= link_to "編集", edit_teachers_student_alergy_checks_creator_path(student_id: student.id, id: alergy_check.id),
+                <td><%= link_to "編集", edit_teachers_creator_alergy_check_path(alergy_check.id),
                         class: "btn btn-primary", remote: true %></td>
                 <td><%= link_to "削除", teachers_student_alergy_checks_creator_path(student_id: student.id, id: alergy_check.id),
                         method: :delete, data: { confirm: "対応法情報を削除します。よろしいですか？" }, class: "btn btn-danger" %></td>
