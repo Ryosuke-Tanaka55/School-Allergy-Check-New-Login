@@ -16,7 +16,7 @@ class SystemAdmins::TeachersController < ApplicationController
     if @admin_teacher.save
       flash[:info] = "学校管理者を作成しました"
     else
-      flash[:danger] = "作成に失敗しました"
+      flash[:danger] = "作成に失敗しました。<br>・#{@admin_teacher.errors.full_messages.join('<br>・')}"
     end
     redirect_to system_admins_schools_path
   end
