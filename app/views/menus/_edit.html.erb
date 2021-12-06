@@ -10,7 +10,7 @@
       <%= form_with model: [@school, @menu], url: teachers_menu_path, local: true, method: :patch do |f| %>
         <div class="form-group">
           <%= f.label :menu_name %><br>
-          <%= f.text_field :menu_name, class: "form-control" %><br>
+          <%= f.text_field :menu_name, placeholder: "献立表名を入力してください", class: "form-control", required: true %><br>
         </div>
 
         <div class="form-group">

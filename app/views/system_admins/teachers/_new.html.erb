@@ -12,19 +12,19 @@
 
         <div class="field">
           <%= f.label :teacher_name %>
-          <%= f.text_field :teacher_name, class: "form-control" %>
+          <%= f.text_field :teacher_name, placeholder: "名前を入力してください（必須）", class: "form-control", required: true %>
 
           <%= f.label :tcode %>
-          <%= f.text_field :tcode, autofocus: true, class: 'form-control' %>
+          <%= f.text_field :tcode, placeholder: "4〜8文字以内の半角英数で入力してください（必須）", autofocus: true, class: 'form-control', required: true %>
 
           <%= f.label :email %>
-          <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
+          <%= f.email_field :email, placeholder: "メールアドレスを入力してください（必須）", autofocus: true, autocomplete: 'email', class: 'form-control', required: true %>
 
           <%= f.label :password %>
-          <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
+          <%= f.password_field :password, placeholder: "パスワードを入力してください（必須）", autocomplete: 'current-password', class: 'form-control', required: true %>
 
           <%= f.label :password_confirmation %>
-          <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %><br>
+          <%= f.password_field :password_confirmation, placeholder: "パスワード（確認）を入力してください（必須）", autocomplete: 'current-password', class: 'form-control', required: true %><br>
         </div>
         <div class="actions">
           <%= f.submit "作成する", class: "btn btn-primary btn-block" %>
