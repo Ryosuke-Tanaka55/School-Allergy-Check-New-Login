@@ -5,17 +5,17 @@
   <ul class="list-group-flush">
     <% unless current_teacher.classroom_id == nil %>
       <li class="today--menu">
-        <%= link_to '自クラス申請', teachers_alergy_checks_path, class: "btn btn-info btn-lg" %>
+        <%= link_to '自クラス報告', teachers_alergy_checks_path, class: "btn btn-info btn-lg" %>
       </li>
     <% end %>
     <% if current_teacher.charger? || current_teacher.admin? %>
       <li class="today--menu">
-        <%= link_to '代理申請', teachers_charger_alergy_checks_path, class: "btn btn-info btn-lg" %>
+        <%= link_to '代理報告', teachers_charger_alergy_checks_path, class: "btn btn-info btn-lg" %>
       </li>
     <% end %>
     <% if current_teacher.creator? || current_teacher.admin? %>
       <li class="today--menu">
-        <%= link_to '対応法作成', creator_teachers_path, class: "btn btn-info btn-lg" %>
+        <%= link_to '対応法作成', teachers_creator_alergy_checks_path, class: "btn btn-info btn-lg" %>
       </li>
     <% end %>
     <% if current_teacher.admin? %>
