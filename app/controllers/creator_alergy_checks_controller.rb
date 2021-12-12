@@ -3,7 +3,7 @@ class CreatorAlergyChecksController < ApplicationController
 
   def index
     @one_month = [*@first_day..@last_day]
-    @students = Student.all
+    @students = Student.where(school_id: current_teacher.school_id)
   end
 
   def new
