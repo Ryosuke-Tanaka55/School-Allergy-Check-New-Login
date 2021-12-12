@@ -47,6 +47,6 @@
       </tbody>
     </table>
   <% else %>
-    <h1 style="font-size:2em"><%= "#{@first_day.month}月のチェック情報はありません。" %></h1>
+    <h1 style="font-size:2em"><%= "#{l(@first_day, format: :middle)}のチェック情報はありません。" %></h1>
   <% end %>
 </div>
