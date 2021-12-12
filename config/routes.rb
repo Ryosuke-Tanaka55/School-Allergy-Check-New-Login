@@ -44,14 +44,10 @@ Rails.application.routes.draw do
         get '/students', to: 'creator_alergy_checks#search_student'
       end
     end
-
-    #管理職月間チェック一覧ページ
-    collection do
-      get '/admin_alergy_checks/one_month_index'
-    end
-
+    # 管理職ページ
     resources :admin_alergy_checks, only: %i(show) do
-      collection do  
+      collection do
+        get 'one_month_index'
         get 'lunch_check'
         patch 'update_lunch_check'
       end   
@@ -60,8 +56,6 @@ Rails.application.routes.draw do
         patch 'update_lunch_check_info'
       end #collection do end
     end #resouces do end
-    resources :admin_alergy_checks, only: %i(show) do
-    end
     resource :students do
       namespace :alergy_checks do
         resource :creator, only: %i(new create)
