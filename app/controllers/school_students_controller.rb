@@ -7,7 +7,7 @@ class SchoolStudentsController < ApplicationController
 
   # 児童一覧
   def index
-    @school_students = @school.students.all.order(:classroom_id)
+    @school_students = @school.students.all.order(:classroom_id, student_number: :asc)
   end
 
   # 児童追加モーダル表示
