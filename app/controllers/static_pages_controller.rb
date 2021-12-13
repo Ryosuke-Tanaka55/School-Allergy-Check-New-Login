@@ -1,7 +1,5 @@
 class StaticPagesController < ApplicationController
-  def top
-  end
 
-  def school_top
+  def top
   end
 end

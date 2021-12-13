@@ -3,11 +3,6 @@
     <%= link_to "Allergy Check App", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <% if teacher_signed_in? %>
-          <li><%= link_to "ホーム", top_path %></li>
-        <% else %>
-          <li><%= link_to "ホーム", root_path %></li>
-        <% end %>
         <% if system_admin_signed_in? %>
           <%= render 'layouts/system_admin_header' %>
         <% elsif teacher_signed_in? %>

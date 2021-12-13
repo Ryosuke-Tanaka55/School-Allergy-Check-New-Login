@@ -17,8 +17,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # 学校区分
-  root to: 'static_pages#school_top', as: 'top'
 
   # 先生画面
   devise_for :teachers, skip: 'sessions', controllers: {
