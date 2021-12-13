@@ -29,13 +29,8 @@
                   <td><%= alergy_check.student.student_name %></td>
                   <td><%= alergy_check.menu %></td>
                   <td><%= alergy_check.support %></td>
-                  <td>
-                    <% if alergy_check.note.present? %>
-                      <%= alergy_check.note %>
-                    <% else %>
-                      なし
-                    <% end %>
-                  </td>
+                  <!-- 備考欄が空白の場合は「なし」を表示 -->
+                  <td><%= note(alergy_check.note) %></td>
                   <% if alergy_check.status.blank? %>
                     <%= f.hidden_field :alergy_check_id, :value => alergy_check.id %>
                     <td><%= f.check_box :first_check, { required: true }, true, false %></td>

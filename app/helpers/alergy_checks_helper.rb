@@ -21,12 +21,12 @@ module AlergyChecksHelper
     end
   end
 
-  # 備考欄表示
+  # 備考欄表示有無
   def note(note)
-    if note.nil?
-      return "なし"
-    else
+    if note.present?
       return note
+    else
+      return "なし"
     end
   end
 end
