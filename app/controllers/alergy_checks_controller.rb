@@ -66,7 +66,10 @@ class AlergyChecksController < ApplicationController
 
     # クラスを持つ職員かどうかの判定
     def have_class_room?
-      redirect_to show_teachers_path unless Classroom.exists?(current_teacher.classroom_id)
+      unless Classroom.exists?(current_teacher.classroom_id)
+        flash[:danger] = "許可されていない操作です。"
+        redirect_to show_teachers_path
+      end
     end
 
     # 自クラス報告用

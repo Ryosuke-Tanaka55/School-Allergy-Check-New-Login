@@ -6,7 +6,6 @@
     <li><%= link_to '本日の作業', show_teachers_path %></li>
     <li><%= link_to '献立表', teachers_menus_path %></li>
     <li><%= link_to '児童一覧', teachers_school_students_path %></li>
-    <%# リファクタリングしたい %>
     <% if !current_teacher.charger? && Classroom.exists?(current_teacher.classroom_id) %>
       <li><%= link_to '月間チェック一覧', one_month_index_teachers_alergy_checks_path %></li>
     <% end %>
