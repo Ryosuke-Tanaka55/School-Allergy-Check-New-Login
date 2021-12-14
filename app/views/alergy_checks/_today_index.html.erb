@@ -31,22 +31,24 @@
                   <td><%= alergy_check.support %></td>
                   <!-- 備考欄が空白の場合は「なし」を表示 -->
                   <td><%= note(alergy_check.note) %></td>
+                  <!-- 未報告状態の場合 -->
                   <% if alergy_check.status.blank? %>
                     <%= f.hidden_field :alergy_check_id, :value => alergy_check.id %>
                     <td><%= f.check_box :first_check, { required: true }, true, false %></td>
                     <td><%= f.check_box :second_check, { required: true }, true, false %></td>
                     <td><%= f.check_box :student_check, { required: true }, true, false %></td>
-                    <!-- 代理報告の場合 -->
+                    <!-- 未報告状態且つ代理報告の場合 -->
                     <% if params[:proxy_flag] %>
                       <td><%= f.collection_select :applicant, @teachers, :teacher_name, :teacher_name, 
                                                   { include_blank: "申請者名を選択" }, { class: "form-control", required: true } %></td>
                       <%= f.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
-                    <!-- 自クラス報告の場合 -->
+                    <!-- 未報告状態且つ自クラス報告の場合 -->
                     <% else %>
                       <td><%= current_teacher.teacher_name %></td>
                     <% end %>
                     <td><%= Teacher.human_attribute_name(:admin) %></td>
                     <td><%= f.submit "#{check_state(alergy_check.status)}", class: "btn btn-primary btn-sm" %></td>
+                  <!-- 報告済の場合 -->
                   <% else %>
                     <td><%= f.check_box :first_check, { disabled: true }, true, false %></td>
                     <td><%= f.check_box :second_check, { disabled: true }, true, false %></td>

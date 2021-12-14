@@ -65,6 +65,7 @@ class AlergyChecksController < ApplicationController
 
     # 自クラス報告用
     def today_check_params
+      # .merge〜でパラメータに報告者名とステータスを追加
       params.require(:alergy_check).permit(:first_check, :second_check, :student_check).merge(applicant: current_teacher.teacher_name, status: "報告中")
     end
 
