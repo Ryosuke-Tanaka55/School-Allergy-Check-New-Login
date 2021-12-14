@@ -44,18 +44,18 @@ Rails.application.routes.draw do
         get '/students', to: 'creator_alergy_checks#search_student'
       end
     end
-    resources :admin_alergy_checks, only: %i(show) do
-      collection do  
-        get 'lunch_check'
-        patch 'update_lunch_check'
-      end   
+    resource :admin_alergy_checks, only: %i(show) do
+      #collection do  
+      #  get 'lunch_check'
+      #  patch 'update_lunch_check'
+      #end   
       member do
          get 'lunch_check_info'
          patch 'update_lunch_check_info'
       end #collection do end
      end #resouces do end
-    resources :admin_alergy_checks, only: %i(show) do
-    end
+    #resources :admin_alergy_checks, only: %i(show) do
+    #end
     resource :students do
       namespace :alergy_checks do
         resource :creator, only: %i(new create)
@@ -107,18 +107,18 @@ Rails.application.routes.draw do
   end
 
   resource :teachers do
-  resources :admin_alergy_checks, only: [:show] do
-    collection do  
-      get 'lunch_check'
-      patch 'update_lunch_check'
-    end   
-    member do
-       get 'lunch_check_info'
-       patch 'update_lunch_check_info'
-       get 'lunch_check_all'
-       patch 'update_lunch_check_all' 
-    end #collection do end
-   end #resouces do end
+  #resources :admin_alergy_checks, only: [:show] do
+  #  collection do  
+  #    get 'lunch_check'
+  #    patch 'update_lunch_check'
+  #  end   
+  #  member do
+  #     get 'lunch_check_info'
+  #     patch 'update_lunch_check_info'
+  #     get 'lunch_check_all'
+  #     patch 'update_lunch_check_all' 
+  #  end #collection do end
+  # end #resouces do end
   end #teachers do end
 
   # 下記山田さん既存のルート
