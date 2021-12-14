@@ -1,13 +1,14 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "Allergy Check App", root_path, id: "logo" %>
+    <% if teacher_signed_in? %>
+      <%= link_to "Allergy Check App", new_teacher_session_url(school_url: current_teacher.school.school_url), id: "logo" %>
+    <% elsif system_admin_signed_in? %>
+      <%= link_to "Allergy Check App", root_path, id: "logo" %>
+    <% else %>
+      <p id="logo">Allergy Check App</p>
+    <% end %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <% if teacher_signed_in? %>
-          <li><%= link_to "ホーム", top_path %></li>
-        <% else %>
-          <li><%= link_to "ホーム", root_path %></li>
-        <% end %>
         <% if system_admin_signed_in? %>
           <%= render 'layouts/system_admin_header' %>
         <% elsif teacher_signed_in? %>
