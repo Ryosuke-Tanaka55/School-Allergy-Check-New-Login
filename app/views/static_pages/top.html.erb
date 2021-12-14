@@ -4,5 +4,7 @@
   <p>このアプリケーションでは、登録されたユーザーの持つアレルギーチェックをすることができます。</p>
   <% if system_admin_signed_in? %>
     <%= link_to "ログイン済みです", new_system_admin_session_path, class: "btn btn-lg btn-primary #{"disabled"}" %>
+  <% else %>
+    <%= link_to "システム管理者ログイン", new_system_admin_session_path, class: "btn btn-lg btn-primary" %>
   <% end %>
 </div>
