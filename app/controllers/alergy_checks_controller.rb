@@ -27,11 +27,7 @@ class AlergyChecksController < ApplicationController
     end
 
     #バリデーションチェック前の値セット
-    if proxy_report_check
-      @alergy_check.assign_attributes(proxy_today_check_params)
-    else
-      @alergy_check.assign_attributes(today_check_params)
-    end
+    @alergy_check.assign_attributes(today_check_params)
 
     if @alergy_check.valid?(:today_check) && @alergy_check.save
       flash[:success] = "#{@alergy_check.student.student_name}のチェックを報告しました。"
@@ -76,10 +72,5 @@ class AlergyChecksController < ApplicationController
     def today_check_params
       # .merge〜でパラメータに報告者名とステータスを追加
       params.require(:alergy_check).permit(:first_check, :second_check, :student_check).merge(applicant: current_teacher.teacher_name, status: "報告中")
-    end
-
-    # 代理報告用
-    def proxy_today_check_params
-      params.require(:alergy_check).permit(:first_check, :second_check, :student_check, :applicant).merge(status: "報告中")
     end
 end
