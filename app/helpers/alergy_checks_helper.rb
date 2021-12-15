@@ -1,4 +1,9 @@
 module AlergyChecksHelper
+  # 未報告件数計算
+  def unchecked(must_checked:, checked:)
+    return must_checked - checked
+  end
+  
   # 報告ボタンテキスト表示
   def check_state(status)
     case status

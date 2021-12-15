@@ -9,7 +9,7 @@
       <% if @alergy_check_sum == @submitted %>  
         本日のチェックは完了しました。
       <% else %>
-        本日のチェック：<%= "#{@alergy_check_sum}件" %>
+        本日の未チェックは<%= unchecked(must_checked: @alergy_check_sum, checked: @submitted) %>件です。
       <% end %>
     <% end %>
   </div>
