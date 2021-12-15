@@ -4,7 +4,7 @@
       <thead>
         <tr>
             <th><%= AlergyCheck.human_attribute_name(:worked_on) %></th>
-            <%# 全学級月間チェックではクラス名を表示 %>
+            <!-- 全学級月間チェックではクラス名を表示 -->
             <% if controller.controller_name == "admin_alergy_checks" %>
               <th><%= Classroom.human_attribute_name(:class_name) %></th>
             <% end %>
@@ -17,20 +17,20 @@
         </tr>
       </thead>
       <tbody>
-        <%# 日付被り非表示チェック用変数 %>
+        <!-- 日付被り非表示チェック用変数 -->
         <% previous_worked_on = nil %>
         <% @alergy_checks.each do |alergy_check| %>
           <tr>
-            <%# 日付被り非表示チェック %>
-            <% if alergy_check.worked_on == previous_worked_on %>
-              <td></td>
-            <% else %>
-              <td><%= l(alergy_check.worked_on, format: :short) + 
-                      "(#{$days_of_the_week[alergy_check.worked_on.wday]})" %></td>
-            <% end %>
+            <td>
+              <!-- 日付被り非表示チェック -->
+              <% unless alergy_check.worked_on == previous_worked_on %>
+                <%= l(alergy_check.worked_on, format: :short) + 
+                    "(#{$days_of_the_week[alergy_check.worked_on.wday]})" %>
+              <% end %>
+            </td>
             <% previous_worked_on = alergy_check.worked_on %>
 
-            <%# 全学級月間チェックではクラス名を表示 %>
+            <!-- 全学級月間チェックではクラス名を表示 -->
             <% if controller.controller_name == "admin_alergy_checks" %>
               <td><%= alergy_check.student.classroom.class_name %></td>
             <% end %>
