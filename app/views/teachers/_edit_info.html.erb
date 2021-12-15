@@ -20,7 +20,8 @@
           <%= f.text_field :teacher_name, placeholder: "名前を入力してください（必須）", autofocus: true, class: 'form-control', required: true %>
         </div>
 
-        <% if @teacher.admin == true %>
+        <!-- システム管理者がemailを付与して作成した学校管理者のみemailの編集が可能 -->
+        <% if @teacher.admin == true && @teacher.email != nil %>
           <div class="form-group">
             <%= f.label :email %><br />
             <%= f.email_field :email, placeholder: "メールアドレスを入力してください（必須）", autofocus: true, autofocus: true, autocomplete: "email", class: 'form-control', required: true %>
