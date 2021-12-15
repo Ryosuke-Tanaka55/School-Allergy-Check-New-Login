@@ -1,6 +1,7 @@
 class AlergyChecksController < ApplicationController
   before_action :set_classroom, only: [:show, :today_index, :one_month_index]
   before_action :set_first_last_day, only: :one_month_index
+  before_action :have_class_room?, only: :one_month_index
 
   def show
     @submitted = @classroom.alergy_checks.today.where.not(status: "").count #報告済み件数
@@ -60,6 +61,14 @@ class AlergyChecksController < ApplicationController
         @classroom = Classroom.find(params[:select_classroom])
       else
         @classroom = current_teacher.classroom
+      end
+    end
+
+    # クラスを持つ職員かどうかの判定
+    def have_class_room?
+      unless Classroom.exists?(current_teacher.classroom_id)
+        flash[:danger] = "許可されていない操作です。"
+        redirect_to show_teachers_path
       end
     end
 

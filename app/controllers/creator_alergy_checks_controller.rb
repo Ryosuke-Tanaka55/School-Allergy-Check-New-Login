@@ -3,14 +3,14 @@ class CreatorAlergyChecksController < ApplicationController
 
   def index
     @one_month = [*@first_day..@last_day]
-    @students = Student.all
+    @students = Student.where(school_id: current_teacher.school_id)
   end
 
   def new
     @student = Student.new
     @alergy_check = @student.alergy_checks.build
     @day = params[:day].to_date
-    @classrooms = current_teacher.school.classrooms
+    @classrooms = current_teacher.school.classrooms.where(using_class: true)
   end
 
   def create
@@ -21,7 +21,8 @@ class CreatorAlergyChecksController < ApplicationController
           student.alergy_checks.create!(
             worked_on:  v[:worked_on],
             menu:       v[:menu],
-            support:    v[:support]
+            support:    v[:support],
+            note:       v[:note]
           )
         end
       end
@@ -38,7 +39,7 @@ class CreatorAlergyChecksController < ApplicationController
     @alergy_check = AlergyCheck.find(params[:id])
     @student = @alergy_check.student
     @classroom = current_teacher.school.classrooms.find(@student.classroom_id)
-    @classrooms = current_teacher.school.classrooms
+    @classrooms = current_teacher.school.classrooms.where(using_class: true)
   end
 
   def update
