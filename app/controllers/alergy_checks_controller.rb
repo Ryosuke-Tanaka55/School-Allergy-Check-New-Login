@@ -43,7 +43,8 @@ class AlergyChecksController < ApplicationController
   end
 
   def one_month_index
-    @alergy_checks = @classroom.alergy_checks.where(worked_on: @first_day..@last_day).order(:worked_on)
+    # 日付と児童のid順でデータを取得
+    @alergy_checks = @classroom.alergy_checks.where(worked_on: @first_day..@last_day).order(:worked_on, student_id: :asc)
   end
 
   private
