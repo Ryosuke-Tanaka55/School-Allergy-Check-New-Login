@@ -6,7 +6,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <h1><%= @teacher.classroom_id == nil ? "職員編集" : "担任編集" %></h1>
+      <h1><%= @teacher.classroom_id == nil ? "#{@teacher.teacher_name}の編集" : "#{params[:class_name]}の担任編集" %></h1>
       <%= form_with(model: @teacher, url: update_info_teachers_path, local: true) do |f| %>
         <%= render 'shared/error_messages', object: @teacher %>
       
@@ -14,6 +14,11 @@
         <%= f.hidden_field(:classroom_id, value: @teacher.classroom_id) %>
         <%= f.hidden_field(:id, value: @teacher.id) %>
 
+
+        <div class="form-group">
+          <%= f.label :クラス名 %>
+          <%= f.collection_select :classroom_id, @classrooms, :id, :class_name, { include_blank: "担当クラス無" }, class: "form-control" %>
+        </div>
 
         <div class="form-group">
           <%= f.label :teacher_name %>

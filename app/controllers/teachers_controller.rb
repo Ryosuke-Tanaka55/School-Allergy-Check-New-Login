@@ -24,6 +24,7 @@ class TeachersController < ApplicationController
 
   def edit_info
     @teacher = current_school.teachers.find(params[:id])
+    @classrooms = current_teacher.school.classrooms.where(using_class: true).order(:id)
   end
 
   def update_info

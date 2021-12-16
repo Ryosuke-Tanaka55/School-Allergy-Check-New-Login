@@ -40,6 +40,7 @@ class SystemAdmins::RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  # アカウント編集後の遷移先
   def after_update_path_for(resource)
     system_admins_schools_path
   end
