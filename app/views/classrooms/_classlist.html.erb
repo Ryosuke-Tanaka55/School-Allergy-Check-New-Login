@@ -15,7 +15,7 @@
 
   <tbody>
     <% classrooms.each do |classroom| %>
-      <% teachers = Teacher.where(classroom_id: classroom.id) %>
+      <% teachers = Teacher.where(classroom_id: classroom.id).order(:id) %>
       <% if teachers.blank? %>
         <tr>
           <td><%= classroom.class_name %></td>
