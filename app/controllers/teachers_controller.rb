@@ -24,16 +24,17 @@ class TeachersController < ApplicationController
 
   def edit_info
     @teacher = current_school.teachers.find(params[:id])
+    @classrooms = current_teacher.school.classrooms.where(using_class: true).order(:id)
   end
 
   def update_info
     @teacher = current_school.teachers.find(params[:teacher][:id])
-    if @teacher.update_attributes!(teachers_params)
+    if @teacher.update_attributes(teachers_params)
       flash[:success] = "職員情報を更新しました。"
-      redirect_to classrooms_path
     else
-      render :edit
+      flash[:danger] = "作成に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"
     end
+    redirect_to classrooms_path
   end
 
   def destroy

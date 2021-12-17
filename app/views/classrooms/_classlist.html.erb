@@ -15,48 +15,59 @@
 
   <tbody>
     <% classrooms.each do |classroom| %>
-      <% teachers = Teacher.where(classroom_id: classroom.id).where.not(id: current_teacher.id) %>
+      <% teachers = Teacher.where(classroom_id: classroom.id).order(:id) %>
       <% if teachers.blank? %>
-      <tr>
-        <td><%= classroom.class_name %></td>
-        <td><%= link_to '担任登録', new_teachers_path(classroom_id: classroom.id), remote: true, class: "btn btn-info" %></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+        <tr>
+          <td><%= classroom.class_name %></td>
+          <td><%= link_to '担任登録', new_teachers_path(classroom_id: classroom.id, class_name: classroom.class_name), remote: true, class: "btn btn-info" %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
       <% else %>
         <% saved_class_name = nil %>
         <% teachers.each do |teacher| %>
-        <tr>
-          <% if classroom.class_name == saved_class_name %>
-            <td></td>
-          <% else %>
-            <td><%= classroom.class_name %></td>
-          <% end %>
-          <% if classroom.class_name == saved_class_name %>
-            <td></td>
-            <td><%= teacher.teacher_name %></td>
-            <td><%= teacher.tcode %></td>
-            <td><%= teacher.admin ? '⭕️': '❌' %></td>
-            <td><%= teacher.creator ? '⭕️': '❌' %></td>
-            <td><%= teacher.charger ? '⭕️': '❌' %></td>
-            <td><%= link_to "編集", edit_info_teachers_path(id: teacher.id), remote: true, class: "btn btn-primary" %></td>
-          <% else %>
-            <% saved_class_name = classroom.class_name %>
-            <td><%= link_to '担任登録', new_teachers_path(classroom_id: classroom.id), remote: true, class: "btn btn-info" %></td>
-            <td><%= teacher.teacher_name %></td>
-            <td><%= teacher.tcode %></td>
-            <td><%= teacher.admin ? '⭕️': '❌' %></td>
-            <td><%= teacher.creator ? '⭕️': '❌' %></td>
-            <td><%= teacher.charger ? '⭕️': '❌' %></td>
-            <td><%= link_to "編集", edit_info_teachers_path(id: teacher.id), remote: true, class: "btn btn-primary" %></td>
-          <% end %>
-          <td><%= link_to "削除", destroy_teachers_path(id: teacher.id), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
-        </tr>
+          <tr>
+            <% if classroom.class_name == saved_class_name %>
+              <td></td>
+            <% else %>
+              <td><%= classroom.class_name %></td>
+            <% end %>
+            <% if classroom.class_name == saved_class_name %>
+              <td></td>
+              <td><%= teacher.teacher_name %></td>
+              <td><%= teacher.tcode %></td>
+              <td><%= teacher.admin ? '⭕️': '❌' %></td>
+              <td><%= teacher.creator ? '⭕️': '❌' %></td>
+              <td><%= teacher.charger ? '⭕️': '❌' %></td>
+              <% if current_teacher == teacher %>
+                <td><%= link_to "編集", edit_teacher_registration_path, class: "btn btn-primary" %></td>
+                <td></td>
+              <% else %>
+                <td><%= link_to "編集", edit_info_teachers_path(id: teacher.id, class_name: classroom.class_name), remote: true, class: "btn btn-primary" %></td>
+                <td><%= link_to "削除", destroy_teachers_path(id: teacher.id), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
+              <% end %>
+            <% else %>
+              <% saved_class_name = classroom.class_name %>
+              <td><%= link_to '担任登録', new_teachers_path(classroom_id: classroom.id, class_name: classroom.class_name), remote: true, class: "btn btn-info" %></td>
+              <td><%= teacher.teacher_name %></td>
+              <td><%= teacher.tcode %></td>
+              <td><%= teacher.admin ? '⭕️': '❌' %></td>
+              <td><%= teacher.creator ? '⭕️': '❌' %></td>
+              <td><%= teacher.charger ? '⭕️': '❌' %></td>
+              <% if current_teacher == teacher %>
+                <td><%= link_to "編集", edit_teacher_registration_path, class: "btn btn-primary" %></td>
+                <td></td>
+              <% else %>
+                <td><%= link_to "編集", edit_info_teachers_path(id: teacher.id, class_name: classroom.class_name), remote: true, class: "btn btn-primary" %></td>
+                <td><%= link_to "削除", destroy_teachers_path(id: teacher.id), method: :delete, class: "btn btn-danger", data: {confirm: "#{teacher.teacher_name}を削除してよろしいですか？" } %></td>
+              <% end %>
+            <% end %>
+          </tr>
         <% end %>
       <% end %>
     <% end %>
