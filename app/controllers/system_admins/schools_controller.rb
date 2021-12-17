@@ -3,7 +3,7 @@ class SystemAdmins::SchoolsController < ApplicationController
   before_action :set_school, only: [:edit, :update, :destroy]
 
   def index
-    @schools = School.all
+    @schools = School.all.order(:school_name)
   end
 
   def show
