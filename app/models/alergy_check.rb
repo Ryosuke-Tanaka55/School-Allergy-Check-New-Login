@@ -24,8 +24,4 @@ class AlergyCheck < ApplicationRecord
 
   # worked_onカラムが本日の日付であるものを取得する
   scope :today, -> { where(worked_on: Date.current) }
-  #森本検証用のため
-  scope :joins_get_all_columns, ->(*tables) {
-    joins(*tables).select("*")
-  }
 end
