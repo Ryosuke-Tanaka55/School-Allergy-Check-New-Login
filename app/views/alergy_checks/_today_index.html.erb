@@ -7,56 +7,58 @@
       <h1>【チェック児童一覧】</h1>
 
       <div class="modal-body">
-        <% @alergy_checks.each do |alergy_check| %>
-          <%= form_with(model: alergy_check, url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
-            <table width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
-              <thead>
-                <tr>
-                  <th><%= Student.human_attribute_name(:student_name) %></th>
-                  <th><%= AlergyCheck.human_attribute_name(:menu) %></th>
-                  <th><%= AlergyCheck.human_attribute_name(:support) %></th>
-                  <th><%= AlergyCheck.human_attribute_name(:note) %></th>
-                  <th><%= AlergyCheck.human_attribute_name(:first_check) %></th>
-                  <th><%= AlergyCheck.human_attribute_name(:second_check) %></th>
-                  <th><%= AlergyCheck.human_attribute_name(:student_check) %></th>
-                  <th><%= AlergyCheck.human_attribute_name(:applicant_id) %></th>
-                  <th><%= AlergyCheck.human_attribute_name(:status_checker) %></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><%= alergy_check.student.student_name %></td>
-                  <td><%= alergy_check.menu %></td>
-                  <td><%= alergy_check.support %></td>
-                  <!-- 備考欄が空白の場合は「なし」を表示 -->
-                  <td><%= note(alergy_check.note) %></td>
-                  <!-- 未報告状態の場合 -->
-                  <% if alergy_check.status.blank? %>
-                    <%= f.hidden_field :alergy_check_id, :value => alergy_check.id %>
-                    <td><%= f.check_box :first_check, { required: true }, true, false %></td>
-                    <td><%= f.check_box :second_check, { required: true }, true, false %></td>
-                    <td><%= f.check_box :student_check, { required: true }, true, false %></td>
-                    <td><%= current_teacher.teacher_name %></td>
-                    <!-- 代理報告の場合 -->
-                    <% if params[:proxy_flag] %>
-                      <%= f.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
+      <%= form_with(url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
+        <table width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
+          <thead>
+            <tr>
+              <th><%= Student.human_attribute_name(:student_name) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:menu) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:support) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:note) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:first_check) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:second_check) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:student_check) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:applicant_id) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:status_checker) %></th>
+              <th><%= AlergyCheck.human_attribute_name(:status) %></th>
+            </tr>
+          </thead>
+            <% @alergy_checks.each do |alergy_check| %>
+              <%= f.fields_for "alergy_checks[]", alergy_check do |ac| %>
+                <tbody>
+                  <tr>
+                    <td><%= alergy_check.student.student_name %></td>
+                    <td><%= alergy_check.menu %></td>
+                    <td><%= alergy_check.support %></td>
+                    <!-- 備考欄が空白の場合は「なし」を表示 -->
+                    <td><%= note(alergy_check.note) %></td>
+                    <!-- 未報告状態の場合 -->
+                    <% if alergy_check.status.blank? %>
+                      <%# ac.hidden_field :alergy_check_id, :value => alergy_check.id %>
+                      <td><%= ac.check_box :first_check, {}, true, false %></td>
+                      <td><%= ac.check_box :second_check, {}, true, false %></td>
+                      <td><%= ac.check_box :student_check, {}, true, false %></td>
+                      <td></td>
+                      <!-- 代理報告の場合 -->
+                      <% if params[:proxy_flag] %>
+                        <%= ac.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
+                      <% end %>
+                    <!-- 報告済の場合 -->
+                    <% else %>
+                      <td><%= ac.check_box :first_check, { disabled: true }, true, false %></td>
+                      <td><%= ac.check_box :second_check, { disabled: true }, true, false %></td>
+                      <td><%= ac.check_box :student_check, { disabled: true }, true, false %></td>
+                      <td><%= alergy_check.applicant %></td>
+                      <!-- 報告状態を表示 -->
                     <% end %>
                     <td><%= Teacher.human_attribute_name(:admin) %></td>
-                    <td><%= f.submit "#{check_state(alergy_check.status)}", class: "btn btn-primary btn-sm" %></td>
-                  <!-- 報告済の場合 -->
-                  <% else %>
-                    <td><%= f.check_box :first_check, { disabled: true }, true, false %></td>
-                    <td><%= f.check_box :second_check, { disabled: true }, true, false %></td>
-                    <td><%= f.check_box :student_check, { disabled: true }, true, false %></td>
-                    <td><%= alergy_check.applicant %></td>
-                    <td><%= Teacher.human_attribute_name(:admin) %></td>
-                    <td><%= f.submit "#{check_state(alergy_check.status)}", { class: "btn btn-primary btn-sm", disabled: true } %></td>
-                  <% end %>
-                </tr>
-              </tbody>
-            </table>
-          <% end %>
+                    <td><%= check_state(status: alergy_check.status, name: alergy_check.admin_name) %></td>
+                  </tr>
+                </tbody>
+              <% end %>
+            <% end %>
+          </table>
+          <%= f.submit "報告する", class: "btn btn-block btn-primary" %>
         <% end %>
       </div>
     </div>

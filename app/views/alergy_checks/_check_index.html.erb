@@ -40,7 +40,7 @@
             <td><%= note(alergy_check.note) %></td>
             <td><%= alergy_check.applicant %></td>
             <td>
-              <%= monthly_check_state(status: alergy_check.status, name: alergy_check.admin_name) %>
+              <%= check_state(status: alergy_check.status, name: alergy_check.admin_name) %>
             </td>
           </tr>
         <% end %>
