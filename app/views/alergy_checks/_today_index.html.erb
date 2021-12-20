@@ -41,7 +41,7 @@
                       <td></td>
                       <!-- 代理報告の場合 -->
                       <% if params[:proxy_flag] %>
-                        <%= ac.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
+                        <%= f.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
                       <% end %>
                     <!-- 報告済の場合 -->
                     <% else %>

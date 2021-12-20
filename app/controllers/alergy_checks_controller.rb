@@ -45,10 +45,10 @@ class AlergyChecksController < ApplicationController
       end
     end
     # 報告件数と可否によってフラッシュメッセージの色と内容を変更
-    if @updated >= 1 && @unupdated >= 0
+    if @updated >= 1 && @unupdated == 0
       flash[:success] = "#{@updated}件のチェックを報告しました。" 
     elsif @updated >= 1 && @unupdated >= 1
-      flash[:warning] = "#{@updated}件のチェックを報告しました。#{@unupdated}件のチェック報告に失敗しました。チェック内容を確認してください。"
+      flash[:warning] = "#{@updated}件のチェックを報告、#{@unupdated}件のチェック報告に失敗しました。チェック内容を確認してください。"
     else
       flash[:danger] = "#{@unupdated}件のチェック報告に失敗しました。チェック内容を確認してください。"
     end
