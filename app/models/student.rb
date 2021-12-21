@@ -4,8 +4,8 @@ class Student < ApplicationRecord
   has_many :alergy_checks, dependent: :destroy
   accepts_nested_attributes_for :alergy_checks, allow_destroy: true
 
-  validates :student_name,  presence: true
-  validates :student_number,  presence: true
+  validates :student_name,  presence: true, uniqueness: { scope: :school_id }
+  validates :student_number,  presence: true, uniqueness: { scope: :school_id }
 
   # def self.import(file)
   #   CSV.foreach(file.path, headers: true, encoding: 'Shift_JIS:UTF-8') do |row|

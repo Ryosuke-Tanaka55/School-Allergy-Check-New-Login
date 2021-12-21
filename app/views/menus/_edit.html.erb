@@ -15,7 +15,7 @@
 
         <div class="form-group">
           <%= f.label :menu_pdf %>
-          <%= @menu.menu_pdf.file.original_filename if @menu.menu_pdf? %>
+            <%= @menu.menu_pdf.file.filename if @menu.menu_pdf? %>
           <%= f.file_field :menu_pdf %>
         </div>
         <%= f.submit "更新する", class: "btn btn-primary btn-block" %>

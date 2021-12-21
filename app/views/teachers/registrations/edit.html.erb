@@ -4,6 +4,11 @@
   <%= bootstrap_devise_error_messages! %>
 
   <div class="form-group">
+    <%= f.label :クラス名 %>
+    <%= f.collection_select :classroom_id, @classrooms, :id, :class_name, { include_blank: "担当クラス無" }, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :teacher_name %>
     <%= f.text_field :teacher_name, placeholder: "名前を入力してください", autofocus: true, class: 'form-control', required: true %>
   </div>
@@ -54,4 +59,5 @@
   <div class="actions">
     <%= f.submit t('.update'), class: 'btn btn-info btn-block' %>
   </div>
+  <%= link_to '戻る', 'javascript:history.back()', class: 'btn btn-default btn-block' %>
 <% end %>

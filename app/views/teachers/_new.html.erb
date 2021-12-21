@@ -6,7 +6,11 @@
       </button>
     </div>
     <div class="modal-body">
-      <h1>担任登録</h1>
+      <% if params[:classroom_id] != nil %>
+        <h1><%= params[:class_name] %>の担任登録</h1>
+      <% else %>
+        <h1>職員登録</h1>
+      <% end %>
       <%= form_with(model: @teacher, local: true) do |f| %>
         <!--%= f.hidden_field(:school_id, value: @school.id) % -->
         <%= f.hidden_field(:classroom_id, value: params[:classroom_id]) %>

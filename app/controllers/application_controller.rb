@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
 
   # 管理者かどうかの判定
   def admin_teacher
-    redirect_to show_teachers_path unless current_teacher.admin?
+    redirect_to show_teachers_path, flash: { danger: "権限がありません。" } unless current_teacher.admin?
   end
 
   # 今日の日付からその月の初日と最終日を取得

@@ -23,7 +23,7 @@
               <td><%= f.collection_select :classroom_id, @classrooms, :id, :class_name, { include_blank: "クラスを選択" }, class: "form-control", required: true %></td>
               <td><%= f.number_field :student_number, class: "form-control", min: 0, required: true %></td>
               <td><%= f.text_field :student_name, class: "form-control", required: true %></td>
-              <td><%= f.text_area :alergy, class: "form-control" %></td>
+              <td><%= f.text_area :alergy, class: "form-control", required: true %></td>
               <td><%= f.text_field :student_note, class: "form-control" %></td>
             </tr>
           </tbody>

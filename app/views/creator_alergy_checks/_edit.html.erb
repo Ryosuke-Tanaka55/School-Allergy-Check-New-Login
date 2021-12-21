@@ -62,7 +62,7 @@ $(document).on("change", "#select--classroom", function () {
   // ajaxでリクエストを送信
   $.ajax({
     type: "GET",
-    url: "/students/alergy_checks/creator/students",
+    url: "/teachers/creator_alergy_checks/students",
     data: {classroom_id: classroom_id},
     dataType: 'json'
   })
