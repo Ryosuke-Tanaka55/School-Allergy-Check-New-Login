@@ -16,48 +16,43 @@ class AlergyChecksController < ApplicationController
   def update
     @updated = 0
     @unupdated = 0
-    today_check_params.each do |id, checks|
-      # 全てのチェックが入っているレコードのみ更新する
-      if checks[:first_check].present? && checks[:second_check].present? && checks[:student_check].present?
-        alergy_check = AlergyCheck.find(id)
-        # 同じschool_idを持つ児童でないと報告できない
-        if current_teacher.school.id != alergy_check.student.school_id
-          flash[:danger] = "許可されていない操作が行われました。"
-        # 代理報告か否かでリダイレクト先を分岐
-          if proxy_report_check
-            return redirect_to teachers_charger_alergy_checks_url
-          else
-            return redirect_to teachers_alergy_checks_url
+    if today_check_params.present?
+      today_check_params.each do |id, checks|
+        # 全てのチェックが入っているレコードの場合
+        if checks[:first_check].present? && checks[:second_check].present? && checks[:student_check].present?
+          alergy_check = AlergyCheck.find(id)
+          # 同じschool_idを持つ児童でないと報告できない
+          if current_teacher.school.id != alergy_check.student.school_id
+            flash[:danger] = "許可されていない操作が行われました。"
+            # 代理報告か否かでリダイレクト先を分岐
+            checked_redirect
           end
-        end
 
-        # バリデーションチェック前の値セット
-        alergy_check.assign_attributes(checks.merge(applicant: current_teacher.teacher_name, status: "報告中"))
-        # バリデーションチェック、保存、件数カウント
-        if alergy_check.valid?(:today_check)
-          alergy_check.save
-          @updated += 1
+          # バリデーションチェック前の値セット
+          alergy_check.assign_attributes(checks.merge(applicant: current_teacher.teacher_name, status: "報告中"))
+          # バリデーションチェック、保存、件数カウント
+          if alergy_check.valid?(:today_check)
+            alergy_check.save
+            @updated += 1
+          else
+            @unupdated += 1
+          end
+        # チェックが抜けている項目があるレコードの場合
         else
           @unupdated += 1
         end
+      end
+      # 報告件数と可否によってフラッシュメッセージの色と内容を変更
+      if @updated >= 1 && @unupdated == 0
+        flash[:success] = "#{@updated}件のチェックを報告しました。"
+      elsif @updated >= 1 && @unupdated >= 1
+        flash[:warning] = "#{@updated}件のチェックを報告しました。報告に失敗したチェックが#{@unupdated}件あります。チェック内容を確認してください。"
       else
-        @unupdated += 1
+        flash[:danger] = "報告に失敗したチェックが#{@unupdated}件あります。チェック内容を確認してください。"
       end
     end
-    # 報告件数と可否によってフラッシュメッセージの色と内容を変更
-    if @updated >= 1 && @unupdated == 0
-      flash[:success] = "#{@updated}件のチェックを報告しました。" 
-    elsif @updated >= 1 && @unupdated >= 1
-      flash[:warning] = "#{@updated}件のチェックを報告、#{@unupdated}件のチェック報告に失敗しました。チェック内容を確認してください。"
-    else
-      flash[:danger] = "#{@unupdated}件のチェック報告に失敗しました。チェック内容を確認してください。"
-    end
     # 担任報告か代理報告かでリダイレクト先を分岐
-    if proxy_report_check
-      redirect_to teachers_charger_alergy_checks_url
-    else
-      redirect_to teachers_alergy_checks_url
-    end
+    checked_redirect
   end
 
   def one_month_index
@@ -69,6 +64,15 @@ class AlergyChecksController < ApplicationController
     # 代理報告か確認
     def proxy_report_check
       !!params[:proxy_flag]
+    end
+
+    # 担任報告か代理報告かでリダイレクト先を分岐
+    def checked_redirect
+      if proxy_report_check
+        return redirect_to teachers_charger_alergy_checks_url
+      else
+        return redirect_to teachers_alergy_checks_url
+      end
     end
 
     def set_classroom

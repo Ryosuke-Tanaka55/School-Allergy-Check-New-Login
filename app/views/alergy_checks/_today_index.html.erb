@@ -24,6 +24,10 @@
             </tr>
           </thead>
             <% @alergy_checks.each do |alergy_check| %>
+              <!-- 代理報告の場合フラグを立てる -->
+              <% if params[:proxy_flag] %>
+                <%= f.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
+              <% end %>
               <%= f.fields_for "alergy_checks[]", alergy_check do |ac| %>
                 <tbody>
                   <tr>
@@ -34,15 +38,10 @@
                     <td><%= note(alergy_check.note) %></td>
                     <!-- 未報告状態の場合 -->
                     <% if alergy_check.status.blank? %>
-                      <%# ac.hidden_field :alergy_check_id, :value => alergy_check.id %>
                       <td><%= ac.check_box :first_check, {}, true, false %></td>
                       <td><%= ac.check_box :second_check, {}, true, false %></td>
                       <td><%= ac.check_box :student_check, {}, true, false %></td>
                       <td></td>
-                      <!-- 代理報告の場合 -->
-                      <% if params[:proxy_flag] %>
-                        <%= f.hidden_field :proxy_flag, :value => params[:proxy_flag] %>
-                      <% end %>
                     <!-- 報告済の場合 -->
                     <% else %>
                       <td><%= ac.check_box :first_check, { disabled: true }, true, false %></td>
