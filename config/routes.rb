@@ -42,7 +42,7 @@ Rails.application.routes.draw do
         get '/students', to: 'creator_alergy_checks#search_student'
       end
     end
-    # 管理職ページ
+    # 管理職ページ（全学級月間チェック一覧）
     resources :admin_alergy_checks, except: %i(new show create index edit update destroy) do
       collection do
         get 'one_month_index'
@@ -85,6 +85,7 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  # 管理職ページ（全般）
   resource :teachers do
     resource :admin_alergy_checks, only: %i(show) do
       member do
