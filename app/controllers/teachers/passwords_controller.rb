@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Teachers::PasswordsController < Devise::PasswordsController
+  before_action :set_school
+
   # GET /resource/password/new
   # def new
   #   super
@@ -22,6 +24,12 @@ class Teachers::PasswordsController < Devise::PasswordsController
   # end
 
   # protected
+
+  # schoolの特定
+  def set_school
+    @school = School.find_by!(school_url: params[:school_url])
+  end
+  
 
   # def after_resetting_password_path_for(resource)
   #   super(resource)

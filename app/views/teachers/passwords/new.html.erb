@@ -1,7 +1,9 @@
 <h1><%= "パスワードの再設定" %></h1>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+<%= form_for(resource, as: resource_name, url: teacher_password_path, html: { method: :post }) do |f| %>
   <%= bootstrap_devise_error_messages! %>
+  <!-- %= hidden_field_tag :school_url, params[:school_url] % -->
+  <!-- %= f.hidden_field(:school_id, value: @school.id) % -->
 
   <div class="form-group">
     <%= f.label :email %>
