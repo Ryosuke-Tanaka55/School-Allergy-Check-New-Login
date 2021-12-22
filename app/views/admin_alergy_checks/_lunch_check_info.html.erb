@@ -40,6 +40,9 @@
                       <% if day.status_checker == "1" && day.status == "確認済" %>
                         <td><%= at.check_box :status_checker, { disabled: true } %></td>
                         <td><%= "#{day.admin_name}が承認" %></td>
+                      <% elsif day.status_checker == "1" && day.status == "要再確認" %>
+                        <td><%= at.check_box :status_checker, { disabled: true } %></td>
+                        <td><%= "#{day.admin_name}が要再確認" %></td>
                       <% else %>
                         <td><%= at.check_box :status_checker, class: "form-control" %></td>
                         <td><%= at.select :status, [' ', '要再確認', '報告中', '確認済'], class: "form-control" %></td>
