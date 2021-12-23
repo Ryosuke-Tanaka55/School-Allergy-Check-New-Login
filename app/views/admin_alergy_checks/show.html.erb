@@ -3,7 +3,7 @@
 
 <div>
   <div class="center">
-    <span style="font-size:2em"><%= I18n.l Date.today, format: :long %><br><br><br></span>
+    <span style="font-size:2em"><%= I18n.l(Date.current, format: :long) %><br><br><br></span>
     <span style="font-size:3em"><%= "本日のチェック件数" %><br><br></span>
     <span style="font-size:2em"><%= @lunch_check_sum %> 件のチェックが必要です</span><br><br><br><br>
     <span style="font-size:3em"><%= "本日の担任からのチェック報告" %><br><br></span>
@@ -29,6 +29,4 @@
     </div>
   <% end %>   
 
-<div id="lunch-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="lunch-check-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-<div id="lunch-check-all" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

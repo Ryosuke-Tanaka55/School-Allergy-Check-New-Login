@@ -9,7 +9,7 @@ CarrierWave.configure do |config|
   if Rails.env.production? # 本番環境の場合はS3へアップロード
     config.storage :fog
     config.fog_provider = 'fog/aws'
-    config.fog_directory  = 'school_allergy' # バケット名
+    config.fog_directory  = 'schoolallergycheck' # バケット名
     config.fog_public = true
     config.fog_credentials = {
       provider: 'AWS',

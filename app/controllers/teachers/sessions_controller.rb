@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Teachers::SessionsController < Devise::SessionsController
+  # before_action :system_admin_not_show, only: [:create]
   before_action :set_school, only: [:new, :create]
   before_action :configure_sign_in_params, only: [:create]
 
@@ -43,5 +44,13 @@ class Teachers::SessionsController < Devise::SessionsController
   def set_school
     @school = School.find_by!(school_url: params[:school_url])
   end
+
+  # # システム管理者ログイン中、システム管理者自身が職員ログインできないようにする
+  # def system_admin_not_show
+  #   if system_admin_signed_in?
+  #     flash[:danger] = "学校の職員のみ遷移可能です。"
+  #     redirect_to classrooms_path
+  #   end
+  # end
 
 end

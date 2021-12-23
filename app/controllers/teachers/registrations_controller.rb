@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+# 下記アクションの内、結局editしか使っていない状況（12/16）
 
 class Teachers::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :require_no_authentication, only: [:cancel] # ログイン後も新規登録を可能にする為、new、createを外す
   before_action :creatable?, only: [:new, :create]
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
+  before_action :admin_teacher, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /resource/sign_up
   # def new
@@ -12,33 +14,20 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  def create
-    # 学校管理者作成時にはadmin付与・一般職員作成時はfalseのまま作成
-    if system_admin_signed_in?
-      self.resource = Teacher.new(sign_up_params)
-      resource.admin = true
-      if resource.save
-        flash[:success] = "学校管理者を作成しました。"
-        redirect_to system_admins_schools_url
-      else
-        flash[:danger] = "作成に失敗しました"
-        render :new
-      end
+  def create    
+    if Teacher.create!(ippan_sign_up_params)
+      flash[:success] = "職員を作成しました。"
+      redirect_to classrooms_path
     else
-      if Teacher.create!(ippan_sign_up_params)
-        flash[:success] = "職員を作成しました。"
-        redirect_to classrooms_path
-      else
-        flash[:danger] = "作成に失敗しました。"
-        render :new
-      end
+      flash[:danger] = "作成に失敗しました。"
+      render :new
     end
   end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    @classrooms = current_teacher.school.classrooms.where(using_class: true).order(:id)
+  end
 
   # PUT /resource
   # def update
@@ -72,7 +61,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
 
   # 学校管理者アカウント編集時のストロングパラメーター
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:teacher_name, :tcode, :email, :password, :password_confirmation, :admin, :creator, :charger, :school_id])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:teacher_name, :tcode, :email, :password, :password_confirmation, :admin, :creator, :charger, :school_id, :classroom_id])
   end
 
   # 一般職員新規登録時のストロングパラメーター
@@ -99,6 +88,11 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
       flash[:danger] = "新規登録は管理者のみ行えます"
       redirect_to teachers_path
     end
+  end
+
+  # アカウント編集後の遷移先
+  def after_update_path_for(resource)
+    show_teachers_path
   end
 
 

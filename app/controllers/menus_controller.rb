@@ -44,8 +44,8 @@ class MenusController < ApplicationController
       redirect_to teachers_menu_path(@menu) and return
     else
       flash[:danger] = "更新に失敗しました。<br>・#{@menu.errors.full_messages.join('<br>・')}"
-  end
-  redirect_to teachers_menus_path and return
+    end
+    redirect_to teachers_menus_path and return
   end
 
   # 献立表削除

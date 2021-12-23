@@ -17,8 +17,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # 学校区分
-  root to: 'static_pages#school_top', as: 'top'
 
   # 先生画面
   devise_for :teachers, skip: 'sessions', controllers: {
@@ -39,22 +37,23 @@ Rails.application.routes.draw do
   resource :teachers, except: %i(show create edit update destroy) do
     resources :school_students
     # 対応法作成ページ
-    resources :creator_alergy_checks, except: %i(show)
-
-    resources :admin_alergy_checks, only: [:edit, :update] do
-      collection do  
+    resources :creator_alergy_checks, except: %i(show) do
+      collection do
+        get '/students', to: 'creator_alergy_checks#search_student'
+      end
+    end
+    # 管理職ページ
+    resources :admin_alergy_checks, only: %i(show) do
+      collection do
+        get 'one_month_index'
         get 'lunch_check'
         patch 'update_lunch_check'
       end   
       member do
-         get 'lunch_check_info'
-         patch 'update_lunch_check_info'
-         get 'lunch_check_all'
-         patch 'update_lunch_check_all' 
+        get 'lunch_check_info'
+        patch 'update_lunch_check_info'
       end #collection do end
-     end #resouces do end
-    resources :admin_alergy_checks do
-    end
+    end #resouces do end
     resource :students do
       namespace :alergy_checks do
         resource :creator, only: %i(new create)
@@ -79,19 +78,6 @@ Rails.application.routes.draw do
     #代理報告ページ
     resource :charger_alergy_checks, only: %i(show)
 
-    #管理職月間チェック一覧ページ
-    collection do
-      get '/admin_alergy_checks/one_month_index'
-    end
-
-
-  end
-  resource :students do
-    namespace :alergy_checks do
-      resource :creator, only: %i(new create) do
-        get '/students', to: 'creators#search_student'
-      end
-    end
   end
 
   resources :classrooms do
@@ -106,18 +92,18 @@ Rails.application.routes.draw do
   end
 
   resource :teachers do
-  resources :admin_alergy_checks, only: [:edit, :update] do
-    collection do  
-      get 'lunch_check'
-      patch 'update_lunch_check'
-    end   
-    member do
-       get 'lunch_check_info'
-       patch 'update_lunch_check_info'
-       get 'lunch_check_all'
-       patch 'update_lunch_check_all' 
-    end #collection do end
-   end #resouces do end
+    resources :admin_alergy_checks, only: [:show] do
+      collection do  
+        get 'lunch_check'
+        patch 'update_lunch_check'
+      end   
+      member do
+        get 'lunch_check_info'
+        patch 'update_lunch_check_info'
+        get 'lunch_check_all'
+        patch 'update_lunch_check_all' 
+      end #collection do end
+    end #resouces do end
   end #teachers do end
 
   # 下記山田さん既存のルート
@@ -140,14 +126,14 @@ Rails.application.routes.draw do
     end
 
     resources :attendances, only: [:edit, :update] do
-     member do
-       get 'lunch_check'
-       patch 'update_lunch_check'
-     end
-     collection do
+      member do
+        get 'lunch_check'
+        patch 'update_lunch_check'
+      end
+      collection do
         get 'lunch_check_info'
         patch 'update_lunch_check_info'
-     end #collection do end
+      end #collection do end
     end #resouces do end
   end #user resouces do end
 end
