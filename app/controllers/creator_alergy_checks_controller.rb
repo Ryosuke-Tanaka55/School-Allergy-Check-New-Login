@@ -1,4 +1,5 @@
 class CreatorAlergyChecksController < ApplicationController
+  before_action :creator_teacher
   before_action :set_first_last_day, only: :index
 
   def index
@@ -75,5 +76,13 @@ class CreatorAlergyChecksController < ApplicationController
   private
     def edit_creator_params
       params.require(:alergy_check).permit(:student_id, :menu, :support, :note)
+    end
+
+    # 対応法作成権限を持つ職員かどうかの判定
+    def creator_teacher
+      unless current_teacher.creator? || current_teacher.admin?
+        flash[:danger] = "アクセス権限がありません。"
+        redirect_to show_teachers_path
+      end
     end
 end
