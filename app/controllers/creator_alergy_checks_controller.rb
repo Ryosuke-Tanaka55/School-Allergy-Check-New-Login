@@ -28,7 +28,7 @@ class CreatorAlergyChecksController < ApplicationController
         end
       end
     end
-    flash[:success] = 'アレルギー情報を登録しました。'
+    flash[:success] = '対応法を登録しました。'
     redirect_to teachers_creator_alergy_checks_url
 
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
@@ -63,7 +63,7 @@ class CreatorAlergyChecksController < ApplicationController
     @alergy_check = AlergyCheck.find(params[:id])
     @student = @alergy_check.student
     @alergy_check.destroy
-    flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}の情報を削除しました。"
+    flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}の対応法を削除しました。"
     redirect_to teachers_creator_alergy_checks_url
   end
 
