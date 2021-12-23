@@ -1,5 +1,6 @@
 class AdminAlergyChecksController < ApplicationController
     UPDATE_ERROR_MSG = "登録に失敗しました。やり直してください。"
+    before_action :admin_teacher, only: [:one_month_index]
     before_action :set_first_last_day
 
     def one_month_index
