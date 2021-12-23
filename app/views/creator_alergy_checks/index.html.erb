@@ -1,13 +1,9 @@
-<div>
-  <table class="table table-bordered table-condensed user-table">
-    <tr>
-      <td>
-        <%= link_to "←", teachers_creator_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-primary" %>
-        <%= l(@first_day, format: :middle) %> 対応法詳細
-        <%= link_to "→", teachers_creator_alergy_checks_path(date: @first_day.next_month), class: "btn btn-primary" %>
-      </td>
-    </tr>
-  </table>
+<h1><%= l(@first_day, format: :middle) %> 対応法詳細</h1>
+
+<div class="button__creator">
+  <%= link_to "前月", teachers_creator_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-info" %>
+  <%= link_to "当月", teachers_creator_alergy_checks_path, class: "btn btn-info" %>
+  <%= link_to "次月", teachers_creator_alergy_checks_path(date: @first_day.next_month), class: "btn btn-info" %>
 </div>
 
 <div>
