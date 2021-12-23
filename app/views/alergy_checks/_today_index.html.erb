@@ -57,7 +57,11 @@
               <% end %>
             <% end %>
           </table>
-          <%= f.submit "報告する", class: "btn btn-block btn-primary" %>
+          <% if @alergy_checks.count == @submitted %>
+            <%= f.submit "報告する", disabled: true, class: "btn btn-block btn-primary" %>
+          <% else %>
+            <%= f.submit "報告する", class: "btn btn-block btn-primary" %>
+          <% end %>
         <% end %>
       </div>
     </div>
