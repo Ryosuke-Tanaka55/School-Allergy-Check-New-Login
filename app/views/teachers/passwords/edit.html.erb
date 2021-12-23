@@ -3,6 +3,8 @@
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= bootstrap_devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
+  <!-- %= f.hidden_field_tag :school_url, value: params[:school_url] % -->
+  <!-- %= f.hidden_field(:school_id, value: @school.id) % -->
 
   <div class="form-group">
     <%= f.label :password, t('.new_password') %>
