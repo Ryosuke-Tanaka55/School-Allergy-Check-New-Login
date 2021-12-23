@@ -2,9 +2,9 @@ class AlergyChecksController < ApplicationController
   before_action :set_classroom, only: [:show, :today_index, :one_month_index]
   before_action :set_first_last_day, only: :one_month_index
   before_action :have_class_room, only: :one_month_index
+  before_action :set_submitted, only: [:show, :today_index]
 
   def show
-    @submitted = @classroom.alergy_checks.today.where.not(status: "").count #報告済み件数
     @alergy_check_sum = @classroom.alergy_checks.today.count
   end
 
@@ -61,6 +61,11 @@ class AlergyChecksController < ApplicationController
   end
 
   private
+    # 報告済件数取得
+    def set_submitted
+      @submitted = @classroom.alergy_checks.today.where.not(status: "").count
+    end
+
     # 代理報告か確認
     def proxy_report_check
       !!params[:proxy_flag]
