@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  
-  
 
   root 'static_pages#top'
 
@@ -30,7 +28,7 @@ Rails.application.routes.draw do
       get 'teachers/password/new', to: 'teachers/passwords#new', as: :new_teacher_password
       post 'teachers/password', to: 'teachers/passwords#create', as: :teacher_password
       get 'teachers/password/edit', to: 'teachers/passwords#edit', as: :edit_teacher_password
-      patch 'teachers/password', to: 'teachers/passwords#update', as: :update_teacher_password
+      put 'teachers/password', to: 'teachers/passwords#update', as: :update_teacher_password
     end
   end
   devise_scope :teacher do
@@ -51,7 +49,7 @@ Rails.application.routes.draw do
         get 'one_month_index'
         get 'lunch_check'
         patch 'update_lunch_check'
-      end   
+      end
       member do
         get 'lunch_check_info'
         patch 'update_lunch_check_info'
@@ -96,15 +94,15 @@ Rails.application.routes.draw do
 
   resource :teachers do
     resources :admin_alergy_checks, only: [:show] do
-      collection do  
+      collection do
         get 'lunch_check'
         patch 'update_lunch_check'
-      end   
+      end
       member do
         get 'lunch_check_info'
         patch 'update_lunch_check_info'
         get 'lunch_check_all'
-        patch 'update_lunch_check_all' 
+        patch 'update_lunch_check_all'
       end #collection do end
     end #resouces do end
   end #teachers do end

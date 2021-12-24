@@ -2,8 +2,6 @@
 
 <%= form_for(resource, as: resource_name, url: teacher_password_path, html: { method: :post }) do |f| %>
   <%= bootstrap_devise_error_messages! %>
-  <!-- %= f.hidden_field_tag :school_url, value: params[:school_url] % -->
-  <!-- %= f.hidden_field(:school_id, value: @school.id) % -->
 
   <div class="form-group">
     <%= f.label :email %>
@@ -15,4 +13,6 @@
   </div>
 <% end %>
 
-<%= render 'teachers/shared/links' %>
+<%= link_to '戻る', new_teacher_session_path(school_url: params[:school_url]), class: 'btn btn-default btn-block' %>
+
+<!-- %= render 'teachers/shared/links' %-->
