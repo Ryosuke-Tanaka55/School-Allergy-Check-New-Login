@@ -16,7 +16,7 @@ module AlergyChecksHelper
     end
   end
 
-  # 備考欄表示有無
+  # 備考欄空白の場合は「なし」表示」
   def note(note)
     if note.present?
       return note
