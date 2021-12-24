@@ -30,6 +30,8 @@
   <div class="check_box">
     <%= f.check_box :admin, disabled: true %>
     <%= f.label :admin %>
+    <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" title="管理者は対応法担当者・代理申請者・その他全ての操作権限を持ちます")></span>
+
 
     <%= f.check_box :creator %>
     <%= f.label :creator %>
@@ -61,3 +63,9 @@
   </div>
   <%= link_to '戻る', 'javascript:history.back()', class: 'btn btn-default btn-block' %>
 <% end %>
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>

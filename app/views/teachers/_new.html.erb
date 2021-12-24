@@ -38,6 +38,7 @@
         <div class="check_box">
           <%= f.check_box :admin %>
           <%= f.label :admin %>
+          <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" title="管理者は対応法担当者・代理申請者・その他全ての操作権限を持ちます")></span>
 
           <%= f.check_box :creator %>
           <%= f.label :creator %>
@@ -57,3 +58,8 @@
   </div>
 </div>
 
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
