@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  
-  
+
+
 
   root 'static_pages#top'
 
@@ -42,16 +42,10 @@ Rails.application.routes.draw do
         get '/students', to: 'creator_alergy_checks#search_student'
       end
     end
-    # 管理職ページ
-    resources :admin_alergy_checks, only: %i(show) do
+    # 管理職ページ（全学級月間チェック一覧）
+    resources :admin_alergy_checks, except: %i(new show create index edit update destroy) do
       collection do
         get 'one_month_index'
-        get 'lunch_check'
-        patch 'update_lunch_check'
-      end   
-      member do
-        get 'lunch_check_info'
-        patch 'update_lunch_check_info'
       end #collection do end
     end #resouces do end
     resource :students do
@@ -91,17 +85,12 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  # 管理職ページ（全般）
   resource :teachers do
-    resources :admin_alergy_checks, only: [:show] do
-      collection do  
-        get 'lunch_check'
-        patch 'update_lunch_check'
-      end   
+    resource :admin_alergy_checks, only: %i(show) do
       member do
         get 'lunch_check_info'
         patch 'update_lunch_check_info'
-        get 'lunch_check_all'
-        patch 'update_lunch_check_all' 
       end #collection do end
     end #resouces do end
   end #teachers do end
