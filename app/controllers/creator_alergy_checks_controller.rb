@@ -1,4 +1,5 @@
 class CreatorAlergyChecksController < ApplicationController
+  before_action :creator_teacher
   before_action :set_first_last_day, only: :index
 
   def index
@@ -27,7 +28,7 @@ class CreatorAlergyChecksController < ApplicationController
         end
       end
     end
-    flash[:success] = 'アレルギー情報を登録しました。'
+    flash[:success] = '対応法を登録しました。'
     redirect_to teachers_creator_alergy_checks_url
 
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
@@ -62,7 +63,7 @@ class CreatorAlergyChecksController < ApplicationController
     @alergy_check = AlergyCheck.find(params[:id])
     @student = @alergy_check.student
     @alergy_check.destroy
-    flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}の情報を削除しました。"
+    flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}、#{@student.student_name}の対応法を削除しました。"
     redirect_to teachers_creator_alergy_checks_url
   end
 
@@ -75,5 +76,13 @@ class CreatorAlergyChecksController < ApplicationController
   private
     def edit_creator_params
       params.require(:alergy_check).permit(:student_id, :menu, :support, :note)
+    end
+
+    # 対応法作成権限を持つ職員かどうかの判定
+    def creator_teacher
+      unless current_teacher.creator? || current_teacher.admin?
+        flash[:danger] = "アクセス権限がありません。"
+        redirect_to show_teachers_path
+      end
     end
 end

@@ -1,6 +1,7 @@
 <h1>全学級月間チェック一覧</h1>
 <div class="button__monthly">
   <%= link_to "前月", one_month_index_teachers_admin_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-info" %>
+  <%= link_to "当月", one_month_index_teachers_admin_alergy_checks_path, class: "btn btn-info" %>
   <%= link_to "次月", one_month_index_teachers_admin_alergy_checks_path(date: @first_day.next_month), class: "btn btn-info" %>
 </div>
 
