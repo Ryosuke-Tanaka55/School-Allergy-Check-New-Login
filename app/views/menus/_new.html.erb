@@ -7,7 +7,9 @@
       <h1>献立表追加</h1>
     </div>
     <div class="modal-body">
-      <%= form_with model: [@school, @menu], url: teachers_menus_path, local: true do |f| %>
+      <div id="menus-error">
+      </div>
+      <%= form_with model: [@school, @menu], url: teachers_menus_path, remote: true do |f| %>
         <div class="form-group">
           <%= f.label :menu_name %><br>
           <%= f.text_field :menu_name, placeholder: "献立表名を入力してください", class: "form-control", required: true %><br>
