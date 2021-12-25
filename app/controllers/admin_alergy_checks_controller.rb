@@ -3,6 +3,7 @@ class AdminAlergyChecksController < ApplicationController
     include AjaxHelper
     UPDATE_ERROR_MSG = "登録に失敗しました。やり直してください。"
 
+    before_action :system_admin_inaccessible
     before_action :set_school
     before_action :admin_teacher, only: [:one_month_index]
     before_action :set_first_last_day
