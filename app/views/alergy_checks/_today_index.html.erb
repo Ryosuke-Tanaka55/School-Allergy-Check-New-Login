@@ -7,7 +7,7 @@
       <h1>【チェック児童一覧】</h1>
 
       <div class="modal-body">
-      <%= form_with(url: teachers_alergy_checks_path, local: true, method: :patch) do |f| %>
+      <%= form_with(url: teachers_alergy_checks_path, local: true, method: :patch, id: "allergy-check-form") do |f| %>
         <table width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
           <thead>
             <tr>
@@ -58,12 +58,48 @@
             <% end %>
           </table>
           <% if @alergy_checks.count == @submitted %>
-            <%= f.submit "報告する", disabled: true, class: "btn btn-block btn-primary" %>
+            <%= f.submit "報告済み", disabled: true, class: "btn btn-block btn-primary" %>
           <% else %>
-            <%= f.submit "報告する", class: "btn btn-block btn-primary" %>
+            <%= f.submit "チェックを入れた行を報告する", type: "button", class: "btn btn-block btn-primary", onclick: "submitForm();" %>
           <% end %>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function submitForm() {
+    let ids = <%= @unreported_alergy_checks_ids %>;
+    let result = true;
+    for (let i = 0; i < ids.length; i++) {
+      let id = ids[i];
+      let check = isCorrectCheck(id);
+      if (check === false) {
+        alert('報告する場合は第1チェック、第2チェック、本人チェックの3つ全てにチェックを入れる必要があります。');
+        result = false;
+        break;
+      }
+    }
+    if (result === true) {
+      $('#allergy-check-form').submit();
+    }
+  }
+
+  function isCorrectCheck(id) {
+    let count = 0;
+    if ($(`#_alergy_checks_${id}_first_check`).is(':checked') === true) {
+      count += 1;
+    }
+    if ($(`#_alergy_checks_${id}_second_check`).is(':checked') === true) {
+      count += 1;
+    }
+    if ($(`#_alergy_checks_${id}_student_check`).is(':checked') === true) {
+      count += 1;
+    }
+    if (count === 1 || count === 2) {
+      return false;
+    }
+    return true;
+  }
+</script>

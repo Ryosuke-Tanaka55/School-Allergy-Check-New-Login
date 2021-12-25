@@ -1,4 +1,5 @@
 class AlergyChecksController < ApplicationController
+  before_action :system_admin_inaccessible
   before_action :set_classroom, only: [:show, :today_index, :one_month_index]
   before_action :set_first_last_day, only: :one_month_index
   before_action :have_class_room, only: :one_month_index
@@ -10,6 +11,7 @@ class AlergyChecksController < ApplicationController
 
   def today_index
     @alergy_checks = @classroom.alergy_checks.today.order(:student_id)
+    @unreported_alergy_checks_ids = @classroom.alergy_checks.today.unreported.pluck(:id)
     @teachers = Teacher.where(school_id: current_teacher.school_id) # 代理報告時に選択
   end
 
