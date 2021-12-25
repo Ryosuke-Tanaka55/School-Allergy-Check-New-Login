@@ -1,4 +1,5 @@
 class AlergyChecksController < ApplicationController
+  before_action :system_admin_inaccessible
   before_action :set_classroom, only: [:show, :today_index, :one_month_index]
   before_action :set_first_last_day, only: :one_month_index
   before_action :have_class_room, only: :one_month_index

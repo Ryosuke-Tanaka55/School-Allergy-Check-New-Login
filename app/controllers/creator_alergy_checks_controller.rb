@@ -1,4 +1,5 @@
 class CreatorAlergyChecksController < ApplicationController
+  before_action :system_admin_inaccessible
   before_action :creator_teacher
   before_action :set_first_last_day, only: :index
 

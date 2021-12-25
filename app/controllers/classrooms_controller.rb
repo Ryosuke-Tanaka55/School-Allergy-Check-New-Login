@@ -1,6 +1,7 @@
 class ClassroomsController < ApplicationController
   include SchoolsHelper
 
+  before_action :system_admin_inaccessible
   before_action :set_school
   before_action :authenticate_teacher!
   before_action :admin_teacher, only: [:index, :edit_using_class, :update_using_class]

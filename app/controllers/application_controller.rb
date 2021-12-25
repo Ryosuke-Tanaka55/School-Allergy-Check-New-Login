@@ -2,10 +2,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
   $days_of_the_week = %w{日 月 火 水 木 金 土}
+  ACCESS_ERROR_MSG = "アクセス権限がありません。"
 
   # ---------下記既存アプリの記述-------------------
   # ページ出力前に1ヶ月分のデータの存在を確認・セットします。
- def set_one_month
+  def set_one_month
   @first_day = params[:date].nil? ?
   Date.current.beginning_of_month : params[:date].to_date
   @last_day = @first_day.end_of_month
@@ -42,7 +43,19 @@ class ApplicationController < ActionController::Base
 
   # 管理者かどうかの判定
   def admin_teacher
-    redirect_to show_teachers_path, flash: { danger: "権限がありません。" } unless current_teacher.admin?
+    redirect_to show_teachers_path, flash: { danger: ACCESS_ERROR_MSG } unless current_teacher.admin?
+  end
+
+  # システム管理者がアクセスできるページかの判定
+  def system_admin_inaccessible
+    if current_system_admin
+      case controller_name
+      when "alergy_checks", "charger_alergy_checks", "creator_alergy_checks", \
+            "admin_alergy_checks", "teachers", "classrooms", "menus", "school_students", "registrations"
+        flash[:danger] = ACCESS_ERROR_MSG
+        redirect_to system_admins_schools_path
+      end
+    end
   end
 
   # 今日の日付からその月の初日と最終日を取得
