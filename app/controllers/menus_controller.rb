@@ -1,6 +1,7 @@
 class MenusController < ApplicationController
   include SchoolsHelper
 
+  before_action :system_admin_inaccessible
   before_action :set_school
   before_action :set_menu, only: [:show, :edit, :update, :destroy]
   before_action :admin_teacher, only: [:new, :create, :edit, :update, :destroy]

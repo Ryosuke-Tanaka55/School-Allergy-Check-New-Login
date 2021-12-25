@@ -2,6 +2,7 @@
 # 下記アクションの内、結局editしか使っていない状況（12/16）
 
 class Teachers::RegistrationsController < Devise::RegistrationsController
+  prepend_before_action :system_admin_inaccessible, only: [:edit]
   prepend_before_action :require_no_authentication, only: [:cancel] # ログイン後も新規登録を可能にする為、new、createを外す
   before_action :creatable?, only: [:new, :create]
   before_action :configure_sign_up_params, only: [:create]

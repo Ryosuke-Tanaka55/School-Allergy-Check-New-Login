@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   # ---------下記既存アプリの記述-------------------
   # ページ出力前に1ヶ月分のデータの存在を確認・セットします。
- def set_one_month
+  def set_one_month
   @first_day = params[:date].nil? ?
   Date.current.beginning_of_month : params[:date].to_date
   @last_day = @first_day.end_of_month
@@ -50,7 +50,8 @@ class ApplicationController < ActionController::Base
   def system_admin_inaccessible
     if current_system_admin
       case controller_name
-      when "alergy_checks", "charger_alergy_checks", "creator_alergy_checks", "admin_alergy_checks", "teachers"
+      when "alergy_checks", "charger_alergy_checks", "creator_alergy_checks", \
+            "admin_alergy_checks", "teachers", "classrooms", "menus", "school_students"
         flash[:danger] = ACCESS_ERROR_MSG
         redirect_to system_admins_schools_path
       end
