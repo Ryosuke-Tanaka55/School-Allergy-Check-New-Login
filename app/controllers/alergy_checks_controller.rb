@@ -11,6 +11,7 @@ class AlergyChecksController < ApplicationController
 
   def today_index
     @alergy_checks = @classroom.alergy_checks.today.order(:student_id)
+    @unreported_alergy_checks_ids = @classroom.alergy_checks.today.unreported.pluck(:id)
     @teachers = Teacher.where(school_id: current_teacher.school_id) # 代理報告時に選択
   end
 
