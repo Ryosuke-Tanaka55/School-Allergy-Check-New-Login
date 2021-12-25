@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
     if current_system_admin
       case controller_name
       when "alergy_checks", "charger_alergy_checks", "creator_alergy_checks", \
-            "admin_alergy_checks", "teachers", "classrooms", "menus", "school_students"
+            "admin_alergy_checks", "teachers", "classrooms", "menus", "school_students", "registrations"
         flash[:danger] = ACCESS_ERROR_MSG
         redirect_to system_admins_schools_path
       end
