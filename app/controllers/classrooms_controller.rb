@@ -25,22 +25,17 @@ class ClassroomsController < ApplicationController
 
   def update_using_class
     @classrooms = @school.classrooms.all.order(:id)
-    ActiveRecord::Base.transaction do
-      using_class_params.each do |id, item|
-        if item[:class_name].blank?
-          flash[:danger] = "クラス名を入力して下さい"
-          redirect_to edit_using_class_classrooms_path(@school)
-        else
-          classroom = Classroom.find(id)
-          classroom.update_attributes!(item)
-        end
+    using_class_params.each do |id, item|
+      classroom = Classroom.find(id)
+      if classroom.update_attributes(item)
+        @school.update(first_edit: true)
+        flash[:success] = "クラス編集を更新しました。"
+        redirect_to classrooms_path and return
+      else
+        flash[:danger] = "更新に失敗しました。<br>・#{classroom.errors.full_messages.join('<br>・')}"
+        render :edit_using_class
       end
     end
-    flash[:success] = "クラス編集を更新しました。"
-    redirect_to classrooms_path
-  rescue ActiveRecord::RecordInvalid
-    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-    redirect_to edit_using_class_classrooms_path(@school)
   end
 
 private
