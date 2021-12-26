@@ -5,25 +5,22 @@
       <%= f.collection_select :classroom,
         @classrooms, :id, :class_name,
         { include_blank: "クラスを選択" },
-        class: "form-control classroom-select",
-        required: true
+        class: "form-control classroom-select"
       %>
     </td>
     <td class="select--student">
       <%= f.collection_select :student_id,
         [], :id, :student_name,
         { include_blank: "児童名を選択" },
-        class: "form-control student-select",
-        required: true
+        class: "form-control student-select"
       %>
     </td>
-    <td><%= f.text_field :menu, required: true, class: "form-control" %></td>
+    <td><%= f.text_field :menu, class: "form-control" %></td>
     <td>
       <%= f.select :support,
         ['対応食', '代替食', '除去食', 'その他'],
         { include_blank: "対応を選択" },
-        class: "form-control",
-        required: true
+        class: "form-control"
       %>
     </td>
     <td><%= f.text_field :note, class: "form-control" %></td>

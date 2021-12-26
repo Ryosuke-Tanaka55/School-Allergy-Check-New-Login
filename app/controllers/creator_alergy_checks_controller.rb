@@ -33,8 +33,11 @@ class CreatorAlergyChecksController < ApplicationController
     redirect_to teachers_creator_alergy_checks_url
 
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
-    flash[:danger] = e.message
-    redirect_to teachers_creator_alergy_checks_url
+    respond_to do |format|
+      # エラーメッセージをうまく取り出せない為、詳しいエラー内容表示ができていない
+      format.js { flash.now[:danger] = "登録に失敗しました。入力内容を確認してください。" }
+      format.js { render 'new' }
+    end
   end
 
   def edit
