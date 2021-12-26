@@ -38,4 +38,9 @@ class AlergyCheck < ApplicationRecord
   # worked_onカラムが本日の日付であるものを取得する
   scope :today, -> { where(worked_on: Date.current) }
   scope :unreported, -> { where(status: "") }
+
+  def reported?
+    return true if self.status && self.applicant
+    false
+  end
 end
