@@ -23,7 +23,7 @@ module CreatorAlergyChecksHelper
       link_to "削除", "#", class: "btn btn-danger disabled-btn"
     else
       link_to "削除", teachers_creator_alergy_check_path(alergy_check.id), method: :delete,
-        data: { confirm: "#{l(alergy_check.worked_on, format: :short)}、#{student.student_name}の対応法を削除します。よろしいですか？" },
+        data: { confirm: "#{l(alergy_check.worked_on, format: :short)}、#{alergy_check.student_name}の対応法を削除します。よろしいですか？" },
         class: "btn btn-danger"
     end
   end
