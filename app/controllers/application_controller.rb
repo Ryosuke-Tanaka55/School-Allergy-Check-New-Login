@@ -58,6 +58,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # ログイン状態でページにアクセスしようとしているかの判定
+  def signed_in_teacher
+    redirect_to alert_path unless current_teacher || current_system_admin
+  end
+
   # 今日の日付からその月の初日と最終日を取得
   def set_first_last_day
     @first_day = params[:date].nil? ? Date.current.beginning_of_month : params[:date].to_date
