@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   root 'static_pages#top'
+
+  # 職員未ログイン時リダイレクト画面
   get '/alert', to: 'static_pages#alert'
 
   # システム管理者用画面
