@@ -1,4 +1,5 @@
 class ChargerAlergyChecksController < ApplicationController
+  before_action :signed_in_teacher
   before_action :system_admin_inaccessible
   before_action :charger_teacher
 

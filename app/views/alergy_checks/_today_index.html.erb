@@ -7,7 +7,8 @@
       <h1>【チェック児童一覧】</h1>
 
       <div class="modal-body">
-      <%= form_with(url: teachers_alergy_checks_path, local: true, method: :patch, id: "allergy-check-form") do |f| %>
+      <div id="general-today_index-error"></div>
+      <%= form_with(url: teachers_alergy_checks_path, remote: true, method: :patch, id: "allergy-check-form") do |f| %>
         <table width=100%, class="table table-bordered table-condensed table__alergy-contents--center ">
           <thead>
             <tr>
