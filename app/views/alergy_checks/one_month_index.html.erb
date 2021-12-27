@@ -1,3 +1,5 @@
+<% provide(:title, current_teacher.teacher_name) %>
+
 <h1><%= current_teacher.classroom.class_name %>月間チェック一覧</h1>
 <div class="button__monthly">
   <%= link_to "前月", one_month_index_teachers_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-info" %>
