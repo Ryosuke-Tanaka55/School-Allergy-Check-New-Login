@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
     when SystemAdmin
       system_admins_schools_path
     when Teacher
-      if current_teacher.admin == true && resource.sign_in_count == 1
+      if current_teacher.admin && resource.sign_in_count == 1 && !current_teacher.school.first_edit
         edit_using_class_classrooms_path
       else
         show_teachers_path

@@ -32,9 +32,9 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    @classrooms = current_teacher.school.classrooms.where(using_class: true).order(:id)
+  end
 
   # DELETE /resource
   # def destroy
