@@ -35,7 +35,7 @@ class CreatorAlergyChecksController < ApplicationController
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     respond_to do |format|
       # エラーメッセージをうまく取り出せない為、詳しいエラー内容表示ができていない
-      format.js { flash.now[:danger] = "登録に失敗しました。入力内容を確認してください。" }
+      format.js { flash.now[:danger] = "登録に失敗しました。入力内容に不備がないか確認してください。" }
       format.js { render 'new' }
     end
   end
@@ -53,14 +53,22 @@ class CreatorAlergyChecksController < ApplicationController
       if @alergy_check.update(edit_creator_params)
         flash[:success] = "#{l(@alergy_check.worked_on, format: :short)}の情報を更新しました。"
       else
-        flash[:danger] = "更新に失敗しました。<br>" + "・" + @alergy_check.errors.full_messages.join("<br>")
+        respond_to do |format|
+          format.js { flash.now[:danger] = "更新に失敗しました。<br>・#{@alergy_check.errors.full_messages.join('<br>・')}"} 
+          format.js { render 'edit' }
+        end
       end
     elsif params[:alergy_check][:student_id].nil?
-      flash[:danger] = "登録に失敗しました。児童の情報が存在しません。入力内容を確認してください。"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "登録に失敗しました。児童の情報が存在しません。入力内容を確認してください。"} 
+        format.js { render 'edit' }
+      end
     else
-      flash[:danger] = "登録に失敗しました。児童名を選択してください。"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "登録に失敗しました。児童名を選択してください。"} 
+        format.js { render 'edit' }
+      end
     end
-    redirect_to teachers_creator_alergy_checks_url
   end
 
   def destroy
