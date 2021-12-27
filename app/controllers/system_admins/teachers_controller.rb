@@ -15,17 +15,20 @@ class SystemAdmins::TeachersController < ApplicationController
     @admin_teacher.admin = true
     if @admin_teacher.save
       flash[:info] = "学校管理者を作成しました"
+      redirect_to system_admins_schools_path
     else
-      flash[:danger] = "作成に失敗しました。<br>・#{@admin_teacher.errors.full_messages.join('<br>・')}"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "作成に失敗しました。<br>・#{@admin_teacher.errors.full_messages.join('<br>・')}"} 
+        format.js { render 'new' }
+      end
     end
-    redirect_to system_admins_schools_path
   end
 
-  # 必要かどうか確認↓
+  # 一旦不要↓
   def edit
   end
 
-  # 必要かどうか確認↓
+  # 一旦不要↓
   def update
     if @admin_teacher.update_attributes(admin_teacher_params)
       flash[:success] = "学校管理者情報を更新しました。"

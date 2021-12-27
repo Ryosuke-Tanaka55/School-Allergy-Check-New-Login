@@ -7,9 +7,8 @@
       <h1>学校管理者作成</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @admin_teacher, url: system_admins_school_teachers_path(@school), local: true) do |f| %>
-        <%= render 'layouts/flash_messages' %>
-
+      <div id="adminteacher-error"></div>
+      <%= form_with(model: @admin_teacher, url: system_admins_school_teachers_path(@school), remote: true) do |f| %>
         <div class="field">
           <%= f.label :teacher_name %>
           <%= f.text_field :teacher_name, placeholder: "名前を入力してください（必須）", class: "form-control", required: true %>

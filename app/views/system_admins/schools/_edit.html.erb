@@ -7,10 +7,8 @@
       <h1>学校情報編集</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @school, url: system_admins_school_path, local: true, method: :patch) do |f| %>
-        <%= render 'layouts/flash_messages' %>
-        <%= render 'layouts/model_error_messages', model: @school %>
-
+      <div id="schools-error"></div>
+      <%= form_with(model: @school, url: system_admins_school_path, remote: true, method: :patch) do |f| %>
         <div class="form-group">
           <%= f.label :school_name %>
           <%= f.text_field :school_name, placeholder: "学校名を入力してください（必須）", class: "form-control", required: true %>

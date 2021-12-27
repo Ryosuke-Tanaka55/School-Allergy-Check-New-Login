@@ -7,9 +7,8 @@
     </div>
     <div class="modal-body">
       <h1><%= @teacher.classroom_id == nil ? "#{@teacher.teacher_name}の編集" : "#{params[:class_name]}の担任編集" %></h1>
-      <%= form_with(model: @teacher, url: update_info_teachers_path, local: true) do |f| %>
-        <%= render 'shared/error_messages', object: @teacher %>
-      
+      <div id="teachers-error"></div>
+      <%= form_with(model: @teacher, url: update_info_teachers_path, remote: true) do |f| %>      
         <!-- %= f.hidden_field(:school_id, value: @school.id) % -->
         <%= f.hidden_field(:classroom_id, value: @teacher.classroom_id) %>
         <%= f.hidden_field(:id, value: @teacher.id) %>

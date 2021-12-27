@@ -17,9 +17,11 @@ class TeachersController < ApplicationController
       flash[:success] = "担任を作成しました。"
       redirect_to classrooms_path and return
     else
-      flash[:danger] = "作成に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "更新に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"} 
+        format.js { render 'new' }
+      end
     end
-    redirect_to classrooms_path and return
   end
 
   def edit_info
@@ -31,10 +33,13 @@ class TeachersController < ApplicationController
     @teacher = current_school.teachers.find(params[:teacher][:id])
     if @teacher.update_attributes(teachers_params)
       flash[:success] = "#{@teacher.teacher_name}の情報を更新しました。"
+      redirect_to classrooms_path
     else
-      flash[:danger] = "作成に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "更新に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"} 
+        format.js { render 'edit_info' }
+      end
     end
-    redirect_to classrooms_path
   end
 
   def destroy

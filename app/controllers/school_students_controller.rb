@@ -23,10 +23,13 @@ class SchoolStudentsController < ApplicationController
     @school_student = @school.students.new(student_params)
     if @school_student.save
       flash[:success] = '児童を追加しました。'
+      redirect_to teachers_school_students_path and return
     else
-      flash[:danger] = "追加に失敗しました。<br>・#{@school_student.errors.full_messages.join('<br>・')}"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "作成に失敗しました。<br>・#{@school_student.errors.full_messages.join('<br>・')}"} 
+        format.js { render 'new' }
+      end
     end
-    redirect_to teachers_school_students_path and return
   end
 
   def show
@@ -41,10 +44,13 @@ class SchoolStudentsController < ApplicationController
   def update
     if @school_student.update_attributes(student_params)
       flash[:success] = "児童情報を更新しました。"
+      redirect_to teachers_school_students_path and return
     else
-      flash[:danger] = "更新に失敗しました。<br>・#{@school_student.errors.full_messages.join('<br>・')}"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "更新に失敗しました。<br>・#{@school_student.errors.full_messages.join('<br>・')}"} 
+        format.js { render 'edit' }
+      end
     end
-    redirect_to teachers_school_students_path and return
   end
   
   # 児童削除
