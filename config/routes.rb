@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
 
-
-
   root 'static_pages#top'
+  get '/alert', to: 'static_pages#alert'
 
   # システム管理者用画面
   devise_for :system_admins, controllers: {

@@ -1,10 +1,11 @@
 class StaticPagesController < ApplicationController
-  before_action :teacher_not_show
+  before_action :teacher_not_show, only: [:top]
 
   def top
   end
 
-
+  def alert
+  end
 
   private
     # 職員がシステム管理者TOPページに遷移できないようにする
