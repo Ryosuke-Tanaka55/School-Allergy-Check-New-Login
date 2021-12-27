@@ -5,6 +5,7 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :require_no_authentication, only: [:cancel] # ログイン後も新規登録を可能にする為、new、createを外す
   prepend_before_action :system_admin_inaccessible
   before_action :creatable?, only: [:new, :create]
+  before_action :set_classrooms, only: [:edit, :update]
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   before_action :admin_teacher, only: [:new, :create, :edit, :update, :destroy]
@@ -27,13 +28,12 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/edit
   def edit
-    @classrooms = current_teacher.school.classrooms.where(using_class: true).order(:id)
   end
 
   # PUT /resource
-  def update
-    @classrooms = current_teacher.school.classrooms.where(using_class: true).order(:id)
-  end
+  # def update
+  #   super
+  # end
 
   # DELETE /resource
   # def destroy
@@ -65,11 +65,11 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: [:teacher_name, :tcode, :email, :password, :password_confirmation, :admin, :creator, :charger, :school_id, :classroom_id])
   end
 
-  # 一般職員新規登録時のストロングパラメーター
-  def ippan_sign_up_params
-    params.require(:teacher).permit(:teacher_name, :tcode, :password, :password_confirmation, :school_id, :classroom_id, :admin, :creator, :charger)
-    # devise_parameter_sanitizer.permit(:sign_up, keys: %i(teacher_name tcode password school_id classroom_id))
+  # 編集時のクラスルームの表示
+  def set_classrooms
+    @classrooms = current_teacher.school.classrooms.where(using_class: true).order(:id)
   end
+
 
   # 学校管理者かどうかの判定
   def current_teacher_is_admin?
