@@ -1,2 +1,5 @@
 $("#new").html("<%= escape_javascript(render 'school_students/new') %>");
-$("#new").modal("show");
+$("#new").modal({
+  backdrop: 'static',
+  keyboard: false
+});

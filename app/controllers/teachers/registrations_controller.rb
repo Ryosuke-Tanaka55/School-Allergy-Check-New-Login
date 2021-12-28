@@ -3,6 +3,8 @@
 
 class Teachers::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :require_no_authentication, only: [:cancel] # ログイン後も新規登録を可能にする為、new、createを外す
+  prepend_before_action :signed_in_teacher, only: [:edit, :update, :destroy]
+  prepend_before_action :system_admin_inaccessible
   before_action :creatable?, only: [:new, :create]
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
@@ -30,9 +32,9 @@ class Teachers::RegistrationsController < Devise::RegistrationsController
   end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    @classrooms = current_teacher.school.classrooms.where(using_class: true).order(:id)
+  end
 
   # DELETE /resource
   # def destroy

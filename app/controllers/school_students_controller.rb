@@ -1,6 +1,8 @@
 class SchoolStudentsController < ApplicationController
   include SchoolsHelper
 
+  before_action :signed_in_teacher
+  before_action :system_admin_inaccessible
   before_action :set_school
   before_action :set_school_student, only: [:edit, :update, :destroy]
   before_action :admin_teacher, only: [:new, :create, :edit, :update, :destroy]

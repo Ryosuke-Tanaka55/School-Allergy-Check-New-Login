@@ -24,7 +24,7 @@
             <td>
               <!-- 日付被り非表示チェック -->
               <% unless alergy_check.worked_on == previous_worked_on %>
-                <%= l(alergy_check.worked_on, format: :short) + 
+                <%= l(alergy_check.worked_on, format: :short) +
                     "(#{$days_of_the_week[alergy_check.worked_on.wday]})" %>
               <% end %>
             </td>
@@ -39,9 +39,13 @@
             <td><%= alergy_check.support %></td>
             <td><%= note(alergy_check.note) %></td>
             <td><%= alergy_check.applicant %></td>
-            <td>
+            <% if alergy_check.status.blank? || alergy_check.status == "要再確認" %>
+             <td bgcolor = "orange" >
+            <% else %>
+             <td>
+            <% end %>
               <%= check_state(status: alergy_check.status, name: alergy_check.admin_name) %>
-            </td>
+             </td>
           </tr>
         <% end %>
       </tbody>
