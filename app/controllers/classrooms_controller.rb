@@ -8,6 +8,7 @@ class ClassroomsController < ApplicationController
   before_action :admin_teacher, only: [:index, :edit_using_class, :update_using_class]
 
   def index
+    @active = params[:active].present? ? params[:active] : 1
     classrooms = @school.classrooms.where(using_class: true)
     # 現状seed込みのidの為、アプリ渡す際下記id番号変更必要！
     @first_grade = @school.classrooms.where(class_grade: 1, using_class: true).order(:id)
