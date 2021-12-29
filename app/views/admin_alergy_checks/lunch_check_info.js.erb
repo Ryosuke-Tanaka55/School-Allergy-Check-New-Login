@@ -1,2 +1,5 @@
 $("#lunch-check-info").html("<%= escape_javascript(render 'lunch_check_info') %>");
-$("#lunch-check-info").modal("show");
+$("#lunch-check-info").modal({
+  backdrop: 'static',
+  keyboard: false
+});

@@ -11,7 +11,8 @@
     </div>
 
     <div class="modal-body">
-      <%= form_with(model: @teacher, url: update_lunch_check_info_teachers_admin_alergy_checks_path, local: true, method: :patch) do |f| %>
+      <div id="admin-error"></div>
+      <%= form_with(model: @teacher, url: update_lunch_check_info_teachers_admin_alergy_checks_path, remote: true, method: :patch) do |f| %>
         <% @requesters.each do |id, attendances| %>
 
          <% classname =  Classroom.find(id).class_name %>

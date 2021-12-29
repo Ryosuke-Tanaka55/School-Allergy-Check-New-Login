@@ -11,19 +11,6 @@ class AlergyCheck < ApplicationRecord
   validates :menu, presence: true, length: { maximum: 20 }, null: false
   validates :support, presence: true, null: false
 
-  # （想定先：管理者の報告確認モーダル）未チェックだが、報告状態が「確認済」のときは無効
-  #validate :status_checker_need
-  # （想定先：管理者の報告確認モーダル）チェック済みだが、報告状態が「報告中」のときは無効
-  #validate :status_need
-
-  def status_checker_need
-    errors.add(:status, "チェックが必要です") if status_checker == "0" && status = "確認済" && worked_on = Date.today
-  end
-
-  def status_need
-    errors.add(:status_checker, "報告状態の選択が正しくありません") if status_checker == "1" && status = "報告中" && applicant.present?
-  end
-
   # 児童アレルギーチェック報告時、第1、第2、児童のチェックなしと報告者名なしは不可
   CHECK_ERROR_MSG = "が必要です"
   with_options on: :today_check do

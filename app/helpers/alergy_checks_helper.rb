@@ -11,6 +11,8 @@ module AlergyChecksHelper
       return "未報告"
     when "報告中" then
       return "報告中"
+    when "要再確認" then
+      return "要再確認"
     when "確認済"
       return "#{name} #{status}"
     end
