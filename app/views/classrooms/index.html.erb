@@ -63,6 +63,8 @@
 
 <script>
   $(function() {
+    $('.tab-active').removeClass('tab-active');
+    $('.box-show').removeClass('box-show');
     $('#tab-<%= @active %>').addClass('tab-active');
     $('#tabbox-<%= @active %>').addClass('box-show');
   })
