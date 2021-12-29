@@ -40,12 +40,12 @@
             <td><%= note(alergy_check.note) %></td>
             <td><%= alergy_check.applicant %></td>
             <% if alergy_check.status.blank? || alergy_check.status == "要再確認" %>
-             <td bgcolor = "orange" >
+              <td bgcolor = "orange" >
             <% else %>
-             <td>
+              <td>
             <% end %>
               <%= check_state(status: alergy_check.status, name: alergy_check.admin_name) %>
-             </td>
+              </td>
           </tr>
         <% end %>
       </tbody>
