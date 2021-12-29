@@ -7,7 +7,8 @@
       <h1>児童追加</h1>
     </div>
     <div class="modal-body">
-      <%= form_with model: @school_student, url: teachers_school_students_path, local: true do |f| %>
+      <div id="students-error"></div>
+      <%= form_with model: @school_student, url: teachers_school_students_path, remote: true do |f| %>
         <table class="table table-bordered table-condensed table-hover">
           <thead>
             <tr>
