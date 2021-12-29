@@ -14,7 +14,7 @@ class TeachersController < ApplicationController
   def create
     @teacher = current_school.teachers.new(teachers_params)
     if @teacher.save
-      flash[:success] = "担任を作成しました。"
+      flash[:success] = teachers_params[:classroom_id].blank? ? "職員を作成しました。" : "担任を作成しました。"
       redirect_to classrooms_path and return
     else
       flash[:danger] = "作成に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"
