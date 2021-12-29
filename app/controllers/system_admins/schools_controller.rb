@@ -18,10 +18,13 @@ class SystemAdmins::SchoolsController < ApplicationController
     set_class
     if @school.save
       flash[:info] = "学校を新規作成しました"
+      redirect_to system_admins_schools_url
     else
-      flash[:danger] = "作成に失敗しました。<br>・#{@school.errors.full_messages.join('<br>・')}"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "作成に失敗しました。<br>・#{@school.errors.full_messages.join('<br>・')}"} 
+        format.js { render 'new' }
+      end
     end
-    redirect_to system_admins_schools_url
   end
 
   def edit
@@ -30,10 +33,13 @@ class SystemAdmins::SchoolsController < ApplicationController
   def update
     if @school.update_attributes(school_params)
       flash[:success] = "学校情報を更新しました。"
+      redirect_to system_admins_schools_url
     else
-      flash[:danger] = "更新に失敗しました。<br>・#{@school.errors.full_messages.join('<br>・')}"
+      respond_to do |format|
+        format.js { flash.now[:danger] = "更新に失敗しました。<br>・#{@school.errors.full_messages.join('<br>・')}"} 
+        format.js { render 'edit' }
+      end
     end
-    redirect_to system_admins_schools_url
   end
 
   def destroy

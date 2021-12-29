@@ -7,7 +7,8 @@
       <h1>児童編集</h1>
     </div>
     <div class="modal-body">
-      <%= form_with model: @school_student, url: teachers_school_student_path(@school_student), local: true, method: :patch do |f| %>
+      <div id="students-error"></div>
+      <%= form_with model: @school_student, url: teachers_school_student_path(@school_student), remote: true, method: :patch do |f| %>
         <table class="table table-bordered table-condensed table-hover">
           <thead>
             <tr>

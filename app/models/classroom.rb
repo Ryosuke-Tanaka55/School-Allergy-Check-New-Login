@@ -5,6 +5,6 @@ class Classroom < ApplicationRecord
   accepts_nested_attributes_for :students, allow_destroy: true
   has_many :alergy_checks, through: :students
 
-  validates :class_name, length: { maximum: 20 }, uniqueness: { scope: :school_id }
+  validates :class_name, presence: true, length: { maximum: 20 }, uniqueness: { scope: :school_id }
 
 end
