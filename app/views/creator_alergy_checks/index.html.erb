@@ -1,13 +1,11 @@
-<div>
-  <table class="table table-bordered table-condensed user-table">
-    <tr>
-      <td>
-        <%= link_to "←", teachers_creator_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-primary" %>
-        <%= l(@first_day, format: :middle) %> 対応法詳細
-        <%= link_to "→", teachers_creator_alergy_checks_path(date: @first_day.next_month), class: "btn btn-primary" %>
-      </td>
-    </tr>
-  </table>
+<% provide(:title, current_teacher.teacher_name) %>
+
+<h1><%= l(@first_day, format: :middle) %> 対応法詳細</h1>
+
+<div class="button__creator">
+  <%= link_to "前月", teachers_creator_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-info" %>
+  <%= link_to "当月", teachers_creator_alergy_checks_path, class: "btn btn-info" %>
+  <%= link_to "次月", teachers_creator_alergy_checks_path(date: @first_day.next_month), class: "btn btn-info" %>
 </div>
 
 <div>
@@ -29,7 +27,7 @@
       <% @one_month.each do |day| %>
         <tr>
           <td><%= l(day, format: :short) + "(#{$days_of_the_week[day.wday]})" %></td>
-          <td><%= link_to "入力", new_teachers_creator_alergy_check_path(day: day), class: "btn btn-primary", remote: true %></td>
+          <td><%= create_alergy_check_button(day) %></td>
           <td></td>
           <td></td>
           <td></td>
@@ -49,10 +47,8 @@
                 <td><%= alergy_check.menu %></td>
                 <td><%= alergy_check.support %></td>
                 <td><%= alergy_check.note %></td>
-                <td><%= link_to "編集", edit_teachers_creator_alergy_check_path(alergy_check.id),
-                        class: "btn btn-primary", remote: true %></td>
-                <td><%= link_to "削除", teachers_creator_alergy_check_path(alergy_check.id),
-                        method: :delete, data: { confirm: "対応法情報を削除します。よろしいですか？" }, class: "btn btn-danger" %></td>
+                <td><%= edit_alergy_check_button(alergy_check.id) %></td>
+                <td><%= destroy_alergy_check_button(alergy_check.id) %></td>
               </tr>
             <% end %>
           <% end %>

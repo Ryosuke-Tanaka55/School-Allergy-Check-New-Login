@@ -1,9 +1,11 @@
+<% provide(:title, current_teacher.teacher_name) %>
+
 <h1>児童一覧ページ</h1>
 
 <!--児童追加ボタン-->
 <% if current_teacher.admin? %>
   <div class="btn-student-new">
-    <%= link_to "児童追加", new_teachers_school_student_path, remote: true, class: "btn btn-primary" %>
+    <%= link_to "児童追加", new_teachers_school_student_path, remote: true, class: "btn btn-info" %>
   </div>
 <% end %>
 
@@ -14,8 +16,8 @@
       <th>児童番号</th>
       <th>児童名</th>
       <th>アレルギー食品</th>
-      <th>担任名</th>
       <th>備考</th>
+      <th>担任名</th>
       <% if current_teacher.admin? %>
         <th></th>
         <th></th>
@@ -35,8 +37,8 @@
               <td></td>
               <td></td>
               <td></td>
-              <td><%= t.teacher_name %></td>
               <td></td>
+              <td><%= t.teacher_name %></td>
               <% if current_teacher.admin? %>
                 <td></td>
                 <td></td>
@@ -48,8 +50,8 @@
               <td><%= student.student_number %></td>
               <td><%= student.student_name %></td> 
               <td><%= student.alergy %></td>
-              <td><%= t.teacher_name %></td>
               <td><%= student.student_note %></td>
+              <td><%= t.teacher_name %></td>
               <% if current_teacher.admin? %>
                 <td><%= link_to "編集", edit_teachers_school_student_path(student), remote: true, class: "btn btn-primary" %></td>
                 <td><%= link_to "削除" ,teachers_school_student_path(student), method: :delete,  class: "btn btn-danger", data: {confirm: "#{student.student_name}を削除してよろしいですか？" } %></td>
@@ -65,8 +67,8 @@
           <td><%= student.student_number %></td>
           <td><%= student.student_name %></td> 
           <td><%= student.alergy %></td>
-          <td>未登録</td>
           <td><%= student.student_note %></td>
+          <td>未登録</td>
           <% if current_teacher.admin? %>
             <td><%= link_to "編集", edit_teachers_school_student_path(student), remote: true, class: "btn btn-primary" %></td>
             <td><%= link_to "削除" ,teachers_school_student_path(student), method: :delete,  class: "btn btn-danger", data: {confirm: "#{student.student_name}を削除してよろしいですか？" } %></td>

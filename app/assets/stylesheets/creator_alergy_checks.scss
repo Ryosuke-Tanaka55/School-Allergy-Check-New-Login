@@ -4,3 +4,12 @@ table.table__creator-contents--center > thead > tr > th {
   text-align: center;
   vertical-align: middle;
 }
+
+.button__creator > .btn {
+  margin-bottom: 5px;
+}
+
+.disabled-btn {
+  pointer-events: none;
+  opacity: 0.4;
+}

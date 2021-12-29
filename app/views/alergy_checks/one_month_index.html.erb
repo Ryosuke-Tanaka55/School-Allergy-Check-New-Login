@@ -1,6 +1,9 @@
+<% provide(:title, current_teacher.teacher_name) %>
+
 <h1><%= current_teacher.classroom.class_name %>月間チェック一覧</h1>
 <div class="button__monthly">
   <%= link_to "前月", one_month_index_teachers_alergy_checks_path(date: @first_day.prev_month), class: "btn btn-info" %>
+  <%= link_to "当月", one_month_index_teachers_alergy_checks_path, class: "btn btn-info" %>
   <%= link_to "次月", one_month_index_teachers_alergy_checks_path(date: @first_day.next_month), class: "btn btn-info" %>
   <% if @alergy_checks.any? %>
     <%= link_to "印刷する", "#", class: "btn btn-primary", onclick: "window.print(); return false;" %>

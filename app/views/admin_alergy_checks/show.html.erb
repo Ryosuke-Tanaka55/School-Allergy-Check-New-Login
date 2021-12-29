@@ -3,11 +3,11 @@
 <div>
   <div class="center contents__font-size">
     <br><%= I18n.l(Date.current, format: :long) %><br><br>
-    <%= link_to "月間チェック", admin_alergy_checks_one_month_index_teachers_path, class: "btn btn-warning btn-lg button__monthly-check" %><br><br>
+    <%= link_to "全学級 月間チェック", one_month_index_teachers_admin_alergy_checks_path, class: "btn btn-warning btn-lg button__monthly-check" %><br><br>
     <% if @lunch_check_sum == 0 %>
       本日のチェックはありません。
     <% else %>
-      <% if @lunch_check_sum == @submitted %>  
+      <% if @lunch_check_sum == @submitted %>
         本日のチェックは完了しました。
       <% else %>
         本日の未チェック：<%= "#{@lunch_check_rest}件" %>
@@ -17,22 +17,22 @@
   <!-- 対応有無の判定 -->
   <div class="area">
     <br>
-    <% if @lunch_check_sum > 0 %>
+    <% if @lunch_check_rest > 0 %>
       <%= link_to "有", lunch_check_info_teachers_admin_alergy_checks_path, remote: true, class: "inline-block button" %>
     <% else %>
-      <a class="inline-block button">無</a>
+      <span class="inline-block button">無</span>
     <% end %>
   </div>
-  <!-- 追加リンク -->  
+  <!-- 追加リンク -->
 </div>
 <div class="center">
-　<% if @teacher.admin? %>
-  　<% if @lunch_check_rest > 0 %>
+ <% if @teacher.admin? %>
+   <% if @lunch_check_rest > 0 %>
       <p><font color="red">
        <%= link_to "【アレルギーチェックのお知らせ】", lunch_check_info_teachers_admin_alergy_checks_path, remote: true, style: "color:red;" %>
-      <span class="box"><%= @lunch_check_sum - @approval %> 件の未承認があります</span></font></p>
+      <span class="box"><%= @lunch_check_rest %> 件の未承認があります</span></font></p>
     <% end %>
-　<% end %>
-</div>   
-<!-- モーダル設定 -->  
+ <% end %>
+</div>
+<!-- モーダル設定 -->
 <div id="lunch-check-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

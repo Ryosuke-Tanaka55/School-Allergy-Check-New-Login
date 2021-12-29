@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  
-  
 
   root 'static_pages#top'
+
+  # 職員未ログイン時リダイレクト画面
+  get '/alert', to: 'static_pages#alert'
 
   # システム管理者用画面
   devise_for :system_admins, controllers: {
@@ -17,12 +18,9 @@ Rails.application.routes.draw do
     end
   end
 
-  # 学校区分
-  root to: 'static_pages#school_top', as: 'top'
 
   # 先生画面
-  devise_for :teachers, skip: 'sessions', controllers: {
-    passwords:     'teachers/passwords',
+  devise_for :teachers, skip: [:sessions, :passwords], controllers: {
     registrations: 'teachers/registrations',
     # omniauth_callbacks: "teachers/omniauth_callbacks"
   }
@@ -30,6 +28,10 @@ Rails.application.routes.draw do
     devise_scope :teacher do
       get 'teachers/sign_in', to: 'teachers/sessions#new', as: :new_teacher_session
       post 'teachers/sign_in', to: 'teachers/sessions#create', as: :teacher_session
+      get 'teachers/password/new', to: 'teachers/passwords#new', as: :new_teacher_password
+      post 'teachers/password', to: 'teachers/passwords#create', as: :teacher_password
+      get 'teachers/password/edit', to: 'teachers/passwords#edit', as: :edit_teacher_password
+      put 'teachers/password', to: 'teachers/passwords#update', as: :update_teacher_password
     end
   end
   devise_scope :teacher do
@@ -44,18 +46,12 @@ Rails.application.routes.draw do
         get '/students', to: 'creator_alergy_checks#search_student'
       end
     end
-    resource :admin_alergy_checks, only: %i(show) do
-      #collection do  
-      #  get 'lunch_check'
-      #  patch 'update_lunch_check'
-      #end   
-      member do
-         get 'lunch_check_info'
-         patch 'update_lunch_check_info'
+    # 管理職ページ（全学級月間チェック一覧）
+    resources :admin_alergy_checks, except: %i(new show create index edit update destroy) do
+      collection do
+        get 'one_month_index'
       end #collection do end
-     end #resouces do end
-    #resources :admin_alergy_checks, only: %i(show) do
-    #end
+    end #resouces do end
     resource :students do
       namespace :alergy_checks do
         resource :creator, only: %i(new create)
@@ -80,20 +76,7 @@ Rails.application.routes.draw do
     #代理報告ページ
     resource :charger_alergy_checks, only: %i(show)
 
-    #管理職月間チェック一覧ページ
-    collection do
-      get '/admin_alergy_checks/one_month_index'
-    end
-
-
   end
-  # resource :students do
-  #   namespace :alergy_checks do
-  #     resource :creator, only: %i(new create) do
-  #       get '/students', to: 'creators#search_student'
-  #     end
-  #   end
-  # end
 
   resources :classrooms do
     collection do
@@ -106,19 +89,14 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  # 管理職ページ（全般）
   resource :teachers do
-  #resources :admin_alergy_checks, only: [:show] do
-  #  collection do  
-  #    get 'lunch_check'
-  #    patch 'update_lunch_check'
-  #  end   
-  #  member do
-  #     get 'lunch_check_info'
-  #     patch 'update_lunch_check_info'
-  #     get 'lunch_check_all'
-  #     patch 'update_lunch_check_all' 
-  #  end #collection do end
-  # end #resouces do end
+    resource :admin_alergy_checks, only: %i(show) do
+      member do
+        get 'lunch_check_info'
+        patch 'update_lunch_check_info'
+      end #collection do end
+    end #resouces do end
   end #teachers do end
 
   # 下記山田さん既存のルート
@@ -141,14 +119,14 @@ Rails.application.routes.draw do
     end
 
     resources :attendances, only: [:edit, :update] do
-     member do
-       get 'lunch_check'
-       patch 'update_lunch_check'
-     end
-     collection do
+      member do
+        get 'lunch_check'
+        patch 'update_lunch_check'
+      end
+      collection do
         get 'lunch_check_info'
         patch 'update_lunch_check_info'
-     end #collection do end
+      end #collection do end
     end #resouces do end
   end #user resouces do end
 end

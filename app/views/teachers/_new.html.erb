@@ -6,7 +6,11 @@
       </button>
     </div>
     <div class="modal-body">
-      <h1>担任登録</h1>
+      <% if params[:classroom_id] != nil %>
+        <h1><%= params[:class_name] %>の担任登録</h1>
+      <% else %>
+        <h1>職員登録</h1>
+      <% end %>
       <%= form_with(model: @teacher, local: true) do |f| %>
         <!--%= f.hidden_field(:school_id, value: @school.id) % -->
         <%= f.hidden_field(:classroom_id, value: params[:classroom_id]) %>
@@ -34,6 +38,7 @@
         <div class="check_box">
           <%= f.check_box :admin %>
           <%= f.label :admin %>
+          <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" title="管理者は対応法担当者・代理申請者・その他全ての操作権限を持ちます")></span>
 
           <%= f.check_box :creator %>
           <%= f.label :creator %>
@@ -53,3 +58,8 @@
   </div>
 </div>
 
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>

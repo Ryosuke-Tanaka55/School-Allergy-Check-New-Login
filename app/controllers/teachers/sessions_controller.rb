@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class Teachers::SessionsController < Devise::SessionsController
-  before_action :set_school, only: [:new, :create]
+  # before_action :system_admin_not_show, only: [:create]
+  before_action :check_current_system_admin, only: [:new]
+  before_action :set_school, only: %i[new create]
   before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -36,7 +38,7 @@ class Teachers::SessionsController < Devise::SessionsController
 
   # ログイン時のストロングパラメータ
   def configure_sign_in_params
-    devise_parameter_sanitizer.permit(:sign_in, keys: %i(tcode))
+    devise_parameter_sanitizer.permit(:sign_in, keys: %i[tcode])
   end
 
   # schoolの特定
@@ -44,4 +46,20 @@ class Teachers::SessionsController < Devise::SessionsController
     @school = School.find_by!(school_url: params[:school_url])
   end
 
+  # # システム管理者ログイン中、システム管理者自身が職員ログインできないようにする
+  # def system_admin_not_show
+  #   if system_admin_signed_in?
+  #     flash[:danger] = "学校の職員のみ遷移可能です。"
+  #     redirect_to classrooms_path
+  #   end
+  # end
+
+  private
+
+  def check_current_system_admin
+    if current_system_admin
+      flash[:danger] = '現在システム管理者でログイン中です。職員でログインする場合は一度ログアウトしてください。'
+      redirect_to system_admins_schools_url
+    end
+  end
 end

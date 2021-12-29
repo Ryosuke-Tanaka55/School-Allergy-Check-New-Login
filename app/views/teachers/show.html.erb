@@ -1,6 +1,9 @@
-<!-- 管理者職員・対応法入力担当者・一般職員で表示項目の切り替え必要 -->
-<h1>本日の作業選択</h1>
+<% provide(:title, current_teacher.teacher_name) %>
 
+<h1>本日の作業選択</h1>
+<div class="center contents__font-size">
+  <%= I18n.l(Date.current, format: :long) %>
+</div>
 <% if teacher_signed_in? %>
   <ul class="list-group-flush">
     <% unless current_teacher.classroom_id == nil %>

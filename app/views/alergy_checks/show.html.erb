@@ -1,3 +1,5 @@
+<% provide(:title, current_teacher.teacher_name) %>
+
 <div>
   <div class="center contents__font-size">
     <br><%= I18n.l(Date.current, format: :long) %><br><br>
@@ -9,7 +11,7 @@
       <% if @alergy_check_sum == @submitted %>  
         本日のチェックは完了しました。
       <% else %>
-        本日のチェック：<%= "#{@alergy_check_sum}件" %>
+        本日の未チェックは<%= unchecked(must_checked: @alergy_check_sum, checked: @submitted) %>件です。
       <% end %>
     <% end %>
   </div>
@@ -18,7 +20,7 @@
     <% if @alergy_check_sum > 0 %>
       <%= link_to "有", today_index_teachers_alergy_checks_path, remote: true, class: "inline-block button" %>
     <% else %>
-      <a class="inline-block button" href="#">無</a>
+      <span class="inline-block button">無</span>
     <% end %>
   </div>
 </div>
