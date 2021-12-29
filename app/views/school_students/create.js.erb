@@ -1,0 +1,5 @@
+//フラッシュメッセージを表示するJSファイル
+
+<% flash.each do |type, message| %>
+  $("#students-error").html('<p class="alert alert-danger"><%= message.html_safe %></p>')
+<% end %>
