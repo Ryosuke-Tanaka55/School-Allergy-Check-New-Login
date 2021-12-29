@@ -15,10 +15,10 @@ class TeachersController < ApplicationController
     @teacher = current_school.teachers.new(teachers_params)
     if @teacher.save
       flash[:success] = teachers_params[:classroom_id].blank? ? "職員を作成しました。" : "担任を作成しました。"
-      redirect_to classrooms_path and return
+      redirect_to classrooms_path(active: @teacher.classroom ? @teacher.classroom.class_grade : 8) and return
     else
       respond_to do |format|
-        format.js { flash.now[:danger] = "更新に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"} 
+        format.js { flash.now[:danger] = "作成に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"}
         format.js { render 'new' }
       end
     end
@@ -33,10 +33,10 @@ class TeachersController < ApplicationController
     @teacher = current_school.teachers.find(params[:teacher][:id])
     if @teacher.update_attributes(teachers_params)
       flash[:success] = "#{@teacher.teacher_name}の情報を更新しました。"
-      redirect_to classrooms_path
+      redirect_to classrooms_path(active: @teacher.classroom ? @teacher.classroom.class_grade : 8) and return
     else
       respond_to do |format|
-        format.js { flash.now[:danger] = "更新に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"} 
+        format.js { flash.now[:danger] = "更新に失敗しました。<br>・#{@teacher.errors.full_messages.join('<br>・')}"}
         format.js { render 'edit_info' }
       end
     end
@@ -44,9 +44,9 @@ class TeachersController < ApplicationController
 
   def destroy
     @teacher = current_school.teachers.find(params[:id])
-    @teacher.destroy
+    @teacher.destroy!
     flash[:danger] = "#{@teacher.teacher_name}を削除しました。"
-    redirect_to classrooms_path
+    redirect_to classrooms_path(active: @teacher.classroom ? @teacher.classroom.class_grade : 8)
   end
 
   private

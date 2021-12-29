@@ -4,56 +4,56 @@
 
 <!--タブ部分-->
 <ul class="tab-list list-unstyled">
-  <li class="tab tab-active">
+  <li class="tab" id="tab-1">
     １学年
   </li>
-  <li class="tab">
+  <li class="tab" id="tab-2">
     ２学年
   </li>
-  <li class="tab">
+  <li class="tab" id="tab-3">
     ３学年
   </li>
-  <li class="tab">
+  <li class="tab" id="tab-4">
     ４学年
   </li>
-  <li class="tab">
+  <li class="tab" id="tab-5">
     ５学年
   </li>
-  <li class="tab">
+  <li class="tab" id="tab-6">
     ６学年
   </li>
-  <li class="tab">
+  <li class="tab" id="tab-7">
     特別学級
   </li>
-  <li class="tab">
+  <li class="tab" id="tab-8">
     その他
   </li>
 </ul>
 <!--タブで選択された要素部分-->
 <div class="tabbox-contents">
-  <div class="tabbox box-show">
-    <%= render 'classrooms/classlist', classrooms: @first_grade %>    
+  <div class="tabbox" id="tabbox-1">
+    <%= render 'classrooms/classlist', classrooms: @first_grade %>
   </div>
-  <div class="tabbox">
-    <%= render 'classrooms/classlist', classrooms: @second_grade %>    
+  <div class="tabbox" id="tabbox-2">
+    <%= render 'classrooms/classlist', classrooms: @second_grade %>
   </div>
-  <div class="tabbox">
-    <%= render 'classrooms/classlist', classrooms: @third_grade %>    
+  <div class="tabbox" id="tabbox-3">
+    <%= render 'classrooms/classlist', classrooms: @third_grade %>
   </div>
-  <div class="tabbox">
-    <%= render 'classrooms/classlist', classrooms: @fourth_grade %>    
+  <div class="tabbox" id="tabbox-4">
+    <%= render 'classrooms/classlist', classrooms: @fourth_grade %>
   </div>
-  <div class="tabbox">
-    <%= render 'classrooms/classlist', classrooms: @fifth_grade %>    
+  <div class="tabbox" id="tabbox-5">
+    <%= render 'classrooms/classlist', classrooms: @fifth_grade %>
   </div>
-  <div class="tabbox">
-    <%= render 'classrooms/classlist', classrooms: @sixth_grade %>    
+  <div class="tabbox" id="tabbox-6">
+    <%= render 'classrooms/classlist', classrooms: @sixth_grade %>
   </div>
-  <div class="tabbox">
-    <%= render 'classrooms/classlist', classrooms: @other_grade %>    
+  <div class="tabbox" id="tabbox-7">
+    <%= render 'classrooms/classlist', classrooms: @other_grade %>
   </div>
-  <div class="tabbox">
-    <%= render 'classrooms/teacherlist', classrooms: @other %>    
+  <div class="tabbox" id="tabbox-8">
+    <%= render 'classrooms/teacherlist', classrooms: @other %>
   </div>
 </div>
 
@@ -62,6 +62,11 @@
 
 
 <script>
+  $(function() {
+    $('#tab-<%= @active %>').addClass('tab-active');
+    $('#tabbox-<%= @active %>').addClass('box-show');
+  })
+
   // turbolinksの無効化
   $(document).on('turbolinks:load', function() {
     $(function() {
