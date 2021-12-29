@@ -14,7 +14,7 @@ class TeachersController < ApplicationController
   def create
     @teacher = current_school.teachers.new(teachers_params)
     if @teacher.save
-      flash[:success] = "担任を作成しました。"
+      flash[:success] = teachers_params[:classroom_id].blank? ? "職員を作成しました。" : "担任を作成しました。"
       redirect_to classrooms_path(active: @teacher.classroom ? @teacher.classroom.class_grade : 8) and return
     else
       respond_to do |format|
