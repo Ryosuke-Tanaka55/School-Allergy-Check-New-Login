@@ -5,9 +5,8 @@ class AdminAlergyChecksController < ApplicationController
     before_action :signed_in_teacher
     before_action :system_admin_inaccessible
     before_action :set_school
-    before_action :admin_teacher, only: [:one_month_index]
+    before_action :admin_teacher
     before_action :set_first_last_day
-    before_action :admin_teacher, only: [:show]
 
     def one_month_index
       @alergy_checks = AlergyCheck.joins({student: {classroom: :school}})
